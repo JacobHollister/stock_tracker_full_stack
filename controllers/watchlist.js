@@ -1,9 +1,12 @@
+const WatchList = require('../models/watchlist')
+
 const getWatchList = (req, res) => {
     res.send('watchlist')
 }
 
-const addTicker = (req, res) => {
-    res.send(`Add ${req.body.ticker} to watchlist`)
+const addTicker = async (req, res) => {
+    const watchList = await WatchList.create(req.body)
+    res.status(201).json({watchList})
 }
 
 const removeTicker = (req, res) => {
