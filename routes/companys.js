@@ -10,7 +10,5 @@ const {
 
 router.route('/').get(getCompanys)
 router.route('/:ticker').get(getCompanyInfo)
-                        .patch(updateCompanyInfo)
-                        .delete(removeCompanyinfo)
 
 module.exports = router
