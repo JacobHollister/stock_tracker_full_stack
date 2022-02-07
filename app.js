@@ -5,6 +5,7 @@ const companys = require('./routes/companys')
 const news = require('./routes/news')
 const candles = require('./routes/candles')
 const quote = require('./routes/quote')
+const line = require('./routes/line')
 const connectDB = require('./db/connect')
 require('dotenv').config()
 
@@ -26,6 +27,8 @@ app.use('/api/v1/news', news)
 app.use('/api/v1/stock/candles', candles)
 
 app.use('/api/v1/stock/quote', quote)
+
+app.use('/api/v1/stock/line', line)
 
 const port = 3000
 
