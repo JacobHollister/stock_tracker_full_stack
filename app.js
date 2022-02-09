@@ -6,11 +6,12 @@ const news = require('./routes/news')
 const candles = require('./routes/candles')
 const quote = require('./routes/quote')
 const line = require('./routes/line')
+const users = require('./routes/users')
+const auth = require('./routes/auth')
 const connectDB = require('./db/connect')
 require('dotenv').config()
 
 // middleware
-
 app.use(express.json())
 
 // routes
@@ -29,6 +30,10 @@ app.use('/api/v1/stock/candles', candles)
 app.use('/api/v1/stock/quote', quote)
 
 app.use('/api/v1/stock/line', line)
+
+app.use('/api/v1/users', users)
+
+app.use('/api/v1/auth', auth)
 
 const port = 3000
 
