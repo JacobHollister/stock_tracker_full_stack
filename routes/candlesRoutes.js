@@ -3,10 +3,8 @@ const router = express.Router()
 
 const authenticationMiddleware = require('../middleware/auth')
 
-const {
-    getAllUsers
-} = require('../controllers/user')
+const getCandles = require('../controllers/candlesController')
 
-router.route('/').get(authenticationMiddleware, getAllUsers)
+router.route('/').get(authenticationMiddleware, getCandles)
 
 module.exports = router

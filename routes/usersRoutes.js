@@ -4,9 +4,9 @@ const router = express.Router()
 const authenticationMiddleware = require('../middleware/auth')
 
 const {
-    getQuote
-} = require('../controllers/quote')
+    getAllUsers
+} = require('../controllers/userController')
 
-router.route('/:ticker').get(authenticationMiddleware, getQuote)
+router.route('/').get(authenticationMiddleware, getAllUsers)
 
 module.exports = router

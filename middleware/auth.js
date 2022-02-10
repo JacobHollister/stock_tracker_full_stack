@@ -12,7 +12,6 @@ const authenticationMiddleware = async (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
         const { id, email } = decodedToken
         req.user = { id, email }
-        console.log(req.user)
         next()
     } catch (err) {
         return res.status(401).json({ msg: 'Invalid token, authorization denied' });

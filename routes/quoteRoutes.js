@@ -3,8 +3,10 @@ const router = express.Router()
 
 const authenticationMiddleware = require('../middleware/auth')
 
-const getLineData = require('../controllers/line')
+const {
+    getQuote
+} = require('../controllers/quoteController')
 
-router.route('/').get(authenticationMiddleware, getLineData)
+router.route('/:ticker').get(authenticationMiddleware, getQuote)
 
 module.exports = router

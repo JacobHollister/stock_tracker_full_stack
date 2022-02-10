@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
-const watchlist = require('./routes/watchList')
-const companys = require('./routes/companys')
-const news = require('./routes/news')
-const candles = require('./routes/candles')
-const quote = require('./routes/quote')
-const line = require('./routes/line')
-const users = require('./routes/users')
-const auth = require('./routes/auth')
+const watchlist = require('./routes/watchListRoutes')
+const companys = require('./routes/companysRoutes')
+const news = require('./routes/newsRoutes')
+const candles = require('./routes/candlesRoutes')
+const quote = require('./routes/quoteRoutes')
+const line = require('./routes/lineRoutes')
+const users = require('./routes/usersRoutes')
+const auth = require('./routes/authRoutes')
 const connectDB = require('./db/connect')
 require('dotenv').config()
 

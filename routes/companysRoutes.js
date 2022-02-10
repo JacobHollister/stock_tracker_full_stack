@@ -8,7 +8,7 @@ const {
     getCompanyInfo,
     updateCompanyInfo,
     removeCompanyinfo
-} = require('../controllers/companys')
+} = require('../controllers/companysController')
 
 router.route('/').get(authenticationMiddleware, getCompanys)
 router.route('/:ticker').get(authenticationMiddleware, getCompanyInfo)

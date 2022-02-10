@@ -1,8 +1,16 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const WatchListSchema = new mongoose.Schema({
-    user_id:String,
-    completed:Boolean
-})
+const WatchlistSchema = new mongoose.Schema({
 
-module.exports = mongoose.model('WatchList', WatchListSchema)
+    user_email: {
+        type: String,
+        unique: true,
+        required: [true, 'Please provide email'],
+    },
+
+    watchlist: [{
+        type: String
+    }]
+});
+
+module.exports = mongoose.model('Watchlist', WatchlistSchema);
