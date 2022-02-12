@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const errorHandlerMiddleware = require('./middleware/error-handler')
 const watchlist = require('./routes/watchListRoutes')
 const companys = require('./routes/companysRoutes')
 const news = require('./routes/newsRoutes')
@@ -34,6 +35,8 @@ app.use('/api/v1/stock/line', line)
 app.use('/api/v1/users', users)
 
 app.use('/api/v1/auth', auth)
+
+app.use(errorHandlerMiddleware);
 
 const port = 3000
 

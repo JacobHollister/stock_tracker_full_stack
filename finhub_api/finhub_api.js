@@ -1,5 +1,5 @@
 require('dotenv').config()
-const retryFetch = require('../middleware/retry-fetch')
+const retryFetch = require('../utils/retry-fetch')
 const fns = require('date-fns')
 
 const apiKey = process.env.FINHUB_API_KEY

@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const WatchlistSchema = new mongoose.Schema({
 
-    user_email: {
-        type: String,
-        unique: true,
-        required: [true, 'Please provide email'],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
     },
 
     watchlist: [{

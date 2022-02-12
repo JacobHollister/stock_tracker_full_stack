@@ -9,7 +9,7 @@ const timeDelay = ms => {
 }
 const retryFetch = (url, fetchOptions = {}, retries = 3, retryDelay = 1000) => {
     return new Promise((resolve, reject) => {
-
+        //console.log(url)
         const fetchUrl = retryNum => {
             fetch(url, fetchOptions)
                 .then(res => { 

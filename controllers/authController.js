@@ -1,44 +1,54 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const Watchlist = require('../models/watchlist')
 const bcrypt = require('bcrypt')
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error');
 
-
-const registerUser = asyncWrapper( async (req, res) => {
+// @desc    Register user
+// @route   POST /api/v1/auth/register
+// @access  Public
+const registerUser = asyncWrapper( async (req, res, next) => {
     const { email, name, password } = req.body;
 
+    if (!name || !email || !password) return next(createCustomError('Please provide name, email and password', 400));
+
     const emailExists = await User.findOne({ email });
-    if (emailExists) {
-        return next(createCustomError('Email already exists', 401))
-    }
+    if (emailExists) return next(createCustomError('Email already exists', 401))
 
     const user = await User.create({ name, email, password });
+    const watchlist = await Watchlist.create({user: user.id, watchlist: [] })
+    const token = await generateToken(user.id);
 
-    return res.status(200).json(user)
+    return res.status(200).json({user, token, expiresIn: 604800,})
 })
 
+// @desc    Login user
+// @route   POST /api/v1/auth/login
+// @access  Public
 const loginUser = asyncWrapper(async (req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) {
-        return new createCustomError('Please provide email and password', 400);
-    }
+
+    if (!email || !password) return new createCustomError('Please provide email and password', 400);
 
     const user = await User.findOne({ email });
-    if (!user) {
-        return new createCustomError('No user exists with this email', 401);
-    }
-    const { id } = user
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    if (!user) return new createCustomError('No user exists with this email', 401);
+
+    if(await bcrypt.compare(password, user.password)){
+        const token = await generateToken(user.id);
+        return res.status(200).json({ msg: 'Successfully logged in!', token, expiresIn: 604800, userId: id });
+    } else {
         return new createCustomError('Invalid Username / Password', 401);
     }
+});
 
-    const token = jwt.sign({id, email}, process.env.JWT_SECRET, {expiresIn: '1h'});
-    res.status(200).json({ msg: 'Successfully logged in!', token, expiresIn: 3600, userId: id });
-    });
+const generateToken = async(id) => {
+    return jwt.sign({id},
+        process.env.JWT_SECRET,
+        {expiresIn: '7d'});
+}
 
 module.exports = {
     registerUser,
