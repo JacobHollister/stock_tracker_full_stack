@@ -29,7 +29,7 @@ app.use('/api/v1/auth', auth)
 
 app.use(errorHandlerMiddleware);
 
-const port = 3000
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
