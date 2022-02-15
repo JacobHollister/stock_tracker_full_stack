@@ -16,7 +16,7 @@ const gettrades = asyncWrapper(async (req, res, next) => {
 // @desc    Add user trade
 // @route   POST /api/v1/trades
 // @access  Private
-const addTrade = asyncWrapper(async (req, res, next) => {
+const addTrade = asyncWrapper(async (req, res) => {
     const {ticker, quantity, purchase_date, purchase_price} = req.body
 
     const newTrade = await Trade.create({user: req.user._id, ticker, quantity, purchase_date, purchase_price})

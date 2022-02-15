@@ -21,7 +21,7 @@ const registerUser = asyncWrapper( async (req, res, next) => {
     const watchlist = await Watchlist.create({user: user.id, watchlist: [] })
     const token = await generateToken(user.id);
 
-    return res.status(200).json({user, token, expiresIn: 604800,})
+    return res.status(200).json({user, token, expiresIn: process.env.TOKEN_EXP,})
 })
 
 // @desc    Login user
@@ -38,7 +38,7 @@ const loginUser = asyncWrapper(async (req, res) => {
 
     if(await bcrypt.compare(password, user.password)){
         const token = await generateToken(user.id);
-        return res.status(200).json({ msg: 'Successfully logged in!', token, expiresIn: 604800, userId: id });
+        return res.status(200).json({ msg: 'Successfully logged in!', token, expiresIn: process.env.TOKEN_EXP, userId: id });
     } else {
         return new createCustomError('Invalid Username / Password', 401);
     }
@@ -47,7 +47,7 @@ const loginUser = asyncWrapper(async (req, res) => {
 const generateToken = async(id) => {
     return jwt.sign({id},
         process.env.JWT_SECRET,
-        {expiresIn: '7d'});
+        {expiresIn: process.env.TOEKN_EXP_DAYS});
 }
 
 module.exports = {
