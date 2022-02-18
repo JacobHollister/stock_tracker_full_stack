@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const StyledHeader = styled.header`
@@ -15,50 +16,53 @@ export const Nav = styled.nav`
         }
     }
 `
-export const NavButton = styled.button`
-    cursor: pointer;
-    margin: 10px 10px 0 10px;
-    padding-bottom: 11px;
-    font-size: .75rem;
-    font-weight: bold;
-    letter-spacing: .1rem;
-    text-transform: bold;
-    border: none;
-    background: none;
-    position: relative;
-    @media (max-width: 768px) {
-        margin: 10px 2px 0 2px;
-    }
-
-    &:after{
-        content: '';
-        position: absolute;
-        width: 100%;
-        transform: scaleY(0);
-        height: 3px;
-        bottom: -3px;
-        left: 0;
-        background-color: black;
-        transform-origin: bottom;
-    }
-    &:hover:after{
-        transform: scaleY(1);
-        transform-origin: bottom;
-    }
-    ${({ active }) => active && `
-        &:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        transform: scaleY(1);
-        height: 3px;
-        bottom: -3px;
-        left: 0;
-        background-color: black;
-        transform-origin: bottom;
+export const NavButton = styled(NavLink)`
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        margin: 10px 10px 0 10px;
+        padding-bottom: 11px;
+        font-size: .75rem;
+        font-weight: bold;
+        letter-spacing: .1rem;
+        text-transform: bold;
+        border: none;
+        background: none;
+        position: relative;
+        @media (max-width: 768px) {
+            margin: 10px 2px 0 2px;
         }
-        cursor: default;
-    `}
+
+        &:after{
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleY(0);
+            height: 3px;
+            bottom: -3px;
+            left: 0;
+            background-color: black;
+            transform-origin: bottom;
+        }
+        &:hover:after{
+            transform: scaleY(1);
+            transform-origin: bottom;
+        }
+        
+        ${({ active }) => active && `
+            &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleY(1);
+            height: 3px;
+            bottom: -3px;
+            left: 0;
+            background-color: black;
+            transform-origin: bottom;
+            }
+            cursor: default;
+        `}
     `
 
 //Change to image when created

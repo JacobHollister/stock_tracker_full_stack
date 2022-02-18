@@ -2,15 +2,17 @@ import { Nav, NavButton, StyledHeader, Logo, NavIcon } from './styles/Header.sty
 import { Container } from './styles/Container.styled'
 import ProfileIcon from '../assets/icons/user.svg'
 
+
 export default function Header() {
+    
     return(
         <StyledHeader>
             <Container>
                 <Nav>
-                    <NavButton >PORTFOLIO</NavButton>
-                    <NavButton active>WATCHLIST</NavButton>
-                    <NavButton>MARKETS</NavButton>
-                    <NavButton>SEARCH</NavButton>
+                    <NavButton to="/portfolio">PORTFOLIO</NavButton>
+                    <NavButton to="/watchlist">WATCHLIST</NavButton>
+                    <NavButton to="/">MARKETS</NavButton>
+                    <NavButton to="/search">SEARCH</NavButton>
                     <Logo>STAKE</Logo>
                     <NavIcon src = {ProfileIcon}></NavIcon>
                 </Nav>
