@@ -9,9 +9,9 @@ export default function Header() {
         <StyledHeader>
             <Container>
                 <Nav>
+                    <NavButton to="/">MARKETS</NavButton>
                     <NavButton to="/portfolio">PORTFOLIO</NavButton>
                     <NavButton to="/watchlist">WATCHLIST</NavButton>
-                    <NavButton to="/">MARKETS</NavButton>
                     <NavButton to="/search">SEARCH</NavButton>
                     <Logo>STAKE</Logo>
                     <NavIcon src = {ProfileIcon}></NavIcon>

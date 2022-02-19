@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const StyledHeader = styled.header`
-    
+    margin-bottom: 10px;
     `
 
 export const Nav = styled.nav`
@@ -24,7 +24,6 @@ export const NavButton = styled(NavLink)`
         padding-bottom: 11px;
         font-size: .75rem;
         font-weight: bold;
-        letter-spacing: .1rem;
         text-transform: bold;
         border: none;
         background: none;
@@ -49,7 +48,7 @@ export const NavButton = styled(NavLink)`
             transform-origin: bottom;
         }
         
-        ${({ active }) => active && `
+        &.active {
             &:after {
             content: '';
             position: absolute;
@@ -62,7 +61,7 @@ export const NavButton = styled(NavLink)`
             transform-origin: bottom;
             }
             cursor: default;
-        `}
+        }
     `
 
 //Change to image when created

@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
 const errorHandlerMiddleware = require('./middleware/error-handler')
 const watchlist = require('./routes/watchListRoutes')
 const companys = require('./routes/companysRoutes')
@@ -15,6 +16,7 @@ require('dotenv').config()
 
 // middleware
 app.use(express.json())
+app.use(cors());
 
 // routes
 app.use('/api/v1/watchlist', watchlist)

@@ -6,6 +6,6 @@ const authenticationMiddleware = require('../middleware/auth')
 
 const getLineData = require('../controllers/lineController')
 
-router.route('/').get(authenticationMiddleware, cache('10 minutes'), getLineData)
+router.route('/').get(cache('10 minutes'), getLineData)
 
 module.exports = router
