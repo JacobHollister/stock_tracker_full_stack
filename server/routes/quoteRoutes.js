@@ -8,6 +8,6 @@ const {
     getQuote
 } = require('../controllers/quoteController')
 
-router.route('/:ticker').get(authenticationMiddleware, cache('10 minutes'), getQuote)
+router.route('/:ticker').get(cache('10 minutes'), getQuote)
 
 module.exports = router

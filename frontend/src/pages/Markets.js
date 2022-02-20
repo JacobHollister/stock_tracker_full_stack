@@ -13,10 +13,10 @@ function Markets() {
       </StyledHeading>
       {/* US Markets (4 x indices graph components) */}
       <MarketGraphContainer>
-        <IndiceGraph ticker={"spy"}/>
-        <IndiceGraph ticker={"qqq"}/>
-        <IndiceGraph ticker={"iwm"}/>
-        <IndiceGraph ticker={"vxx"}/>
+        <IndiceGraph ticker={"spy"} indice={'S&P500'}/>
+        <IndiceGraph ticker={"qqq"} indice={'NASDAQ'}/>
+        <IndiceGraph ticker={"iwm"} indice={'RUSSEL 2000'}/>
+        <IndiceGraph ticker={"vxx"} indice={'VOLATILITY INDEX'}/>
       </MarketGraphContainer>
       {/* General news */}
       <StyledHeading>
