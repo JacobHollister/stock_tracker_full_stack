@@ -13,7 +13,7 @@ const getNews = asyncWrapper( async (req, res, next) => {
     
     if(!marketNews) next(createCustomError(`External API error`, 404))
     
-    return res.status(200).json(marketNews)
+    return res.status(200).json(marketNews.slice(0, 10))
 })
 
 // @desc    Get company specific news

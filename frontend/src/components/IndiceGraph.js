@@ -32,6 +32,7 @@ export default function IndiceGraph({ticker, indice}) {
     const [ chartData, setChartData ] = useState(null)
     const [ labelData, setLabelData ] = useState(null)
     const [ quoteData, setQuoteData ] = useState(null)
+    const [ chartColor, setChartColor ] = useState(null)
 
     useEffect(() => {
         loadChartContent()
@@ -39,10 +40,22 @@ export default function IndiceGraph({ticker, indice}) {
     }, [])
 
     useEffect(() => {
-        if(chartData && labelData && quoteData){
+        if(chartData && labelData && quoteData && chartColor){
             setIsChartLoading(false)
         }
-    }, [chartData, labelData, quoteData, ticker])
+    }, [chartData, labelData, quoteData, chartColor, ticker])
+
+    useEffect(() => {
+        
+        const dangerFill = '#eb0f29';
+        const successFill =  '#00873c'; 
+
+        if (quoteData && quoteData.dp < 0){
+            setChartColor(dangerFill)
+        } else if (quoteData && quoteData.dp > 0) {
+            setChartColor(successFill)
+        }
+    }, [quoteData])
 
 
     const loadChartContent = async () => {
@@ -68,10 +81,9 @@ export default function IndiceGraph({ticker, indice}) {
             labels: labelData,
             datasets: [
                 {
-                    //backgroundColor: chartData ? chartColorHandler() : null,
+                    borderColor: chartColor,
                     data: chartData, 
                     fill: true,
-                    borderColor: '#92949c',
                     borderWidth: '2',
                     tension: .3,
                     pointRadius: '0',
@@ -79,26 +91,28 @@ export default function IndiceGraph({ticker, indice}) {
         }]}
     
     const graphOptionsProps = {
-        maintainAspectRatio: false,  
+        maintainAspectRatio: false,
         plugins: {legend: {display: false}}, 
         tooltips: {
             displayColors: false
         },
-        layout:{autoPadding: false, padding:10},
+        layout:{autoPadding: false, padding:20},
         scales: {
             xAxes: {display: false}, 
-            yAxes: {display: true, position:'right', ticks: {count: 4, padding: 0}}
+            yAxes: {display: true, position:'right', ticks: {count: 3, padding: 0}}
         },
     }
+
     
     return (
         <IndiceGraphContainer>
             <IndiceGraphHeading>
                 <span>{indice}</span>
-                <span>{ticker} ({quoteData ? quoteData.dp.toFixed(2) : '0.0'}%)</span>
+                <span>{ticker} </span>
+                <span style={{color: chartColor}}> {quoteData ? quoteData.dp.toFixed(2) : '0.0'}%</span>
             </IndiceGraphHeading>
             <div>
-                {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps}/>}
+                {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps} />}
             </div>
         </IndiceGraphContainer>
     )
