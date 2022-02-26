@@ -10,6 +10,6 @@ const {
 } = require('../controllers/newsController')
 
 router.route('/').get(cache('10 minutes'), getNews)
-router.route('/:ticker').get(authenticationMiddleware, cache('10 minutes'), getCompanyNews)
+router.route('/:ticker').get(cache('10 minutes'), getCompanyNews)
 
 module.exports = router
