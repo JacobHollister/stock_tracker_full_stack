@@ -92,12 +92,9 @@ export default function IndiceGraph({ticker, indice}) {
     
     const graphOptionsProps = {
         maintainAspectRatio: false,
-        plugins: {legend: {display: false}}, 
-        tooltips: {
-            displayColors: false
-        },
+        plugins: {legend: {display: false}, tooltip: {enabled: false}}, 
         layout:{autoPadding: false, padding:20},
-        scales: {
+        scales: { 
             xAxes: {display: false}, 
             yAxes: {display: true, position:'right', ticks: {count: 3, padding: 0}}
         },
