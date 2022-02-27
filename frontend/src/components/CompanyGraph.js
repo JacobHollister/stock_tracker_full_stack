@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2'
 import axios from 'axios'
-import { IndiceGraphHeading, IndiceGraphContainer} from './styles/IndiceGraph.styled';
 import Loader from './Loader'
 
 ChartJS.register(
@@ -24,14 +23,12 @@ ChartJS.register(
     Legend
 );
 
-function CompanyGraph({ticker}) {
+function CompanyGraph({ticker, chartColor}) {
 
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
     const [ labelData, setLabelData ] = useState(null)
-    const [ quoteData, setQuoteData ] = useState(null)
-    const [ chartColor, setChartColor ] = useState(null)
 
     useEffect(() => {
         loadChartContent()
@@ -39,22 +36,10 @@ function CompanyGraph({ticker}) {
     }, [])
 
     useEffect(() => {
-        if(chartData && labelData && quoteData && chartColor){
+        if(chartData && labelData){
             setIsChartLoading(false)
         }
-    }, [chartData, labelData, quoteData, chartColor, ticker])
-
-    useEffect(() => {
-        
-        const dangerFill = '#eb0f29';
-        const successFill =  '#00873c'; 
-
-        if (quoteData && quoteData.dp < 0){
-            setChartColor(dangerFill)
-        } else if (quoteData && quoteData.dp > 0) {
-            setChartColor(successFill)
-        }
-    }, [quoteData])
+    }, [chartData, labelData, ticker])
 
 
     const loadChartContent = async () => {
@@ -67,20 +52,13 @@ function CompanyGraph({ticker}) {
         .catch (
             err => console.error(err)
         )
-        axios.get(`http://localhost:5000/api/v1/stock/quote/${ticker.toUpperCase()}`)
-        .then(result => {
-            setQuoteData(result.data)
-        })
-        .catch (
-            err => console.error(err)
-        )
     }
 
     const graphDataProps = {
             labels: labelData,
             datasets: [
                 {
-                    borderColor: chartColor,
+                    borderColor: chartColor ? chartColor : "grey",
                     data: chartData, 
                     fill: true,
                     borderWidth: '2',
@@ -92,25 +70,18 @@ function CompanyGraph({ticker}) {
     const graphOptionsProps = {
         maintainAspectRatio: false,
         plugins: {legend: {display: false}, tooltip: {enabled: false}}, 
-        layout:{autoPadding: false, padding:20},
+        layout:{autoPadding: false, padding:5},
         scales: { 
-            xAxes: {display: false}, 
+            xAxes: {display: true, ticks: {autoSkip: true, autoSkipPadding: 100, padding: 0}}, 
             yAxes: {display: true, position:'right', ticks: {count: 3, padding: 0}}
         },
     }
 
     
     return (
-        <>
-            <IndiceGraphHeading>
-                <span> </span>
-                <span>{ticker} </span>
-                <span style={{color: chartColor}}> {quoteData ? quoteData.dp.toFixed(2) : '0.0'}%</span>
-            </IndiceGraphHeading>
-            <div>
-                {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps} />}
-            </div>
-        </>
+        <div>
+            {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps} />}
+        </div>
     )
 }
 
