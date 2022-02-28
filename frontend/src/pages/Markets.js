@@ -1,7 +1,7 @@
 import { StyledHeading } from "../components/styles/Heading.styled"
 import { MarketGraphContainer } from "../components/styles/MarketGraphContainer.styled"
 import IndiceGraph from '../components/IndiceGraph'
-import NewsContainer from "../components/NewsContainer"
+import News from "../components/News"
 
 function Markets() {
 
@@ -20,7 +20,7 @@ function Markets() {
         <IndiceGraph ticker={"iwm"} indice={'RUSSEL 2000'}/>
         <IndiceGraph ticker={"vxx"} indice={'VOLATILITY INDEX'}/>
       </MarketGraphContainer>
-      <NewsContainer/>
+      <News/>
     </>
   )
 }

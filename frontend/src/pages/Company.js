@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
 import CompanyGraph from '../components/CompanyGraph'
-import CompanyNews from '../components/CompanyNews'
+import News from '../components/News'
 import CompanyInfo from '../components/CompanyInfo'
 import { CompanyContainer, CompanyHeading} from '../components/styles/Company.styled'
 
@@ -56,9 +56,9 @@ function Company() {
             <CompanyGraph ticker={ticker} chartColor={chartColor}/>
             <CompanyInfo/>
         </CompanyContainer>
-        <CompanyNews ticker={ticker}/>
+        <News ticker={ticker}/>
         </>
     )
-  }
-  
-  export default Company
+}
+
+export default Company
