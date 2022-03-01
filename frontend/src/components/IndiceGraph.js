@@ -47,8 +47,8 @@ export default function IndiceGraph({ticker, indice}) {
 
     useEffect(() => {
         
-        const dangerFill = '#eb0f29';
-        const successFill =  '#00873c'; 
+        const dangerFill = '#d9534f';
+        const successFill =  '#5cb85c'; 
 
         if (quoteData && quoteData.dp < 0){
             setChartColor(dangerFill)

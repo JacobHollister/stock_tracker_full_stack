@@ -6,6 +6,8 @@ import {
     NewsSource
 } from './styles/NewsSnippet.styled';
 
+import defaultImage from '../assets/default.jpg'
+
 const fns = require('date-fns')
 
 export default function NewsSnippet ({articleData})  {
@@ -21,7 +23,7 @@ export default function NewsSnippet ({articleData})  {
                 <NewsSource>{articleData.source} - {date} </NewsSource>
             </div>
             <div>
-                <NewsImage src={articleData.image}/>
+                <NewsImage src={articleData.image ? articleData.image : defaultImage}/>
             </div>
         </NewsArticle>
     )

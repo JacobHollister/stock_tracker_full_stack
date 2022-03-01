@@ -10,8 +10,11 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2'
-import axios from 'axios'
 import Loader from './Loader'
+
+import { fetchLineData } from '../utils/Api'
+
+import { CompanyGraphContainer, ResolutionButtonContainer, ResolutionButton } from './styles/CompanyGraph.styled'
 
 ChartJS.register(
     CategoryScale,
@@ -29,11 +32,12 @@ function CompanyGraph({ticker, chartColor}) {
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
     const [ labelData, setLabelData ] = useState(null)
+    const [ chartResolution, setChartResolution ] = useState('week')
 
     useEffect(() => {
         loadChartContent()
         //eslint-disable-next-line
-    }, [])
+    }, [chartResolution])
 
     useEffect(() => {
         if(chartData && labelData){
@@ -44,10 +48,10 @@ function CompanyGraph({ticker, chartColor}) {
 
     const loadChartContent = async () => {
         setIsChartLoading(true)
-        axios.get(`http://localhost:5000/api/v1/stock/line?ticker=${ticker}&resolution=day`)
+        fetchLineData(ticker, chartResolution)
         .then(result => {
-            setChartData(result.data.data)
-            setLabelData(result.data.labels)
+            setChartData(result.data)
+            setLabelData(result.labels)
         })
         .catch (
             err => console.error(err)
@@ -70,18 +74,40 @@ function CompanyGraph({ticker, chartColor}) {
     const graphOptionsProps = {
         maintainAspectRatio: false,
         plugins: {legend: {display: false}, tooltip: {enabled: false}}, 
-        layout:{autoPadding: false, padding:5},
+        layout:{autoPadding: false, padding: {
+            left:0, right: 20}},
         scales: { 
-            xAxes: {display: true, ticks: {autoSkip: true, autoSkipPadding: 100, padding: 0}}, 
-            yAxes: {display: true, position:'right', ticks: {count: 3, padding: 0}}
+            xAxes: {display: true,
+                    ticks: {autoSkip: true,
+                            autoSkipPadding: 100,
+                            padding: 0,
+                            maxRotation: 0,
+                            labelOffset: 40,},
+                    grid: {display: false}}, 
+            yAxes: {display: true, 
+                    position:'right', 
+                    ticks: {
+                        count: 5, 
+                        padding: 0,
+                    }
+                }
         },
     }
 
+    function buttonHandler(e) {
+        setChartResolution(e.target.value)
+    }
     
     return (
-        <div>
+        <CompanyGraphContainer>
+            <ResolutionButtonContainer>
+                <ResolutionButton active={chartResolution === 'day' ? true : false} value={'day'} onClick={buttonHandler}>DAY</ResolutionButton>
+                <ResolutionButton active={chartResolution === 'week' ? true : false} value={'week'} onClick={buttonHandler}>WEEK</ResolutionButton>
+                <ResolutionButton active={chartResolution === 'month' ? true : false} value={'month'} onClick={buttonHandler}>MONTH</ResolutionButton>
+                <ResolutionButton active={chartResolution === 'year' ? true : false} value={'year'} onClick={buttonHandler}>YEAR</ResolutionButton>
+            </ResolutionButtonContainer>
             {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps} />}
-        </div>
+        </CompanyGraphContainer>
     )
 }
 
