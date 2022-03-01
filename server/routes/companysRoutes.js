@@ -7,11 +7,13 @@ const authenticationMiddleware = require('../middleware/auth')
 const {
     getCompanys,
     getCompanyInfo,
+    companySearch,
     updateCompanyInfo,
     removeCompanyinfo
 } = require('../controllers/companysController')
 
 router.route('/').get(authenticationMiddleware, cache('10 minutes'), getCompanys)
+router.route('/search').get(companySearch)
 router.route('/:ticker').get(cache('10 minutes'), getCompanyInfo)
 
 module.exports = router

@@ -10,6 +10,12 @@ const queryFinhub = async (query) => {
     return responseData
 }
 
+const searchCompany = async () => {
+    const queryUrl = `https://finnhub.io/api/v1//stock/symbol?exchange=US`
+    const searchResponse = await queryFinhub(queryUrl)
+    return searchResponse.count === 0 ? null : searchResponse;
+}
+
 const getFinhubCompanyInfo = async (companyTicker) => {
     const queryUrl = `https://finnhub.io/api/v1/stock/profile2?symbol=${companyTicker}`
     const CompanyInfo = await queryFinhub(queryUrl)
@@ -82,5 +88,6 @@ module.exports = {
     getFinhubCompanyNews,
     getFinhubCandles,
     getFinhubQuote,
-    getFinhubFinancials
+    getFinhubFinancials,
+    searchCompany
 }

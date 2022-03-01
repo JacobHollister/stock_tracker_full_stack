@@ -1,6 +1,6 @@
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
-const {getFinhubCompanyInfo, getFinhubFinancials} = require('../finhub_api/finhub_api')
+const {getFinhubCompanyInfo, getFinhubFinancials, searchCompany} = require('../finhub_api/finhub_api')
 
 // @desc    Returns list of all companies stored on MONGO DB
 // @route   GET /api/v1/companys
@@ -30,7 +30,20 @@ const getCompanyInfo = asyncWrapper(async (req, res, next) => {
     return res.status(200).json({...companyInfo, yearHigh, yearLow, peRatio})
 })
 
+const companySearch = asyncWrapper( async (req, res, next) => {
+    const {q} = req.query
+    
+    const usCompanies = await searchCompany(q)
+    
+    const filteredResults = usCompanies.filter((company) => (company.description.includes(q.toUpperCase()) || company.symbol.includes(q.toUpperCase())))
+
+    if(filteredResults.length === 0) return  next(createCustomError(`No company could be found for q ${q}`, 404))
+
+    return res.status(200).json(filteredResults)
+})
+
 module.exports = {
     getCompanys,
     getCompanyInfo,
+    companySearch
 }
