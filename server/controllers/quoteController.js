@@ -9,7 +9,7 @@ const {
 // @access  Private
 const getQuote = asyncWrapper( async (req, res, next) => {
     const { ticker } = req.params
-    const tickerQuote = await getFinhubQuote(ticker)
+    const tickerQuote = await getFinhubQuote(ticker.toUpperCase())
 
     if(!tickerQuote.c) return  next(createCustomError(`No quote could be found for ticker ${ticker}`, 404))
 

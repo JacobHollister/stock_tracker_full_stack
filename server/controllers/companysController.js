@@ -1,8 +1,6 @@
-
-const Company = require('../models/companys')
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
-const {getFinhubCompanyInfo} = require('../finhub_api/finhub_api')
+const {getFinhubCompanyInfo, getFinhubFinancials} = require('../finhub_api/finhub_api')
 
 // @desc    Returns list of all companies stored on MONGO DB
 // @route   GET /api/v1/companys
@@ -19,19 +17,17 @@ const getCompanys = asyncWrapper(async (req, res) => {
 const getCompanyInfo = asyncWrapper(async (req, res, next) => {
     const { ticker: companyTicker } = req.params
 
-    const companyInfo = await Company.findOne({ticker: companyTicker})
+    const companyInfo = await getFinhubCompanyInfo(companyTicker)
 
-    if (!companyInfo){
-        const newCompanyInfo = await getFinhubCompanyInfo(companyTicker)
+    if(Object.keys(companyInfo).length === 0) return next(createCustomError(`No company with id : ${companyTicker}`, 404))
+    
+    const companyFinancials = await getFinhubFinancials(companyTicker.toLowerCase())
 
-        if(!newCompanyInfo) {
-            return next(createCustomError(`No company with id : ${companyTicker}`, 404))
-        } else {
-            const createCompanyInfo = await Company.create(newCompanyInfo)
-            return res.status(200).json(createCompanyInfo)
-        }
-    }
-    return res.status(200).json(companyInfo)
+    const yearHigh = companyFinancials.metric['52WeekHigh']
+    const yearLow = companyFinancials.metric['52WeekLow']
+    const peRatio = companyFinancials.metric.peNormalizedAnnual
+
+    return res.status(200).json({...companyInfo, yearHigh, yearLow, peRatio})
 })
 
 module.exports = {

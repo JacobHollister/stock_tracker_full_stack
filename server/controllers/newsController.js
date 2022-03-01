@@ -29,7 +29,7 @@ const getCompanyNews = asyncWrapper( async (req, res, next) => {
 
     if(!companyNews) return  next(createCustomError(`No news could be found for ticker ${ticker}`, 404))
 
-    return res.status(200).json(companyNews.slice(page * 10, page * 10 + 10))
+    return res.status(200).json(companyNews.slice(page * 10, page * 10 + 9))
 })
 
 module.exports = {

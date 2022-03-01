@@ -69,10 +69,18 @@ const getFinhubQuote = async (ticker) => {
     return Object.keys(Quote).length === 0 ? null : Quote;
 }
 
+const getFinhubFinancials = async (ticker) => {
+    const queryUrl = `https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all`
+    const financials = await queryFinhub(queryUrl)
+
+    return Object.keys(financials).length === 0 ? null : financials;
+}
+
 module.exports = {
     getFinhubCompanyInfo,
     getFinhubMarketNews,
     getFinhubCompanyNews,
     getFinhubCandles,
-    getFinhubQuote
+    getFinhubQuote,
+    getFinhubFinancials
 }
