@@ -35,8 +35,8 @@ const companySearch = asyncWrapper( async (req, res, next) => {
     
     const usCompanies = await searchCompany(q)
     
-    const filteredResults = usCompanies.filter((company) => (company.description.includes(q.toUpperCase()) || company.symbol.includes(q.toUpperCase())))
-
+    const filteredResults = usCompanies.filter((company) => ((company.description.includes(q.toUpperCase()) || company.symbol.includes(q.toUpperCase())) && !company.symbol.includes('.')))
+    
     if(filteredResults.length === 0) return  next(createCustomError(`No company could be found for q ${q}`, 404))
 
     return res.status(200).json(filteredResults)

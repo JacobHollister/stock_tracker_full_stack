@@ -26,6 +26,7 @@ export const fetchCompanyInfo = async (ticker) => {
     })
 }
 
+
 export const fetchQuote = async (ticker) => {
     return await new Promise((resolve, reject)=>{
         axios.get(`http://localhost:5000/api/v1/stock/quote/${ticker}`)
@@ -43,6 +44,18 @@ export const fetchLineData = async (ticker, resolution) => {
         axios.get(`http://localhost:5000/api/v1/stock/line?ticker=${ticker}&resolution=${resolution}`)
         .then(result => {
             resolve(result.data) 
+        })
+        .catch (
+            err => reject(err)
+        )
+    })
+}
+
+export const searchCompanies = async (query) => {
+    return await new Promise((resolve, reject)=>{
+        axios.get(`http://localhost:5000/api/v1/companys/search?q=${query}`)
+        .then(result => {
+            resolve(result) 
         })
         .catch (
             err => reject(err)

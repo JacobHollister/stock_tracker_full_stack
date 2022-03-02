@@ -13,7 +13,7 @@ const {
 } = require('../controllers/companysController')
 
 router.route('/').get(authenticationMiddleware, cache('10 minutes'), getCompanys)
-router.route('/search').get(companySearch)
+router.route('/search').get(cache('10 minutes'), companySearch)
 router.route('/:ticker').get(cache('10 minutes'), getCompanyInfo)
 
 module.exports = router
