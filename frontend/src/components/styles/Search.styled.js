@@ -10,13 +10,8 @@ export const SearchInput = styled.div`
         font-weight: 600;
         margin-top: 1rem;
         padding: .5rem;
-        background: #f3f3f3;
-        border: 1px solid #dddddd;
-        border-radius: .1rem;
-        &:focus {
-            outline: none;
-            border-bottom: 1px solid black;
-        }
+        border: 1px solid #e6e6e6;
+        border-radius: .2rem;
     }
 `
 
