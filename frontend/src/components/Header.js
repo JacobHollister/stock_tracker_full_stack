@@ -1,10 +1,26 @@
-import { Nav, NavButton, StyledHeader, Logo, NavIcon } from './styles/Header.styled'
+import { Nav, NavButton, StyledHeader, Logo, NavIcon, AuthButton } from './styles/Header.styled'
 import { Container } from './styles/Container.styled'
 import ProfileIcon from '../assets/icons/user.svg'
+import {Link} from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../features/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
+import { FaRegUser } from 'react-icons/fa'
+import { FiLogIn, FiLogOut } from 'react-icons/fi'
 
 
 export default function Header() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { user } = useSelector((state) => state.auth)
     
+    const onLogout = () => {
+        dispatch(logout())
+        dispatch(reset())
+        navigate('/')
+    }
+
     return(
         <StyledHeader>
             <Container>
@@ -14,7 +30,25 @@ export default function Header() {
                     <NavButton to="/watchlist">WATCHLIST</NavButton>
                     <NavButton to="/search">SEARCH</NavButton>
                     <Logo>STAKE</Logo>
-                    <NavIcon src = {ProfileIcon}></NavIcon>
+                    { user ? (
+                        <>
+                            <AuthButton alt onClick={onLogout}>
+                                <FiLogOut/> Logout
+                            </AuthButton>
+                            <Link to='/'>
+                                <NavIcon src = {ProfileIcon}></NavIcon>
+                            </Link>
+                        </>
+                    ):(
+                        <>
+                                <AuthButton onClick={() => navigate('/login')}>
+                                    <FiLogIn/> Sign in
+                                </AuthButton>
+                                <AuthButton alt onClick={() =>navigate('/register')}>
+                                    <FaRegUser/> Register
+                                </AuthButton>
+                        </>
+                    )}
                 </Nav>
             </Container>
         </StyledHeader>

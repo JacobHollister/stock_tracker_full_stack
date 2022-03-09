@@ -5,6 +5,31 @@ export const StyledHeader = styled.header`
     margin-bottom: 10px;
     `
 
+export const AuthButton = styled.button`
+    cursor: pointer;
+    margin: 0 .5rem;
+    padding: 5px;
+    font-weight: bold;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 5px;
+    align-items: center;
+    background: none;
+    background-color: ${props => props.alt ? 'grey' : 'none'};
+    color: ${props => props.alt ? 'white' : 'black'};
+    border: 1.5px solid black;
+    border-radius: .25rem;
+
+    &:last-child{
+        margin-right: 0;
+    }
+
+    &:hover {
+        background-color: lightgrey;
+        color: ${props => !props.alt ? 'white' : 'black'};
+    }
+`
+
 export const Nav = styled.nav`
     display: flex;
     align-items: center;
@@ -77,6 +102,7 @@ export const Logo = styled.div`
 `
 export const NavIcon = styled.img`
     cursor: pointer;
+    margin-left: .5rem;
     display: flex;
     align-items: center;
     justify-items: center;
