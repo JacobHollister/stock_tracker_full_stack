@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:5000';
 const API_URL_REGISTER = '/api/v1/auth/register'
 const API_URL_LOGIN = '/api/v1/auth/login'
 
@@ -26,6 +25,7 @@ const login = async (userData) => {
     return response.data
 }
 
+// log out user
 const logout = () => {
     localStorage.removeItem('user')
 }

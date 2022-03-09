@@ -13,8 +13,11 @@ import Login from './pages/Login'
 import Company from './pages/Company';
 import ForgotPassword from './pages/ForgotPassword';
 
-const theme = {
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:5000';
 
+const theme = {
+  
 }
 
 function App() {

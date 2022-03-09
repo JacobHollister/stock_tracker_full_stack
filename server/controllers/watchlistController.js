@@ -18,14 +18,15 @@ const getWatchList = asyncWrapper(async (req, res) => {
 // @access  Private
 const addTicker = asyncWrapper(async (req, res, next) => {
     const userWatchlist = await Watchlist.findOne({user: req.user._id})
+
     const newTicker = req.body.ticker
 
     if(userWatchlist.watchlist.includes(newTicker)) return next(createCustomError(`Watchlist already contains ticker: ${newTicker}`, 400))
 
     const newWatchlist = [...userWatchlist.watchlist, newTicker]
 
-    const updatedWatchlist = await Watchlist.findOneAndUpdate({user_email: req.user.email}, {watchlist: newWatchlist}, {new: true})
-    
+    const updatedWatchlist = await Watchlist.findOneAndUpdate({user: userWatchlist.user}, {watchlist: newWatchlist}, {new: true})
+
     res.status(201).json(updatedWatchlist.watchlist)
 })
 
@@ -34,7 +35,6 @@ const addTicker = asyncWrapper(async (req, res, next) => {
 // @access  Private
 const removeTicker = asyncWrapper( async (req, res, next) => {
     const userWatchlist = await Watchlist.findOne({user: req.user._id})
-    
     const ticker = req.body.ticker
 
     if(!userWatchlist.watchlist.includes(ticker)) return next(createCustomError(`Watchlist does not contain ticker: ${ticker}`, 400))
@@ -42,7 +42,7 @@ const removeTicker = asyncWrapper( async (req, res, next) => {
     const newWatchlist = [...userWatchlist.watchlist].filter((tick) => { return tick !== ticker} )
 
     const updatedWatchlist = await Watchlist.findOneAndUpdate({user: userWatchlist.user}, {watchlist: newWatchlist}, {new: true})
-    
+
     res.status(201).json(updatedWatchlist.watchlist)
 })
 

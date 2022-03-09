@@ -65,6 +65,9 @@ export const WatchlistButton = styled.button`
     border: none;
     border-radius: .1rem;
     transition: .1s;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 5px;
     &:hover {
         background-color: #dddddd;
     }

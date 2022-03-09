@@ -3,14 +3,24 @@ import { useEffect, useState } from 'react'
 import { StyledHeading } from '../components/styles/Heading.styled'
 import { SearchInput, CompanyCard } from '../components/styles/Search.styled'
 import { searchCompanies } from '../utils/Api'
-
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 
 function Search() {
+  const navigate = useNavigate()
 
   const [ searchQuery, setSearchQuery ] = useState('')
   const [ searchResults, setSearchResults] = useState([])
   const [ isLoading, setIsLoading ] = useState(false)
+
+  const { user } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if(!user){
+      navigate('/login')
+    }
+  }, [user, navigate])
 
   useEffect(() => {
     const delay = setTimeout(() => {
