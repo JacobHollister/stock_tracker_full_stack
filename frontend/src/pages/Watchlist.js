@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getWatchList } from '../features/watchlist/watchlistSlice'
 
 import Loader from '../components/Loader'
+import WatchlistCard from '../components/WatchlistCard'
 
 function Watchlist() {
   const dispatch = useDispatch()
@@ -27,11 +28,17 @@ function Watchlist() {
     }
   }, [user, navigate])
 
+  const watchlistCompanys = watchlist.map((ticker, ind) => {
+    return (
+      <WatchlistCard ticker={ticker} key={ticker}/>
+    )
+  })
+
   if(isLoading) return <Loader />
 
   return (
     <div>
-      {watchlist}
+      {watchlistCompanys}
     </div>
   )
 }
