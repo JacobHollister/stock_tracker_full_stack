@@ -109,7 +109,7 @@ function Register() {
             <SuccessButton type='submit'>
               Submit
             </SuccessButton>
-            <QueryButton>
+            <QueryButton onClick={() => navigate('/login')}>
               Already have an account?
             </QueryButton>
           </div>

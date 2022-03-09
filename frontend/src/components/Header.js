@@ -32,7 +32,7 @@ export default function Header() {
                     <Logo>STAKE</Logo>
                     { user ? (
                         <>
-                            <AuthButton alt onClick={onLogout}>
+                            <AuthButton alt="true" onClick={onLogout}>
                                 <FiLogOut/> Logout
                             </AuthButton>
                             <Link to='/'>
@@ -44,7 +44,7 @@ export default function Header() {
                                 <AuthButton onClick={() => navigate('/login')}>
                                     <FiLogIn/> Sign in
                                 </AuthButton>
-                                <AuthButton alt onClick={() =>navigate('/register')}>
+                                <AuthButton alt="true" onClick={() =>navigate('/register')}>
                                     <FaRegUser/> Register
                                 </AuthButton>
                         </>

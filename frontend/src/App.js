@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import Search from './pages/Search'
 import Login from './pages/Login'
 import Company from './pages/Company';
+import ForgotPassword from './pages/ForgotPassword';
 
 const theme = {
 
@@ -30,6 +31,7 @@ function App() {
               <Route path='/portfolio' element={ <Portfolio/> }/>
               <Route path='/search' element={ <Search/> }/>
               <Route path='/login' element={ <Login/> }/>
+              <Route path='/forgotpassword' element={ <ForgotPassword/> }/>
               <Route path='/register' element={ <Register/> }/>
               <Route path='/company/:ticker' element={ <Company/> }/>
             </Routes>

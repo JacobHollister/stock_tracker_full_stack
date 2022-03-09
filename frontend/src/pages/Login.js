@@ -89,12 +89,15 @@ function Login() {
             <SuccessButton type='submit'>
               Login
             </SuccessButton>
-            <QueryButton>
+            <QueryButton onClick={() => navigate('/forgotpassword')}>
               Forgot your password?
             </QueryButton>
           </div>
         </form>
       </Form>
+      <button onClick={() => {setFormData({email: 'testing@admin.com', password: 'admin1234'})}}>
+        developer test credentials
+      </button>
     </FormContainer>
   )
 }
