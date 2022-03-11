@@ -52,6 +52,7 @@ export const fetchLineData = async (ticker, resolution) => {
 }
 
 export const searchCompanies = async (query) => {
+    if (query === "") return
     return await new Promise((resolve, reject)=>{
         axios.get(`/api/v1/companys/search?q=${query}`)
         .then(result => {

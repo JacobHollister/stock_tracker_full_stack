@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { addToWatchList, removeFromWatchList } from '../features/watchlist/watchlistSlice'
 import { fetchCompanyInfo, fetchQuote } from '../utils/Api'
 
@@ -100,7 +99,7 @@ function Company() {
                         <span>${quote ? quote.c.toFixed(2) : '0.0'}</span>
                         <span >{quote ? quoteChangeHandler() : '0.0'}</span>
                     </h2>
-                    <SuccessButton>ADD</SuccessButton>
+                    <SuccessButton onClick={() => navigate('/addtrade/' + ticker)}>ADD</SuccessButton>
                 </CompanyHeading>
                 <div></div>
             <CompanyGraph ticker={ticker} chartColor={chartColor}/>
