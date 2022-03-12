@@ -29,18 +29,23 @@ export const Form = styled.section`
     form input{
         width: 100%;
         display: block;
-        margin: 1rem auto;
+        margin: .25rem auto 1rem auto;
         padding: .5rem;
         border: 1px solid #e6e6e6;
         border-radius: .2rem;
         font-size: 1rem;
     }
-    div {
-        display: grid;
-        grid-auto-flow: column;
-        justify-content: space-evenly; 
-        align-items: center;   
+    form label {
+        padding: .5rem;
+        margin-top: .5rem;
     }
+    `
+    
+export const FormButtonContainer = styled.div`
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-evenly; 
+    align-items: center;   
 `
 
 export const QueryButton = styled.button`

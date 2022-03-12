@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { register, reset } from '../features/auth/authSlice'
 import { FaRegUser } from 'react-icons/fa'
 import Loader from '../components/Loader'
-import { FormContainer, FormHeading, Form, QueryButton } from '../components/styles/Form.styled'
+import { FormContainer, FormHeading, Form, QueryButton, FormButtonContainer } from '../components/styles/Form.styled'
 import { SuccessButton } from '../components/styles/Company.styled'
 
 function Register() {
@@ -105,14 +105,14 @@ function Register() {
             placeholder='Confirm password'
             onChange={onChange}
           />
-          <div>
+          <FormButtonContainer>
             <SuccessButton type='submit'>
               Submit
             </SuccessButton>
             <QueryButton onClick={() => navigate('/login')}>
               Already have an account?
             </QueryButton>
-          </div>
+          </FormButtonContainer>
         </form>
       </Form>
     </FormContainer>

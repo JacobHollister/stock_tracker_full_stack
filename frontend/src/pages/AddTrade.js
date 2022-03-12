@@ -3,8 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import AsyncSelect from 'react-select/async'
 import { searchCompanies } from '../utils/Api'
-import axios from 'axios'
-import _ from 'lodash'
+import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
+import { SuccessButton } from '../components/styles/Company.styled'
+import { StyledHeading } from "../components/styles/Heading.styled"
 
 const AddTrade = () => {
     const navigate = useNavigate()
@@ -22,33 +23,16 @@ const AddTrade = () => {
 
     const [inputValue, setValue] = useState('');
     const [selectedValue, setSelectedValue] = useState(null);
-
-
-    const handleInputChange = value => {
-        setValue(value);
-    };
-
-    // handle selection
-    const handleChange = value => {
-        setSelectedValue(value);
-    }
-
-    //load options using API call
-    function loadOptions() {
-        if (inputValue === "") return 
-        console.log('searching' + inputValue)
-        return axios.get(`/api/v1/companys/search?q=${inputValue}`)
-        .then(result => {
-            return result.data.slice(0, 20)
-        })
-        .catch (
-            err => console.log(err)
-        );
-    };
-
     const [debounce, setDebounce] = useState({});
+    const [formData, setFormData] = useState({
+        symbol: '',
+        purchasePrice: '',
+        purchaseDate: '',
+        amount: '',
+    })
 
-// Listen to changes of debounce (function, delay), when it does clear the previos timeout and set the new one.
+    const {purchasePrice, purchaseDate, amount }= formData
+
     useEffect(() => {
         const { cb, delay } = debounce;
         if (cb) {
@@ -57,42 +41,144 @@ const AddTrade = () => {
         }
     }, [debounce]);
 
-    const loadOptions1 = async (value, callback) => {
-        setDebounce({
-            cb: async () => {
-                if (value === "") return
-                console.log('searching' + value)
-                const data = await axios.get(`/api/v1/companys/search?q=${value}`)
-                .then(result => {
-                    return result.data.slice(0, 20)
-                })
-                console.log(data)
-                callback(data);
-            },
-            delay: 2000 // ms
+    const loadOptions = async (value) => {
+        return new Promise((resolve, reject) => {
+            setDebounce({
+                cb: async () => {
+                    if (value === "") return
+                    console.log('searching ', value )
+                    const data = await searchCompanies(value)
+                    .then(result => {
+                        return result.data.slice(0, 20)
+                    })
+                    resolve(data);
+                },
+                delay: 2000
+            })
         });
     }
 
+    const handleInputChange = (value, {action}) => {
+        if(action !== "input-blur" && action !== "menu-close") {
+            setValue(value);
+        }
+    };
+    
+    const handleChange = value => {
+        setSelectedValue(value.symbol);
+        setFormData((prevState) => ({
+            ...prevState,
+            symbol: value.symbol,
+        }))
+    }
+
+
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+        }))
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        // check values
+
+        // dispatch()
+    }
+
+    const selectOptions = {
+        customStyles : {
+            container: (provided, state) => ({
+            ...provided,
+            margin: '.5rem 0 1rem',
+        })},
+        customTheme : (theme) => ({
+        ...theme,
+        colors: {
+            ...theme.colors,
+            primary25: 'neutral80',
+            primary: 'neutral80',
+        }})
+    }
+
     return (
-        <>
-            <div>Add Trade page {ticker ? `ticker : ${ticker}` : null}</div>
+        <FormContainer>
+            <StyledHeading>
+                <h1>
+                    ADD A TRADE
+                </h1>
+            </StyledHeading>
             {/* // company information with ticker information from params */}
-            <AsyncSelect
-                cacheOptions
-                defaultOptions
-                value={selectedValue}
-                getOptionLabel={e => e.symbol}
-                getOptionValue={e => e.symbol}
-                loadOptions={loadOptions}
-                onInputChange={handleInputChange}
-                onChange={handleChange}
-            />
             {/* // input { purchase_price, purchase_date, quantity } ( ticker and user provided) */}
-
-            {/* // add button */}
-
+            <Form>
+                <form onSubmit={onSubmit}>
+                    <label >Company</label>
+                    { ticker ? (
+                        <div>{ticker}</div>
+                        ) : (
+                        <div>
+                            <AsyncSelect
+                            cacheOptions
+                            placeholder={'Please select company'}
+                            inputValue={inputValue}
+                            getOptionLabel={e => e.symbol + " : " + e.description}
+                            getOptionValue={e => e.symbol}
+                            loadOptions={loadOptions}
+                            onInputChange={handleInputChange}
+                            onChange={handleChange}
+                            noOptionsMessage={() => "No results"}
+                            styles={selectOptions.customStyles}
+                            theme={selectOptions.customTheme}
+                        />
+                    </div>
+                    )}
+                        
+                    <label htmlFor='purchasePrice'>Purchase price</label>
+                    <input
+                        type='number'
+                        id='purchasePrice'
+                        name='purchasePrice'
+                        value={purchasePrice}
+                        placeholder='Enter purchase price'
+                        onChange={onChange}
+                    />
+                    <label htmlFor='amount'>Amount of shares</label>
+                    <input
+                        type='number'
+                        id='amount'
+                        name='amount'
+                        value={amount}
+                        placeholder='Enter amount of shares'
+                        onChange={onChange}
+                    />
+                    <label htmlFor='purchaseDate'>Purchased date</label>
+                    <input
+                        type='date'
+                        id='purchaseDate'
+                        name='purchaseDate'
+                        value={purchaseDate}
+                        placeholder='Enter purchase date'
+                        onChange={onChange}
+                    />
+                <FormButtonContainer>
+                    <SuccessButton type='submit'>
+                    Add trade
+                    </SuccessButton>
+                    { ticker ? 
+                    (<QueryButton onClick={() => navigate('/addtrade')}>
+                        Different company?
+                    </QueryButton>)
+                    :
+                    (null) 
+                    }
+                </FormButtonContainer>
+                </form>
+            </Form>
             {/* // list of previous trades from company */}
-        </>
+            
+        </FormContainer>
     )
 }
 

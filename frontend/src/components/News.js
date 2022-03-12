@@ -17,8 +17,7 @@ function News({ticker}) {
 
   useEffect(() => {
       loadNewsContent(page)
-  //disable-eslint-next-line
-  }, [page])
+  }, [page]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if(newsData.length){
@@ -26,7 +25,7 @@ function News({ticker}) {
     }
   }, [newsData])
 
-  const loadNewsContent = async(page) => {
+  async function loadNewsContent(page) {
     setIsLoading(true)
 
     fetchNewsContent(page, ticker)
@@ -43,6 +42,7 @@ function News({ticker}) {
 
   async function fetchMoreListItems() {
     setPage(prevState => (prevState + 1));
+    
     setTimeout(() => {
       setIsFetching(false);
     }, 1000)
@@ -61,7 +61,7 @@ function News({ticker}) {
       {/* General news */}
       <StyledHeading>
           <h1>
-          news
+          NEWS
           </h1>
       </StyledHeading>
       {content}

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+//import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
-import { FormContainer, FormHeading, Form, QueryButton } from '../components/styles/Form.styled'
+import { FormContainer, FormHeading, Form, FormButtonContainer } from '../components/styles/Form.styled'
 import { SuccessButton } from '../components/styles/Company.styled'
 import { FiLogIn } from 'react-icons/fi'
 
@@ -15,10 +15,11 @@ function ForgotPassword() {
 
     const {email} = formData
     
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    //const navigate = useNavigate()
+    //const dispatch = useDispatch()
     
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+    const { isLoading } = useSelector((state) => state.auth)
+    //const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
     
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -58,11 +59,11 @@ function ForgotPassword() {
                         placeholder='Enter your email'
                         onChange={onChange}
                         />
-                    <div>
+                    <FormButtonContainer>
                         <SuccessButton type='submit'>
                             Reset Password
                         </SuccessButton>
-                    </div>
+                    </FormButtonContainer>
                 </form>
             </Form>
         </FormContainer>

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login, reset } from '../features/auth/authSlice'
 import Loader from '../components/Loader'
-import { FormContainer, FormHeading, Form, QueryButton } from '../components/styles/Form.styled'
+import { FormContainer, FormHeading, Form, QueryButton, FormButtonContainer } from '../components/styles/Form.styled'
 import { SuccessButton } from '../components/styles/Company.styled'
 import { FiLogIn } from 'react-icons/fi'
 
@@ -85,14 +85,14 @@ function Login() {
             placeholder='Enter password'
             onChange={onChange}
           />
-          <div>
+          <FormButtonContainer>
             <SuccessButton type='submit'>
               Login
             </SuccessButton>
             <QueryButton onClick={() => navigate('/forgotpassword')}>
               Forgot your password?
             </QueryButton>
-          </div>
+          </FormButtonContainer>
         </form>
       </Form>
       <button onClick={() => {setFormData({email: 'testing@admin.com', password: 'admin1234'})}}>

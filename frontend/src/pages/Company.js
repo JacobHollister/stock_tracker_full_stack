@@ -17,7 +17,8 @@ function Company() {
     
     const {ticker} = useParams()
     const { user } = useSelector((state) => state.auth)
-    const { watchlist, isLoading, isError, isSuccess, message } = useSelector((state) => state.watchlist)
+    const { watchlist } = useSelector((state) => state.watchlist)
+    //const { watchlist, isLoading, isError, isSuccess, message } = useSelector((state) => state.watchlist)
 
     const [ quote, setQuote] = useState(null)
     const [ companyInfo, setCompanyInfo] = useState(null)
