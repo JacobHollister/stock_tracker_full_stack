@@ -23,21 +23,6 @@ export const addTrade = createAsyncThunk('trades/add', async (tradeDetails, thun
     }
 })
 
-// export const removeFromWatchList = createAsyncThunk('watchlist/remove', async (ticker, thunkAPI) => {
-//     try {
-//         const token = thunkAPI.getState().auth.user.token
-//         return await watchlistService.removeFromWatchlist(ticker, token)
-//     } catch (error) {
-//         const message = (error.response && 
-//                 error.response.data && 
-//                 error.response.data.message) 
-//                 || error.message
-//                 || error.toString()
-//         return thunkAPI.rejectWithValue(message)
-//     }
-// })
-
-
 export const tradesSlice = createSlice({
     name: 'trades',
     initialState,
