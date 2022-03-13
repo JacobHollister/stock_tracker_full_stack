@@ -8,8 +8,6 @@ const Trade = require('../models/trade')
 const gettrades = asyncWrapper(async (req, res, next) => {
     const userTrades = await Trade.find({user: req.user._id})
 
-    if(userTrades.length === 0) return next(createCustomError('No trades by user found', 404))
-
     res.status(200).json(userTrades)
 })
 

@@ -86,7 +86,6 @@ export const watchlistSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
-                state.watchlist = []
             })
             .addCase(removeFromWatchList.pending, (state) => {
                 state.isLoading = true
@@ -100,7 +99,6 @@ export const watchlistSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
-                state.watchlist = []
             })
 
     }

@@ -1,37 +1,51 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addTrade } from '../features/trades/tradesSlice'
 import AsyncSelect from 'react-select/async'
 import { searchCompanies } from '../utils/Api'
 import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
 import { SuccessButton } from '../components/styles/Company.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
+import TradeDetails from '../components/TradeDetails'
 
 const AddTrade = () => {
     const navigate = useNavigate()
-    
-    const { user } = useSelector((state) => state.auth)
-    
-    useEffect(() => {
+    const dispatch = useDispatch()
 
+    const { user } = useSelector((state) => state.auth)
+    const { trade, isLoading, isError, isSuccess, message  } = useSelector((state) => state.trades)
+
+    useEffect(() => {
         if(!user){
             navigate('/login')
         }
-    }, [user, navigate])
+    }, [user, navigate, dispatch])
 
     const {ticker} = useParams()
 
     const [inputValue, setValue] = useState('');
     const [selectedValue, setSelectedValue] = useState(null);
     const [debounce, setDebounce] = useState({});
+    const [ previousTrades, setPreviousTrades ] = useState([])
     const [formData, setFormData] = useState({
-        symbol: '',
-        purchasePrice: '',
-        purchaseDate: '',
-        amount: '',
+        ticker: '',
+        purchase_price: '',
+        purchase_date: '',
+        quantity: '',
     })
 
-    const {purchasePrice, purchaseDate, amount }= formData
+    const {purchase_price, purchase_date, quantity }= formData
+
+    useEffect(() => {
+        if(isError) {
+            console.log(message)
+        }
+        if(isSuccess) {
+            console.log('sucessfully added trade')
+            navigate('/portfolio')
+        }
+    }, [isError, isSuccess, message, navigate])
 
     useEffect(() => {
         const { cb, delay } = debounce;
@@ -68,7 +82,7 @@ const AddTrade = () => {
         setSelectedValue(value.symbol);
         setFormData((prevState) => ({
             ...prevState,
-            symbol: value.symbol,
+            ticker: value.symbol,
         }))
     }
 
@@ -84,6 +98,11 @@ const AddTrade = () => {
         e.preventDefault()
 
         // check values
+        if(formData.ticker && formData.purchase_price && formData.quantity && formData.purchase_date) {
+            dispatch(addTrade(formData))
+        } else {
+            console.log('not all fields filled out')
+        }
 
         // dispatch()
     }
@@ -104,14 +123,13 @@ const AddTrade = () => {
     }
 
     return (
+        <>
         <FormContainer>
             <StyledHeading>
                 <h1>
                     ADD A TRADE
                 </h1>
             </StyledHeading>
-            {/* // company information with ticker information from params */}
-            {/* // input { purchase_price, purchase_date, quantity } ( ticker and user provided) */}
             <Form>
                 <form onSubmit={onSubmit}>
                     <label >Company</label>
@@ -135,30 +153,30 @@ const AddTrade = () => {
                     </div>
                     )}
                         
-                    <label htmlFor='purchasePrice'>Purchase price</label>
+                    <label htmlFor='purchase_price'>Purchase price</label>
                     <input
                         type='number'
-                        id='purchasePrice'
-                        name='purchasePrice'
-                        value={purchasePrice}
+                        id='purchase_price'
+                        name='purchase_price'
+                        value={purchase_price}
                         placeholder='Enter purchase price'
                         onChange={onChange}
                     />
-                    <label htmlFor='amount'>Amount of shares</label>
+                    <label htmlFor='quantity'>Amount of shares</label>
                     <input
                         type='number'
-                        id='amount'
-                        name='amount'
-                        value={amount}
+                        id='quantity'
+                        name='quantity'
+                        value={quantity}
                         placeholder='Enter amount of shares'
                         onChange={onChange}
                     />
-                    <label htmlFor='purchaseDate'>Purchased date</label>
+                    <label htmlFor='purchase_date'>Purchased date</label>
                     <input
                         type='date'
-                        id='purchaseDate'
-                        name='purchaseDate'
-                        value={purchaseDate}
+                        id='purchase_date'
+                        name='purchase_date'
+                        value={purchase_date}
                         placeholder='Enter purchase date'
                         onChange={onChange}
                     />
@@ -176,9 +194,9 @@ const AddTrade = () => {
                 </FormButtonContainer>
                 </form>
             </Form>
-            {/* // list of previous trades from company */}
-            
         </FormContainer>
+        {/* // list of previous trades from company */}
+        </>
     )
 }
 
