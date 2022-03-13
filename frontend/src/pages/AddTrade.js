@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { addTrade } from '../features/trades/tradesSlice'
 import AsyncSelect from 'react-select/async'
-import { searchCompanies } from '../utils/Api'
+import { searchCompanies, fetchCompanyInfo } from '../utils/Api'
 import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
 import { SuccessButton } from '../components/styles/Company.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
@@ -24,6 +24,7 @@ const AddTrade = () => {
 
     const {ticker} = useParams()
 
+    const [tickerInfo, setTickerInfo] = useState(null)
     const [inputValue, setValue] = useState('');
     const [selectedValue, setSelectedValue] = useState(null);
     const [debounce, setDebounce] = useState({});
@@ -36,6 +37,14 @@ const AddTrade = () => {
     })
 
     const {purchase_price, purchase_date, quantity }= formData
+
+    useEffect(() => {
+        if(ticker){
+            fetchCompanyInfo(ticker).then((info) => {
+                setTickerInfo(`${info.ticker} : ${info.name}`)
+            })
+        }
+    }, [ticker])
 
     useEffect(() => {
         if(isError) {
@@ -134,7 +143,13 @@ const AddTrade = () => {
                 <form onSubmit={onSubmit}>
                     <label >Company</label>
                     { ticker ? (
-                        <div>{ticker}</div>
+                        <input
+                            type='text'
+                            id='ticker'
+                            name='ticker'
+                            placeholder={tickerInfo ? tickerInfo : ticker}
+                            disabled
+                        />
                         ) : (
                         <div>
                             <AsyncSelect

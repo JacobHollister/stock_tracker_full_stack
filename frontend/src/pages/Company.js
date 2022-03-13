@@ -37,7 +37,6 @@ function Company() {
     }, [])
 
     useEffect(() => {
-        
         const dangerFill = '#d9534f';
         const successFill =  '#5cb85c'; 
 
