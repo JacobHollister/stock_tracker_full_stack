@@ -17,6 +17,7 @@ import {
 import { InfoDetail, InfoLabel } from '../components/styles/Company.styled'
 import PortfolioGraph from '../components/PortfolioGraph'
 import { ResolutionButtonContainer, ResolutionButton } from '../components/styles/CompanyGraph.styled'
+import PortfolioDoughnutGraph from '../components/PortfolioDoughnutGraph'
 
 
 function Portfolio() {
@@ -202,7 +203,7 @@ function Portfolio() {
         </PortfolioInfoContainer>
         <PortfolioWeightingsContainer>
           <div>
-            wieghtings pie
+            <PortfolioDoughnutGraph data={tradedCompanyLineData} tradedCompanies={tradedCompanies}/>
           </div>
           <div>
             sector wieghtings graph

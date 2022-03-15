@@ -36,16 +36,13 @@ export const PortfolioGraphContainer = styled.div`
 `
 export const PortfolioWeightingsContainer = styled.div`
     width: 100;
-    border: 1px solid black;
-    height: 15rem;
+    height: 300px;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 1fr 1fr;
     gap: .5rem;
     div {
-        border: 1px solid black;
         margin: .1rem;
-        height: auto;
     }
 `
 export const PortfolioHoldingsContainer = styled.div`
