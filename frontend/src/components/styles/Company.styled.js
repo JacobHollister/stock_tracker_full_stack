@@ -78,7 +78,7 @@ export const CompanyInfoContainer = styled.div`
     align-content: center;
     margin-left: 1rem;
 `
-export const CompanyInfoDetail = styled.div`
+export const InfoDetail = styled.div`
     display: grid;
     grid-auto-flow: column;
     justify-content: space-between;
@@ -87,4 +87,5 @@ export const CompanyInfoDetail = styled.div`
 `
 export const InfoLabel = styled.span`
     font-weight: 600;
+
 `

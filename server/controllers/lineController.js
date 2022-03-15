@@ -20,8 +20,10 @@ const getLineData = asyncWrapper(async (req, res, next) => {
         const labelData = candleData.t.map( (time) => {
             return fns.format(fns.fromUnixTime(time), timeFormatString)
         })
-        
-        return res.status(200).json({data: lineData, labels: labelData})
+
+        const dateData = candleData.t
+
+        return res.status(200).json({data: lineData, labels: labelData, date: dateData})
     } else {
         return next(createCustomError(`External API error: ${candleData.s}`, 404))
     }

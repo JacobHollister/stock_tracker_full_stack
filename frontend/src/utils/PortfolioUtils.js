@@ -1,6 +1,5 @@
 export const portfolioCloseHandler = (fetchedCompanyLineData, tradedCompanies) => {
     let total = 0
-    console.log(fetchedCompanyLineData)
 
 for (const company in tradedCompanies) {
     const amount = tradedCompanies[company]
@@ -13,34 +12,36 @@ for (const company in tradedCompanies) {
 }
 
 export const portfolioGraphDataHandler = (graphData) => {
-const fixedGraphData = {}
+    const fixedGraphData = {}
+    let LongestCompany = Object.keys(graphData).reduce((prev, curr) => {
+        return (graphData[curr].data.length > graphData[prev].data.length) ? curr : prev
+    }, Object.keys(graphData)[0])
 
-let LongestCompany = Object.keys(graphData).reduce((prev, curr) => {
-    return (graphData[curr].data.length > graphData[prev].data.length) ? curr : prev
-}, Object.keys(graphData)[0])
-
-Object.keys(graphData).forEach((company) => {
-    if(company === LongestCompany || graphData[company].data.length === graphData[LongestCompany].data.length) {
-    fixedGraphData[company] = graphData[company]
-    return
-    } 
-    const fixedData = { [company] : { data: [], labels: []}}
-    graphData[LongestCompany].labels.forEach(( closeTime, ind ) => {
-    if(!graphData[company].labels.includes(closeTime)){
-        fixedData[company].labels.push(closeTime)
-        if(fixedData[company].data.length === 0){
-        fixedData[company].data.push(graphData[company].data[0])
+    Object.keys(graphData).forEach((company) => {
+        if(company === LongestCompany || graphData[company].data.length === graphData[LongestCompany].data.length) {
+        fixedGraphData[company] = graphData[company]
+        return
+        } 
+        const fixedData = { [company] : { data: [], labels: [], date:[]}}
+        graphData[LongestCompany].labels.forEach(( closeTime, ind ) => {
+        if(!graphData[company].labels.includes(closeTime)){
+            fixedData[company].labels.push(closeTime)
+            fixedData[company].date.push(graphData[LongestCompany].date[ind])
+            if(fixedData[company].data.length === 0){
+            fixedData[company].data.push(graphData[company].data[0])
+            } else {
+            fixedData[company].data.push(fixedData[company].data[ind - 1])
+            }
         } else {
-        fixedData[company].data.push(fixedData[company].data[ind - 1])
+            const indexOfData = graphData[company].labels.indexOf(closeTime)
+            fixedData[company].labels.push(closeTime)
+            fixedData[company].data.push(graphData[company].data[indexOfData])
+            fixedData[company].date.push(graphData[company].date[indexOfData])
         }
-    } else {
-        fixedData[company].labels.push(closeTime)
-        fixedData[company].data.push(graphData[company].data[ind])
-    }
+        })
+        fixedGraphData[company] = fixedData[company]
     })
-    fixedGraphData[company] = fixedData[company]
-})
-return fixedGraphData
+    return fixedGraphData
 
 }
 

@@ -2,28 +2,36 @@ import styled from "styled-components";
 
 export const PortfolioContainer = styled.div`
     width: 100;
-    padding: .5rem;
+    padding: 0 .5rem;
     display: grid;
     gap: .5rem;
 `
 
 export const PortfolioHeader = styled.div`
     width: 100;
-    border: 1px solid black;
-    height: 3rem;
+    h1 {
+        margin: 0 0 .5rem 0;
+    }
+
+    h3 {
+        margin: 0 0 .5rem 0;
+        color: ${props => props.color}
+    }
 `
-export const PortfolioGraphContainer = styled.div`
+export const PortfolioInfoContainer = styled.div`
+    padding-top: .5rem;
     width: 100;
-    border: 1px solid black;
-    height: 20rem;
+    height: 350px;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 2fr 1fr;
     gap: .5rem;
-    div {
-        border: 1px solid black;
-        margin: .1rem;
-        height: auto;
+`
+
+export const PortfolioGraphContainer = styled.div`
+    height: 300px;
+    div { 
+        padding: .5rem 0;
     }
 `
 export const PortfolioWeightingsContainer = styled.div`
