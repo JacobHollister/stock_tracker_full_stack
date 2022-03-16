@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import {PorfolioCompanyCard, PorfolioCompanyCardInfo} from './styles/PortfolioHolding.styled'
+import TradeDetailsDropdown from './TradeDetailsDropdown'
 
 const PortfolioHolding = ({company, trades, companyData}) => {
 
@@ -11,6 +12,7 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         totalCost: 0
     })
     const [ color, setColor ] = useState(null)
+    const [ tradesOpen, setTradesOpen ] = useState(false)
 
     const shareAmountHandler = (trades) => {
         let quantity = 0
@@ -38,7 +40,7 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         return (currentInvestment - totalCost).toFixed(2)
     }
     
-    const gainPercenttHandler = (gainAmount, totalCost, shareAmount) => {
+    const gainPercenttHandler = (gainAmount, totalCost, shareAmount, companyData) => {
         const currentPrice = companyData.data[companyData.data.length -1] 
         const currentInvestment = currentPrice * shareAmount
         const changeDirection = ( currentInvestment > totalCost ) ? '+' : "-"
@@ -52,7 +54,7 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         const totalCost = totalCostHandler(trades)
         const averageCost = averageCostHandler(totalCost, shareAmount)
         const gainAmount = gainAmountHandler(companyData, totalCost, shareAmount)
-        const gainPercent = gainPercenttHandler(gainAmount, totalCost, shareAmount)
+        const gainPercent = gainPercenttHandler(gainAmount, totalCost, shareAmount, companyData)
 
         setHoldingData({
             shareAmount, 
@@ -67,39 +69,37 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         setColor((gainAmount > 0 ? successFill : dangerFill))
 
     }, [trades, companyData])
-    
-    
-    
 
     return(
         <>
-            <PorfolioCompanyCard>
+            <PorfolioCompanyCard onClick={() => setTradesOpen((prev) => !prev)}>
                 <h3>
                     <span>{company}</span>
                     <span> - </span>
                     <span>${companyData ? companyData.data[companyData.data.length -1] : '0.0'}</span>
                 </h3>
-                    <PorfolioCompanyCardInfo>
-                        <div>
-                            <span>Average cost : </span>
-                            <span >{holdingData.averageCost}</span>
-                        </div>
-                        <div>
-                            <span>Shares : </span>
-                            <span >{holdingData.shareAmount}</span>
-                        </div>
-                    </PorfolioCompanyCardInfo>
-                    <PorfolioCompanyCardInfo color={color}>
-                        <div>
-                            <span>Gain / Loss: </span>
-                            <span >{holdingData.gainAmount}</span>
-                        </div>
-                        <div>
-                            <span>Gain / Loss % : </span>
-                            <span >{holdingData.gainPercent}</span>
-                        </div>
-                    </PorfolioCompanyCardInfo>
+                <PorfolioCompanyCardInfo>
+                    <div>
+                        <span>Average cost : </span>
+                        <span >{holdingData.averageCost}</span>
+                    </div>
+                    <div>
+                        <span>Shares : </span>
+                        <span >{holdingData.shareAmount}</span>
+                    </div>
+                </PorfolioCompanyCardInfo>
+                <PorfolioCompanyCardInfo color={color}>
+                    <div>
+                        <span>Gain / Loss: </span>
+                        <span >{holdingData.gainAmount}</span>
+                    </div>
+                    <div>
+                        <span>Gain / Loss % : </span>
+                        <span >{holdingData.gainPercent}</span>
+                    </div>
+                </PorfolioCompanyCardInfo>
             </PorfolioCompanyCard>
+            {tradesOpen ? <TradeDetailsDropdown trades={trades}/> : null}
         </>
     )
 

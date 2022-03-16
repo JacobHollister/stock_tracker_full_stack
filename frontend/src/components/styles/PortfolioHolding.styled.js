@@ -4,7 +4,7 @@ export const PorfolioCompanyCard = styled.div`
     cursor: pointer;
     padding: .5rem 0;
     margin-bottom: .5rem;
-    margin: .5rem;
+    margin: .5rem .5rem 0 .5rem;
     position: relative;
     border-bottom: 1px solid grey;
     display: grid;

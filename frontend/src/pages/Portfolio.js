@@ -12,7 +12,10 @@ import {
   PortfolioGraphContainer, 
   PortfolioWeightingsContainer,
   PortfolioHoldingsContainer,
-  PortfolioInfoContainer
+  PortfolioInfoContainer,
+  PortfolioOverviewContainer,
+  PortfolioInfoLabel,
+  PortfolioInfoDetail
 } from '../components/styles/Portfolio.styled'
 import { InfoDetail, InfoLabel } from '../components/styles/Company.styled'
 import PortfolioGraph from '../components/PortfolioGraph'
@@ -203,44 +206,42 @@ function Portfolio() {
               trades={trades}
               setResolution={(resolution) => resolutionChangeHandler(resolution)}/>
           </PortfolioGraphContainer>
-          <div>
-            {/* investment cost, total gain/loss amount, total gain percentage */}
-            <h2>Overview</h2>
-            <div>
-                <InfoDetail>
-                    <InfoLabel>Open :</InfoLabel>
-                    <span>${portfolioData.open ? portfolioData.open : '0.0'}</span>
-                </InfoDetail>
-                <InfoDetail>
-                    <InfoLabel>Close :</InfoLabel>
-                    <span>${portfolioData.close ? portfolioData.close : '0.0'}</span>
-                </InfoDetail>
-                <InfoDetail>
-                    <InfoLabel>Total Gain / Loss :</InfoLabel>
-                    <span style={{color: investmentColorHandler()}}>{(portfolioData.investmentCost && portfolioData.close) ? investmentGainHandler() : '0.0'}</span>
-                </InfoDetail>
-                <InfoDetail >
-                    <InfoLabel>Total Gain / Loss % :</InfoLabel>
-                    <span style={{color: investmentColorHandler()}}>{(portfolioData.investmentCost && portfolioData.close) ? investmentPercentHandler() : '0.0'}</span>
-                </InfoDetail>
-                <InfoDetail>
-                    <InfoLabel>Investment Cost :</InfoLabel>
-                    <span>${portfolioData.investmentCost ? portfolioData.investmentCost : '0.0'}</span>
-                </InfoDetail>
-            </div>
-          </div>
-        </PortfolioInfoContainer>
-        <PortfolioWeightingsContainer>
-          <div>
+          <PortfolioWeightingsContainer>
             <PortfolioDoughnutGraph data={tradedCompanyLineData} tradedCompanies={tradedCompanies}/>
-          </div>
-          <div>
-            sector wieghtings graph
-          </div>
-          <div>
-            currency conversion
-          </div>
-        </PortfolioWeightingsContainer>
+          </PortfolioWeightingsContainer>
+        </PortfolioInfoContainer>
+        <StyledHeading>
+          <h1>
+            Overview
+          </h1>
+        </StyledHeading>
+            <PortfolioOverviewContainer>
+                <PortfolioInfoDetail>
+                    <PortfolioInfoLabel>Open</PortfolioInfoLabel>
+                    <span> : </span>
+                    <span>${portfolioData.open ? portfolioData.open : '0.0'}</span>
+                </PortfolioInfoDetail>
+                <PortfolioInfoDetail>
+                    <PortfolioInfoLabel>Close</PortfolioInfoLabel>
+                    <span> : </span>
+                    <span>${portfolioData.close ? portfolioData.close : '0.0'}</span>
+                </PortfolioInfoDetail>
+                <PortfolioInfoDetail>
+                    <PortfolioInfoLabel>Total Gain / Loss</PortfolioInfoLabel>
+                    <span> : </span>
+                    <span style={{color: investmentColorHandler()}}>{(portfolioData.investmentCost && portfolioData.close) ? investmentGainHandler() : '0.0'}</span>
+                </PortfolioInfoDetail>
+                <PortfolioInfoDetail >
+                    <PortfolioInfoLabel>Total Gain / Loss %</PortfolioInfoLabel>
+                    <span> : </span>
+                    <span style={{color: investmentColorHandler()}}>{(portfolioData.investmentCost && portfolioData.close) ? investmentPercentHandler() : '0.0'}</span>
+                </PortfolioInfoDetail>
+                <PortfolioInfoDetail>
+                    <PortfolioInfoLabel>Investment Cost</PortfolioInfoLabel>
+                    <span> : </span>
+                    <span>${portfolioData.investmentCost ? portfolioData.investmentCost : '0.0'}</span>
+                </PortfolioInfoDetail>
+            </PortfolioOverviewContainer>
         <StyledHeading>
         <h1>
           Holdings
