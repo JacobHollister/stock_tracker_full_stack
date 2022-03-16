@@ -18,6 +18,7 @@ import { InfoDetail, InfoLabel } from '../components/styles/Company.styled'
 import PortfolioGraph from '../components/PortfolioGraph'
 import { ResolutionButtonContainer, ResolutionButton } from '../components/styles/CompanyGraph.styled'
 import PortfolioDoughnutGraph from '../components/PortfolioDoughnutGraph'
+import PortfolioHolding from '../components/PortfolioHolding'
 
 
 function Portfolio() {
@@ -140,8 +141,36 @@ function Portfolio() {
     return (portfolioData.close > portfolioData.investmentCost ) ? successFill : dangerFill
   }
 
+  const companyHoldingTradeHandler = (company) => {
+    const companyTrades = trades.filter((trade) => {
+      return trade.ticker === company 
+    })
+    return companyTrades
+  }
+  
   if(isLoading || !isSuccess) return <Loader/>
 
+  let holdings = Object.keys(tradedCompanies).map((company, ind) => {
+    return (
+      <PortfolioHolding 
+        key={ind} 
+        company={company} 
+        trades={companyHoldingTradeHandler(company)}
+        companyData={tradedCompanyLineData[company]}
+      />
+    )
+  }).sort((company, nextCompany) => {
+    let CompanyInvestment = 0
+    let nextCompanyInvestment = 0
+    company.props.trades.forEach((trade) => {
+      CompanyInvestment += trade.quantity * trade.purchase_price
+    })
+    nextCompany.props.trades.forEach((trade) => {
+      nextCompanyInvestment += trade.quantity * trade.purchase_price
+    })
+    return CompanyInvestment > nextCompanyInvestment ? -1 : 1
+  })
+  
   return (
     <div>
       <StyledHeading>
@@ -208,9 +237,17 @@ function Portfolio() {
           <div>
             sector wieghtings graph
           </div>
+          <div>
+            currency conversion
+          </div>
         </PortfolioWeightingsContainer>
-        <PortfolioHoldingsContainer>
+        <StyledHeading>
+        <h1>
           Holdings
+        </h1>
+      </StyledHeading>
+        <PortfolioHoldingsContainer>
+          {holdings}
         </PortfolioHoldingsContainer>
       </PortfolioContainer>
     </div>

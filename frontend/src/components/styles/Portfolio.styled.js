@@ -39,7 +39,7 @@ export const PortfolioWeightingsContainer = styled.div`
     height: 300px;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: .5rem;
     div {
         margin: .1rem;
@@ -47,6 +47,5 @@ export const PortfolioWeightingsContainer = styled.div`
 `
 export const PortfolioHoldingsContainer = styled.div`
     width: 100;
-    border: 1px solid black;
     height: 30rem;
 `
