@@ -41,6 +41,8 @@ const removeTrade = asyncWrapper( async (req, res, next) => {
 // @access  Private
 const updateTrade = asyncWrapper( async(req, res, next) => {
 
+    console.log('here')
+
     const trade = await Trade.findOne({user: req.user._id, _id: req.body.trade_id})
 
     if(trade) {

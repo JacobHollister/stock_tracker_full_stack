@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTrade } from '../features/trades/tradesSlice'
+import { addTrade, reset } from '../features/trades/tradesSlice'
 import AsyncSelect from 'react-select/async'
 import { searchCompanies, fetchCompanyInfo } from '../utils/Api'
 import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
 import { SuccessButton } from '../components/styles/Company.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
+import { getPortfolio } from '../features/portfolio/portfolioSlice'
 import TradeDetails from '../components/TradeDetails'
 
 const AddTrade = () => {
@@ -43,6 +44,10 @@ const AddTrade = () => {
             fetchCompanyInfo(ticker).then((info) => {
                 setTickerInfo(`${info.ticker} : ${info.name}`)
             })
+        setFormData((prevState) => ({
+            ...prevState,
+            ticker,
+        }))
         }
     }, [ticker])
 
@@ -52,6 +57,8 @@ const AddTrade = () => {
         }
         if(isSuccess) {
             console.log('sucessfully added trade')
+            dispatch(reset())
+            dispatch(getPortfolio())
             navigate('/portfolio')
         }
     }, [isError, isSuccess, message, navigate])
@@ -106,14 +113,11 @@ const AddTrade = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        // check values
         if(formData.ticker && formData.purchase_price && formData.quantity && formData.purchase_date) {
             dispatch(addTrade(formData))
         } else {
             console.log('not all fields filled out')
         }
-
-        // dispatch()
     }
 
     const selectOptions = {
@@ -210,7 +214,6 @@ const AddTrade = () => {
                 </form>
             </Form>
         </FormContainer>
-        {/* // list of previous trades from company */}
         </>
     )
 }

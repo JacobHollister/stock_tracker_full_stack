@@ -4,6 +4,7 @@ import ProfileIcon from '../assets/icons/user.svg'
 import {Link} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
+import { reset as resetPortfolio } from '../features/portfolio/portfolioSlice'
 import { useNavigate } from 'react-router-dom'
 import { FaRegUser } from 'react-icons/fa'
 import { FiLogIn, FiLogOut } from 'react-icons/fi'
@@ -17,6 +18,7 @@ export default function Header() {
     
     const onLogout = () => {
         dispatch(logout())
+        dispatch(resetPortfolio())
         dispatch(reset())
         navigate('/')
     }

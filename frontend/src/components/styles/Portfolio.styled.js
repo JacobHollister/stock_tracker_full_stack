@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const PortfolioContainer = styled.div`
     width: 100;
-    padding: 0 .5rem;
+    padding: 0 .5rem 3rem .5rem;
     display: grid;
     gap: .5rem;
 `
@@ -62,25 +62,49 @@ export const PortfolioHoldingsContainer = styled.div`
 export const TradeDetailsHeader = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin: 0 .5rem;
     padding: .5rem .5rem;
     color: grey;
     border-bottom: 1px solid lightgrey;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
-
+    span {
+        &:nth-last-of-type(){
+            border-bottom: 1px solid lightgrey;
+        }
+    }
 `
 
 export const TradeDetailsInfo = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
     margin: 0 .5rem;
     padding: .25rem .5rem;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
+    background-color: #f3f3f3;
     span{
         &:nth-child(4){
             justify-self: end;
         }
     }
+`
+export const TradeDetailsContainer = styled.div`
+    border: 1px solid lightgrey;  
+    border-top: none;
+    margin: 0 .5rem;
+    background-color: #f3f3f3;
+`
+
+export const ButtonSmall = styled.button`
+    cursor: pointer;
+    padding: .25rem .5rem;
+    justify-self: end;
+    align-self: end;
+    margin: .5rem;
+    background-color: #5cb85c;
+    border: none;
+    border-radius: .1rem;
+    color: white;
+    transition: .1s;
+    &:hover {
+        background-color: ${props => props.color == 'grey' ? 'lightgrey' : '#ff434f'};
+    }
+    background-color: ${props => props.color};
 `
