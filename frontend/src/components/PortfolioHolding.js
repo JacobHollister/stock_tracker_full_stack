@@ -9,7 +9,8 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         gainPercent: 0,
         averageCost: 0,
         shareAmount: 0,
-        totalCost: 0
+        totalCost: 0,
+        investmentTotal: 0
     })
     const [ color, setColor ] = useState(null)
     const [ tradesOpen, setTradesOpen ] = useState(false)
@@ -39,6 +40,12 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         const currentInvestment = currentPrice * shareAmount
         return (currentInvestment - totalCost).toFixed(2)
     }
+
+    const investmentTotalHandler = (companyData, shareAmount) => {
+        const currentPrice = companyData.data[companyData.data.length -1] 
+        const currentInvestment = currentPrice * shareAmount
+        return currentInvestment.toFixed(2)
+    }
     
     const gainPercenttHandler = (gainAmount, totalCost, shareAmount, companyData) => {
         const currentPrice = companyData.data[companyData.data.length -1] 
@@ -53,6 +60,7 @@ const PortfolioHolding = ({company, trades, companyData}) => {
         const shareAmount = shareAmountHandler(trades)
         const totalCost = totalCostHandler(trades)
         const averageCost = averageCostHandler(totalCost, shareAmount)
+        const investmentTotal = investmentTotalHandler(companyData, shareAmount)
         const gainAmount = gainAmountHandler(companyData, totalCost, shareAmount)
         const gainPercent = gainPercenttHandler(gainAmount, totalCost, shareAmount, companyData)
 
@@ -60,7 +68,8 @@ const PortfolioHolding = ({company, trades, companyData}) => {
             shareAmount, 
             averageCost,
             gainAmount,
-            gainPercent
+            gainPercent,
+            investmentTotal
         })
 
         const dangerFill = '#d9534f';
@@ -76,18 +85,8 @@ const PortfolioHolding = ({company, trades, companyData}) => {
                 <h3>
                     <span>{company}</span>
                     <span> - </span>
-                    <span>${companyData ? companyData.data[companyData.data.length -1] : '0.0'}</span>
+                    <span>${holdingData.investmentTotal}</span>
                 </h3>
-                <PorfolioCompanyCardInfo>
-                    <div>
-                        <span>Average cost : </span>
-                        <span >{holdingData.averageCost}</span>
-                    </div>
-                    <div>
-                        <span>Shares : </span>
-                        <span >{holdingData.shareAmount}</span>
-                    </div>
-                </PorfolioCompanyCardInfo>
                 <PorfolioCompanyCardInfo color={color}>
                     <div>
                         <span>Gain / Loss: </span>
@@ -96,6 +95,16 @@ const PortfolioHolding = ({company, trades, companyData}) => {
                     <div>
                         <span>Gain / Loss % : </span>
                         <span >{holdingData.gainPercent}</span>
+                    </div>
+                </PorfolioCompanyCardInfo>
+                <PorfolioCompanyCardInfo>
+                    <div>
+                        <span>Average cost : </span>
+                        <span >{holdingData.averageCost}</span>
+                    </div>
+                    <div>
+                        <span>Shares : </span>
+                        <span >{holdingData.shareAmount}</span>
                     </div>
                 </PorfolioCompanyCardInfo>
             </PorfolioCompanyCard>

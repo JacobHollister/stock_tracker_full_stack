@@ -46,7 +46,7 @@ function PortfolioDoughnutGraph({data, tradedCompanies}) {
         })
 
         if(graphData.length > 4){
-            const sortedGraphData = graphData.sort().slice(0,3)
+            const sortedGraphData = [...graphData].sort().reverse().slice(0,3)
             const updatedGraphData = [0]
             const updatedLabelData = ['Other']
             labels.forEach((company, ind) => {
