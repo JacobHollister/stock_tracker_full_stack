@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import { fetchNewsContent } from '../utils/Api'
 import useInfiniteScroll from "../hooks/useInfiniteScroll"
 
@@ -11,49 +11,49 @@ import { StyledHeading } from "./styles/Heading.styled"
 function News({ticker}) {
 
   const [newsData, setNewsData] = useState([])
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [isLoading, setIsLoading] = useState(true)
+  const [getPage, setGetPage] = useInfiniteScroll();
   const [page, setPage] = useState(0)
 
-  useEffect(() => {
-      loadNewsContent(page)
-  }, [page]) // eslint-disable-line react-hooks/exhaustive-deps
+  const loadNewsContent = useCallback(
+    async (page, ticker) => {
+      setIsLoading(true)
 
-  useEffect(() => {
-    if(newsData.length){
-      setIsLoading(false)
-    }
-  }, [newsData])
-
-  async function loadNewsContent(page) {
-    setIsLoading(true)
-
-    fetchNewsContent(page, ticker)
-      .then((NewsContent) => {
-        if(newsData.length){
+      fetchNewsContent(page, ticker)
+        .then((NewsContent) => {
           setNewsData(prevState => {
             return [...prevState, ...NewsContent]
           })
-        } else {
-          setNewsData([...NewsContent])
-        }
+          setGetPage(false)
+          setIsLoading(false)
       })
-  }
-
-  async function fetchMoreListItems() {
-    setPage(prevState => (prevState + 1));
-    
-    setTimeout(() => {
-      setIsFetching(false);
-    }, 1000)
-  }
+    },
+    [setGetPage],
+  )
   
 
-    const content = newsData.map((article) => {
-      return (
-          <NewsSnippet articleData={article} key={article.id}/>
-      )
-    })
+  useEffect(() => {
+      loadNewsContent(page, ticker)
+  }, [page, ticker, loadNewsContent]) 
+
+
+  useEffect(() => {
+    if(!getPage) return
+
+    setIsLoading(true)
+
+    const delay = setTimeout(() => {
+      setPage(prevState => (prevState + 1));
+    }, 500)
+
+    return () => clearTimeout(delay)
+  }, [getPage])
+
+  const content = newsData.map((article) => {
+    return (
+        <NewsSnippet articleData={article} key={article.id}/>
+    )
+  })
 
 
   return (
@@ -65,7 +65,7 @@ function News({ticker}) {
           </h1>
       </StyledHeading>
       {content}
-      {(isFetching || isLoading) && <Loader/>}
+      {isLoading ? <Loader/> : null}
       </>  
   )
 }

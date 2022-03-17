@@ -1,26 +1,19 @@
 import { useState, useEffect } from 'react';
 
-const useInfiniteScroll = (callback) => {
-    const [isFetching, setIsFetching] = useState(false);
+const useInfiniteScroll = () => {
+    const [getPage, setGetPage] = useState(false);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     });
 
-    useEffect(() => {
-        if (!isFetching) return;
-        callback(() => {
-            console.log('called back');
-        });
-    }, [isFetching, callback]);
-
     function handleScroll() {
-        if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - 10 || isFetching) return;
-        setIsFetching(true);
+        if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - 10 || getPage) return;
+        setGetPage(true);
     }
 
-    return [isFetching, setIsFetching];
+    return [getPage, setGetPage];
 };
 
 export default useInfiniteScroll;
