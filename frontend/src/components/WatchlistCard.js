@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { WatchlistCompanyCard } from './styles/Watchlist.styled'
 import { fetchQuote } from '../utils/Api'
@@ -9,11 +9,22 @@ function WatchlistCard({ticker}) {
 
   const [ quote, setQuote] = useState(null)
   const [ Color, setColor ] = useState(null)
-
+  
   useEffect(() => {
-      loadData()
-      //eslint-disable-next-line
-  }, [])
+    let isMounted = true
+    fetchQuote(ticker)
+      .then(result => {
+        if(!isMounted) return
+        setQuote(result)
+      })
+      .catch (
+        err => console.error(err)
+      )
+      
+      return () => {
+        isMounted = false
+      }
+  }, [ticker])
 
   useEffect(() => {
       
@@ -27,15 +38,6 @@ function WatchlistCard({ticker}) {
       }
   }, [quote])
 
-  const loadData = async () => {
-    fetchQuote(ticker)
-    .then(result => {
-        setQuote(result)
-    })
-    .catch (
-        err => console.error(err)
-    )
-  }
 
   function quoteChangeHandler() {
       const changeDirection = ( quote.dp > 0 ) ? '+' : "-"

@@ -31,7 +31,6 @@ function News({ticker}) {
     [setGetPage],
   )
   
-
   useEffect(() => {
       loadNewsContent(page, ticker)
   }, [page, ticker, loadNewsContent]) 

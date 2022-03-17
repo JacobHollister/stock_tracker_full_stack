@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -31,9 +31,21 @@ function WatchlistGraph({ticker, chartColor}) {
     const [ labelData, setLabelData ] = useState(null)
 
     useEffect(() => {
-        loadChartContent()
-        //eslint-disable-next-line
-    }, [])
+        let isMounted = true
+        setIsChartLoading(true)
+        fetchLineData(ticker, 'day')
+            .then(result => {
+                if(!isMounted)return
+                setChartData(result.data)
+                setLabelData(result.labels)
+            })
+            .catch (
+                err => console.error(err)
+            )
+        return () => {
+            isMounted = false
+        }
+    }, [ticker])
 
     useEffect(() => {
         if(chartData && labelData){
@@ -41,17 +53,6 @@ function WatchlistGraph({ticker, chartColor}) {
         }
     }, [chartData, labelData])
 
-    const loadChartContent = async () => {
-        setIsChartLoading(true)
-        fetchLineData(ticker, 'day')
-        .then(result => {
-            setChartData(result.data)
-            setLabelData(result.labels)
-        })
-        .catch (
-            err => console.error(err)
-        )
-    }
 
     const graphDataProps = {
             labels: labelData,
