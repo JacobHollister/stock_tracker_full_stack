@@ -104,7 +104,7 @@ export const ButtonSmall = styled.button`
     color: white;
     transition: .1s;
     &:hover {
-        background-color: ${props => props.color == 'grey' ? 'lightgrey' : '#ff434f'};
+        background-color: ${props => props.color === 'grey' ? 'lightgrey' : '#ff434f'};
     }
     background-color: ${props => props.color};
 `

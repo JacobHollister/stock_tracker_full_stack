@@ -15,6 +15,8 @@ import Login from './pages/Login'
 import Company from './pages/Company';
 import ForgotPassword from './pages/ForgotPassword';
 
+import Modal from './UI/Modal'
+
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:5000';
 
@@ -28,6 +30,7 @@ function App() {
       <>
         <Router>
           <GlobalStyles/>
+          <Modal/>
           <Header/>
           <Container>
             <Routes>

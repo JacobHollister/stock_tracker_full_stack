@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { login, reset } from '../features/auth/authSlice'
 import Loader from '../components/Loader'
 import { FormContainer, FormHeading, Form, QueryButton, FormButtonContainer } from '../components/styles/Form.styled'
-import { SuccessButton } from '../components/styles/Company.styled'
+import { ButtonLarge } from '../components/styles/UI.styled'
 import { FiLogIn } from 'react-icons/fi'
 
 function Login() {
@@ -86,9 +86,9 @@ function Login() {
             onChange={onChange}
           />
           <FormButtonContainer>
-            <SuccessButton type='submit'>
+            <ButtonLarge color={'success'} type='submit'>
               Login
-            </SuccessButton>
+            </ButtonLarge>
             <QueryButton onClick={() => navigate('/forgotpassword')}>
               Forgot your password?
             </QueryButton>

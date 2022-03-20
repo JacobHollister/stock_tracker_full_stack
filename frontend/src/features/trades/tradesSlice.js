@@ -2,11 +2,13 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import tradesService from './tradesService'
 
 const initialState = {
-    trade: [],
+    trade: null,
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
+    modalOpen: false,
+    modalType: '',
 }
 
 export const addTrade = createAsyncThunk('trades/add', async (tradeDetails, thunkAPI) => {
@@ -55,7 +57,27 @@ export const tradesSlice = createSlice({
     name: 'trades',
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => initialState,
+        confirm_delete: (state, action) => {
+            state.trade = action.payload
+            state.modalType = 'delete'
+            state.modalOpen = true
+        },
+        confirm_add: (state, action) => {
+            state.trade = action.payload
+            state.modalType = 'add'
+            state.modalOpen = true
+        },
+        confirm_update: (state, action) => {
+            state.trade = action.payload
+            state.modalType = 'update'
+            state.modalOpen = true
+        },
+        cancel_confirm: (state) => {
+            state.modalType = ''
+            state.modalOpen = false
+            state.trade = null
+        }
     }, 
     extraReducers: (builder) => {
         builder
@@ -90,7 +112,6 @@ export const tradesSlice = createSlice({
             .addCase(updateTrade.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.trade = action.payload
             })
             .addCase(updateTrade.rejected, (state, action) => {
                 state.isLoading = false
@@ -100,5 +121,5 @@ export const tradesSlice = createSlice({
     }
 })
 
-export const  { reset } = tradesSlice.actions
+export const  { reset, confirm_delete, cancel_confirm, confirm_add, confirm_update } = tradesSlice.actions
 export default tradesSlice.reducer

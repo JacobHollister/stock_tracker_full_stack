@@ -97,11 +97,6 @@ function Portfolio() {
       })
   }, [tradedCompanies, chartResolution])
 
-  useEffect(() => {
-    //console.log(tradedCompanies, tradedCompanyLineData, trades, portfolioData)
-    //console.log(tradedCompanyLineData, portfolioData)
-  }, [tradedCompanies, tradedCompanyLineData, trades, portfolioData])
-
   const quoteChangeHandler = () => {
     const changeDirection = ( portfolioData.close > portfolioData.open ) ? '+' : "-"
     const change = portfolioData.close - portfolioData.open
@@ -183,7 +178,6 @@ function Portfolio() {
       </StyledHeading>
       <PortfolioContainer>
         <PortfolioHeader color={chartColor}>
-          {/* Current amount, gain/resolution, percentage gain */}
           <h1>
             ${portfolioData.close !== 0 ? portfolioData.close : '0.0'}
           </h1>

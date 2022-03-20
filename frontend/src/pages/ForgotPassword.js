@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 //import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
 import { FormContainer, FormHeading, Form, FormButtonContainer } from '../components/styles/Form.styled'
-import { SuccessButton } from '../components/styles/Company.styled'
+import { ButtonLarge  } from '../components/styles/UI.styled'
 import { FiLogIn } from 'react-icons/fi'
 
 
@@ -60,9 +60,9 @@ function ForgotPassword() {
                         onChange={onChange}
                         />
                     <FormButtonContainer>
-                        <SuccessButton type='submit'>
+                        <ButtonLarge color={'success'} type='submit'>
                             Reset Password
-                        </SuccessButton>
+                        </ButtonLarge >
                     </FormButtonContainer>
                 </form>
             </Form>

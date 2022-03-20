@@ -9,7 +9,8 @@ import CompanyGraph from '../components/CompanyGraph'
 import News from '../components/News'
 import { CgAdd} from 'react-icons/cg'
 import { MdOutlineCancel } from 'react-icons/md'
-import { CompanyContainer, CompanyHeading, SuccessButton, WatchlistButton} from '../components/styles/Company.styled'
+import { ButtonLarge } from '../components/styles/UI.styled'
+import { CompanyContainer, CompanyHeading, WatchlistButton} from '../components/styles/Company.styled'
 
 function Company() {
     const dispatch = useDispatch()
@@ -99,7 +100,7 @@ function Company() {
                         <span>${quote ? quote.c.toFixed(2) : '0.0'}</span>
                         <span >{quote ? quoteChangeHandler() : '0.0'}</span>
                     </h2>
-                    <SuccessButton onClick={() => navigate('/addtrade/' + ticker)}>ADD</SuccessButton>
+                    <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + ticker)}>ADD</ButtonLarge>
                 </CompanyHeading>
                 <div></div>
             <CompanyGraph ticker={ticker} chartColor={chartColor}/>

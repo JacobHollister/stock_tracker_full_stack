@@ -39,23 +39,6 @@ export const CompanyHeading = styled.div`
     }
 `
 
-export const SuccessButton = styled.button`
-    cursor: pointer;
-    width: 10rem;
-    height: 2rem;
-    justify-self: end;
-    align-self: end;
-    margin: .5rem;
-    background-color: #5cb85c;
-    border: none;
-    border-radius: .1rem;
-    color: white;
-    transition: .1s;
-    &:hover {
-        background-color: #28a745;
-    }
-`
-
 export const WatchlistButton = styled.button`
     cursor: pointer;
     justify-self: end;

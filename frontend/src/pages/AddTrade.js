@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTrade, reset } from '../features/trades/tradesSlice'
+import { confirm_add } from '../features/trades/tradesSlice'
 import AsyncSelect from 'react-select/async'
 import { searchCompanies, fetchCompanyInfo } from '../utils/Api'
 import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
-import { SuccessButton } from '../components/styles/Company.styled'
+import { ButtonLarge } from '../components/styles/UI.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
-import { getPortfolio } from '../features/portfolio/portfolioSlice'
-import TradeDetails from '../components/TradeDetails'
 
 const AddTrade = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    const { trade, isLoading, isError, isSuccess, message  } = useSelector((state) => state.trades)
 
     useEffect(() => {
         if(!user){
@@ -27,9 +24,7 @@ const AddTrade = () => {
 
     const [tickerInfo, setTickerInfo] = useState(null)
     const [inputValue, setValue] = useState('');
-    const [selectedValue, setSelectedValue] = useState(null);
     const [debounce, setDebounce] = useState({});
-    const [ previousTrades, setPreviousTrades ] = useState([])
     const [formData, setFormData] = useState({
         ticker: '',
         purchase_price: '',
@@ -50,18 +45,6 @@ const AddTrade = () => {
         }))
         }
     }, [ticker])
-
-    useEffect(() => {
-        if(isError) {
-            console.log(message)
-        }
-        if(isSuccess) {
-            console.log('sucessfully added trade')
-            dispatch(reset())
-            dispatch(getPortfolio())
-            navigate('/portfolio')
-        }
-    }, [isError, isSuccess, message, navigate])
 
     useEffect(() => {
         const { cb, delay } = debounce;
@@ -95,7 +78,6 @@ const AddTrade = () => {
     };
     
     const handleChange = value => {
-        setSelectedValue(value.symbol);
         setFormData((prevState) => ({
             ...prevState,
             ticker: value.symbol,
@@ -114,7 +96,7 @@ const AddTrade = () => {
         e.preventDefault()
 
         if(formData.ticker && formData.purchase_price && formData.quantity && formData.purchase_date) {
-            dispatch(addTrade(formData))
+            dispatch(confirm_add(formData))
         } else {
             console.log('not all fields filled out')
         }
@@ -200,9 +182,9 @@ const AddTrade = () => {
                         onChange={onChange}
                     />
                 <FormButtonContainer>
-                    <SuccessButton type='submit'>
+                    <ButtonLarge color={'success'} type='submit'>
                     Add trade
-                    </SuccessButton>
+                    </ButtonLarge>
                     { ticker ? 
                     (<QueryButton onClick={() => navigate('/addtrade')}>
                         Different company?

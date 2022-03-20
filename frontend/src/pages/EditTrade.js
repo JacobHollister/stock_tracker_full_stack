@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateTrade, reset } from '../features/trades/tradesSlice'
-import AsyncSelect from 'react-select/async'
-import { searchCompanies, fetchCompanyInfo } from '../utils/Api'
+import { confirm_update } from '../features/trades/tradesSlice'
 import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
-import { SuccessButton } from '../components/styles/Company.styled'
+import { ButtonLarge } from '../components/styles/UI.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
 import { getPortfolio } from '../features/portfolio/portfolioSlice'
-import TradeDetails from '../components/TradeDetails'
 import {format} from 'date-fns'
 
 const EditTrade = () => {
@@ -16,7 +13,6 @@ const EditTrade = () => {
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    const { trade, isLoading, isError, isSuccess, message  } = useSelector((state) => state.trades)
     const { trades  } = useSelector((state) => state.portfolio)
 
     useEffect(() => {
@@ -49,19 +45,6 @@ const EditTrade = () => {
         }
     }, [trades, trade_id])
 
-    useEffect(() => {
-        if(isError) {
-            console.log(message)
-        }
-        if(isSuccess) {
-            console.log('sucessfully added trade')
-            dispatch(reset())
-            dispatch(getPortfolio())
-            navigate('/portfolio')
-        }
-    }, [isError, isSuccess, message, navigate, dispatch])
-
-
     const onChange = (e) => {
         setFormData((prevState) => ({
         ...prevState,
@@ -74,7 +57,7 @@ const EditTrade = () => {
 
         // check values
         if(formData.ticker && formData.purchase_price && formData.quantity && formData.purchase_date) {
-            dispatch(updateTrade(formData))
+            dispatch(confirm_update(formData))
         } else {
             console.log('not all fields filled out')
         }
@@ -127,9 +110,9 @@ const EditTrade = () => {
                         onChange={onChange}
                     />
                 <FormButtonContainer>
-                    <SuccessButton type='submit'>
+                    <ButtonLarge color={'success'} type='submit'>
                     Edit Trade
-                    </SuccessButton>
+                    </ButtonLarge>
                     <QueryButton onClick={() => navigate('/')}>
                         Back to portfolio
                     </QueryButton>

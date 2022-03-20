@@ -1,33 +1,13 @@
-import { useEffect, useState } from "react"
 import { TradeDetailsInfo , TradeDetailsHeader, TradeDetailsContainer, ButtonSmall } from './styles/Portfolio.styled'
 import {format} from 'date-fns'
-import { useDispatch, useSelector } from 'react-redux'
-import { deleteTrade, reset } from '../features/trades/tradesSlice'
-import { getPortfolio } from '../features/portfolio/portfolioSlice'
+import { useDispatch } from 'react-redux'
+import { confirm_delete } from '../features/trades/tradesSlice'
 import { useNavigate } from 'react-router-dom'
 
 const TradeDetailsDropdown = ({trades}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { isLoading, isError, isSuccess, message  } = useSelector((state) => state.trades)
-
-    useEffect(() => {
-    if(isError) {
-        console.log(message)
-    }
-    if (isSuccess) {
-        dispatch(getPortfolio())
-    }
-
-    dispatch(reset())
-
-    }, [isError, isSuccess, message, dispatch])
-
-    const deleteTradeHandler = (purchase_id) => {
-        dispatch(deleteTrade(purchase_id))
-    }
-    
     let tradesDetails = trades.map((trade, ind) => {
         const editPath = `/edittrade/${trade._id}`
         return (
@@ -38,10 +18,12 @@ const TradeDetailsDropdown = ({trades}) => {
                 <span>       
                     <ButtonSmall 
                         color={'grey'}
-                        onClick={() => navigate(editPath)}>Edit</ButtonSmall>
+                        onClick={() => navigate(editPath)}
+                        >Edit</ButtonSmall>
                     <ButtonSmall 
                         color={'#d9534f'} 
-                        onClick={() => deleteTradeHandler(trade._id)}
+                        // onClick={() => deleteTradeHandler(trade._id)}
+                        onClick={() => dispatch(confirm_delete(trade))}
                         >Delete</ButtonSmall>
                 </span>
 

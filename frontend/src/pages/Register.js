@@ -5,7 +5,7 @@ import { register, reset } from '../features/auth/authSlice'
 import { FaRegUser } from 'react-icons/fa'
 import Loader from '../components/Loader'
 import { FormContainer, FormHeading, Form, QueryButton, FormButtonContainer } from '../components/styles/Form.styled'
-import { SuccessButton } from '../components/styles/Company.styled'
+import { ButtonLarge } from '../components/styles/UI.styled'
 
 function Register() {
 
@@ -106,9 +106,9 @@ function Register() {
             onChange={onChange}
           />
           <FormButtonContainer>
-            <SuccessButton type='submit'>
+            <ButtonLarge color={'success'} type='submit'>
               Submit
-            </SuccessButton>
+            </ButtonLarge>
             <QueryButton onClick={() => navigate('/login')}>
               Already have an account?
             </QueryButton>
