@@ -17,7 +17,6 @@ import {
   PortfolioInfoLabel,
   PortfolioInfoDetail
 } from '../components/styles/Portfolio.styled'
-import { InfoDetail, InfoLabel } from '../components/styles/Company.styled'
 import PortfolioGraph from '../components/PortfolioGraph'
 import { ResolutionButtonContainer, ResolutionButton } from '../components/styles/CompanyGraph.styled'
 import PortfolioDoughnutGraph from '../components/PortfolioDoughnutGraph'
@@ -147,6 +146,7 @@ function Portfolio() {
   }
   
   if(isLoading || !isSuccess) return <Loader/>
+  if(!isLoading && Object.keys(tradedCompanies).length === 0) return <p>Please add trades to view portfolio</p>
 
   let holdings = Object.keys(tradedCompanies).map((company, ind) => {
     return (

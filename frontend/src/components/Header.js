@@ -1,4 +1,19 @@
-import { Nav, NavButton, StyledHeader, Logo, NavIcon, AuthButton } from './styles/Header.styled'
+import { useState } from 'react'
+import { 
+    Nav, 
+    NavButton, 
+    StyledHeader, 
+    Logo, 
+    NavIcon, 
+    AuthButton,
+    SideNav,
+    NavItems,
+    Backdrop,
+    SideNavButton,
+    NavLogo,
+    NavSmall
+} from './styles/Header.styled'
+
 import { Container } from './styles/Container.styled'
 import ProfileIcon from '../assets/icons/user.svg'
 import {Link} from 'react-router-dom'
@@ -17,11 +32,14 @@ export default function Header() {
     const { user } = useSelector((state) => state.auth)
     
     const onLogout = () => {
+        setSideNavOpen("false")
         dispatch(logout())
         dispatch(resetPortfolio())
         dispatch(reset())
         navigate('/')
     }
+
+    const [ sideNavOpen, setSideNavOpen ] = useState('false')
 
     return(
         <StyledHeader>
@@ -52,6 +70,28 @@ export default function Header() {
                         </>
                     )}
                 </Nav>
+                <NavSmall>
+                    <div onClick={() => setSideNavOpen("true")}>=</div>
+                    <Logo>STAKE</Logo>
+                </NavSmall>
+                <SideNav display={sideNavOpen}>
+                    <NavItems>
+                        <NavLogo>STAKE</NavLogo>
+                        <SideNavButton to="/" onClick={() => setSideNavOpen("false")}>MARKETS</SideNavButton>
+                        <SideNavButton to="/portfolio" onClick={() => setSideNavOpen("false")}>PORTFOLIO</SideNavButton>
+                        <SideNavButton to="/watchlist" onClick={() => setSideNavOpen("false")}>WATCHLIST</SideNavButton>
+                        <SideNavButton end to="/search" onClick={() => setSideNavOpen("false")}>SEARCH</SideNavButton>
+                        { user ? (
+                            <SideNavButton to='/' onClick={() => onLogout()}>LOGOUT</SideNavButton>
+                            ):(
+                            <>
+                                <SideNavButton end to="/login" onClick={() => setSideNavOpen("false")}>LOGIN</SideNavButton>
+                                <SideNavButton end to="/register" onClick={() => setSideNavOpen("false")}>REGISTER</SideNavButton>
+                            </>
+                        )}
+                    </NavItems>
+                </SideNav>
+                {(sideNavOpen === 'true')? <Backdrop onClick={() => setSideNavOpen('false')}/> : null}
             </Container>
         </StyledHeader>
     )

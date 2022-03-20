@@ -40,7 +40,13 @@ export const Nav = styled.nav`
             margin-left: 0;
         }
     }
+
+    @media (max-width: 576px) {
+        display: none;
+    }
 `
+// (<= 575px, 576px to 767px, 768px to 991px, > 992px )
+
 export const NavButton = styled(NavLink)`
         cursor: pointer;
         text-decoration: none;
@@ -114,5 +120,89 @@ export const NavIcon = styled.img`
     border: .5px solid black;
     &:hover {
         background-color: #f5f5f5;
+    }
+`
+
+export const Backdrop = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 1000;
+    @media (min-width: 575px) {
+        display: none;
+    }
+`
+
+export const SideNav = styled.nav`
+    position: fixed;
+    width: 280px;
+    max-width: 70%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1001;
+    background-color: white;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out;
+    transform: ${props => (props.display === 'true')? 'translateX(0)' : 'translateX(-100%)'};
+    @media (min-width: 575px) {
+        display: none;
+    }
+`
+export const NavItems = styled.ul`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-flow: column;
+    align-items: right;
+    height: 100%;
+    justify-content: start;
+`
+export const SideNavButton = styled(NavLink)`
+    padding: 1rem;
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    &:last-child {
+        margin-bottom: 2rem;
+    }
+`
+
+export const NavLogo = styled.div`
+    font-weight: bold;
+    // Temporary style
+    font-size: 2rem;
+    letter-spacing: .1rem;
+    text-transform: bold;
+    padding: 1rem;
+`
+
+export const NavSmall = styled.nav`
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 2rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border-bottom: 1.5px solid black;
+    z-index: 900;
+    margin-bottom: 1rem;
+    > * {
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    @media (min-width: 575px) {
+        display: none;
     }
 `

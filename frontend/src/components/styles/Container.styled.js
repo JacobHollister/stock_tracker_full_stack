@@ -5,4 +5,7 @@ export const Container = styled.div`
     max-width: 100%;
     padding: 0 10px;
     margin: 0 auto;
+    @media (max-width: 576px) {
+        margin-top: 3rem;
+    }
 `;

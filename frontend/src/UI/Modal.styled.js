@@ -9,6 +9,7 @@ export const Overlay = styled.div`
     background-color: rgba(0, 0, 0, .7);
     z-index: 1000;
 `
+
 export const ModalContainer = styled.div`
     position: fixed;
     top: 50%;
