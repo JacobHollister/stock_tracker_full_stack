@@ -23,6 +23,7 @@ import { reset as resetPortfolio } from '../features/portfolio/portfolioSlice'
 import { useNavigate } from 'react-router-dom'
 import { FaRegUser } from 'react-icons/fa'
 import { FiLogIn, FiLogOut } from 'react-icons/fi'
+import MenuHamburger from './MenuHambuger'
 
 
 export default function Header() {
@@ -40,6 +41,10 @@ export default function Header() {
     }
 
     const [ sideNavOpen, setSideNavOpen ] = useState('false')
+
+    const ToggleMenu = () => {
+        setSideNavOpen(prev => prev === "true" ? 'false' : "true")
+    }
 
     return(
         <StyledHeader>
@@ -71,7 +76,7 @@ export default function Header() {
                     )}
                 </Nav>
                 <NavSmall>
-                    <div onClick={() => setSideNavOpen("true")}>=</div>
+                    <MenuHamburger ToggleMenu={ToggleMenu} isOpen={sideNavOpen}/>
                     <Logo>STAKE</Logo>
                 </NavSmall>
                 <SideNav display={sideNavOpen}>
