@@ -8,7 +8,7 @@ export const WatchlistCompanyCard = styled.div`
     border-bottom: 1px solid grey;
     display: grid;
     gap: 1rem;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: 6rem 1fr 15rem;
     justify-content: space-between; 
     align-items: center;
     color: black;
@@ -26,12 +26,30 @@ export const WatchlistCompanyCard = styled.div`
         margin: 0;
         display: grid;
         grid-auto-flow: column;
-        justify-content: space-between; 
+        justify-content: end;
+        gap: 1rem;
         padding: .5rem;
     }
     div {
         width: 10rem;
         height: 5rem;
-        justify-self: center;
+        justify-self: end;
+    }
+    
+    @media (max-width: 992px) {
+    }
+    @media (max-width: 768px) {
+    }
+    @media (max-width: 576px) {
+        grid-template-columns: 6rem 1fr 10rem;
+        margin: .5rem 0;
+        h4{
+            grid-auto-flow: row;
+            justify-content: center;
+        }
+        div {
+            width: 100px;
+        }
     }
 `
+// (<= 575px, 576px to 767px, 768px to 991px, > 992px )
