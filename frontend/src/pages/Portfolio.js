@@ -170,13 +170,13 @@ function Portfolio() {
   })
   
   return (
-    <div>
-      <StyledHeading>
-        <h1>
-          Portfolio
-        </h1>
-      </StyledHeading>
+    <>
       <PortfolioContainer>
+        <StyledHeading>
+          <h1>
+            Portfolio
+          </h1>
+        </StyledHeading>
         <PortfolioHeader color={chartColor}>
           <h1>
             ${portfolioData.close !== 0 ? portfolioData.close : '0.0'}
@@ -186,20 +186,22 @@ function Portfolio() {
           </h3>
         </PortfolioHeader>
         <PortfolioInfoContainer>
-          <PortfolioGraphContainer>
+          <div>
             <ResolutionButtonContainer>
                 <ResolutionButton active={chartResolution === 'day' ? true : false} value={'day'} onClick={resolutionChangeHandler}>DAY</ResolutionButton>
                 <ResolutionButton active={chartResolution === 'week' ? true : false} value={'week'} onClick={resolutionChangeHandler}>WEEK</ResolutionButton>
                 <ResolutionButton active={chartResolution === 'month' ? true : false} value={'month'} onClick={resolutionChangeHandler}>MONTH</ResolutionButton>
                 <ResolutionButton active={chartResolution === 'year' ? true : false} value={'year'} onClick={resolutionChangeHandler}>YEAR</ResolutionButton>
             </ResolutionButtonContainer>
-            <PortfolioGraph 
-              data={tradedCompanyLineData} 
-              resolution={chartResolution} 
-              chartColor={chartColor}
-              trades={trades}
-              setResolution={(resolution) => resolutionChangeHandler(resolution)}/>
-          </PortfolioGraphContainer>
+            <PortfolioGraphContainer>
+                <PortfolioGraph 
+                  data={tradedCompanyLineData} 
+                  resolution={chartResolution} 
+                  chartColor={chartColor}
+                  trades={trades}
+                  setResolution={(resolution) => resolutionChangeHandler(resolution)}/>
+              </PortfolioGraphContainer>
+          </div>
           <PortfolioWeightingsContainer>
             <PortfolioDoughnutGraph data={tradedCompanyLineData} tradedCompanies={tradedCompanies}/>
           </PortfolioWeightingsContainer>
@@ -245,24 +247,8 @@ function Portfolio() {
           {holdings}
         </PortfolioHoldingsContainer>
       </PortfolioContainer>
-    </div>
+    </>
   )
 }
-
-
-// 1. Fetch portfolio information on all trades => redux (state.portfolio) -
-// 2. Fetch line data on all companies -
-// 3. Functions to correct all data for line graph -
-// 4. Display info on portfolio in header and details section
-// 5. display graph with day chart
-// 6. display pie graph with current stocks
-// 7. display individual stock card down below
-  // stock cards - fetch quote
-  // display ticker and quote infomation
-  // drop down to display trades with add trade button and edit/remove options
-
-// currency converion button
-  
-
 
 export default Portfolio

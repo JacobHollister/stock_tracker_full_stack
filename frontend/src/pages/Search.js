@@ -52,7 +52,7 @@ function Search() {
       <Link style={{textDecoration: 'none', color: 'black'}} to={to} key={ind}>
         <CompanyCard >
           <h3>{company.description}</h3>
-          <h4><i>Symbol</i> : {company.symbol}</h4>
+          <h4><span><i>Symbol</i> :</span> <span> {company.symbol}</span></h4>
         </CompanyCard>
       </Link>
     )

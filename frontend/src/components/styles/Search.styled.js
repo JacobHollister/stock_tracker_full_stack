@@ -22,7 +22,7 @@ export const CompanyCard = styled.div`
     position: relative;
     border-bottom: 1px solid grey;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 10rem;
     justify-content: space-between; 
     align-items: center;
     &:hover {
@@ -35,6 +35,15 @@ export const CompanyCard = styled.div`
 
     h4 {
         margin: 0;
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: space-between;
     }
 
+    @media (max-width: 768px) {
+        grid-template-columns: auto 6rem;
+        h4 {
+            grid-auto-flow: row;
+        }
+    }
 `

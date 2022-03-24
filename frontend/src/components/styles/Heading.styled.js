@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledHeading = styled.div`
-    width: 100%;
+    width: calc(100vw - 2rem);
     border-bottom: 1.5px solid black;
     margin-bottom: 1.5rem;
 

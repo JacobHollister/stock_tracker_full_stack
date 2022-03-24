@@ -31,6 +31,26 @@ export const PorfolioCompanyCard = styled.div`
             }
         }
     }
+    @media (max-width: 992px) {
+    
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: 8rem 1fr 1fr;
+        h3 {
+            grid-template-columns: auto;
+            grid-auto-flow: row;
+            gap: 1rem;
+
+            span { 
+                &:nth-child(2){
+                    display: none
+                }
+            }
+        }
+    }
+    @media (max-width: 576px) {
+
+    }
 
 `
 export const PorfolioCompanyCardInfo = styled.div`
