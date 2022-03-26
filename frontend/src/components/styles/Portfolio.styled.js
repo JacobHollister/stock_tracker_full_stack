@@ -5,10 +5,13 @@ export const PortfolioContainer = styled.div`
     padding: 0 .5rem 3rem .5rem;
     display: grid;
     gap: 1rem;
+    @media (max-width: 767px) {
+        padding: 0 0 3rem 0;
+    }
 `
 
 export const PortfolioHeader = styled.div`
-    width: calc(100vw - 2rem);
+    padding: 0 .5rem;
     h1 {
         margin: 0 0 .5rem 0;
     }
@@ -29,7 +32,7 @@ export const PortfolioInfoContainer = styled.div`
         grid-template-columns: 2fr 1fr;
         grid-auto-flow: column;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         grid-auto-flow: row;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
@@ -57,18 +60,13 @@ export const PortfolioOverviewContainer = styled.div`
         grid-template-columns: repeat(2, auto);
     }
     @media (max-width: 576px) {
+        justify-content: center;
         grid-template-columns: auto;
     }
 `
 export const PortfolioWeightingsContainer = styled.div`
     padding: 1rem;
     margin-top: 1rem;
-    @media (max-width: 768px) {
-        width: calc(100vw - 1rem);
-    }
-    @media (max-width: 576px) {
-
-    }
 `
 export const PortfolioInfoDetail = styled.div`
     display: grid;
@@ -77,8 +75,10 @@ export const PortfolioInfoDetail = styled.div`
     align-content: center;
     grid-template-columns: auto auto 1fr;
     gap: 0 .5rem;
-    margin: .5rem 0;
     font-size: .9rem;
+    @media (max-width: 576px) {
+        grid-template-columns: 1fr auto 1fr;
+    }
 `
 export const PortfolioInfoLabel = styled.div`
     font-weight: 600;
@@ -89,7 +89,7 @@ export const PortfolioHoldingsContainer = styled.div`
 `
 export const TradeDetailsHeader = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: .75fr 1fr 1fr .75fr;
     padding: .5rem .5rem;
     color: grey;
     border-bottom: 1px solid lightgrey;
@@ -102,9 +102,8 @@ export const TradeDetailsHeader = styled.div`
 
 export const TradeDetailsInfo = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: .75fr 1fr 1fr .75fr;
     align-items: center;
-    margin: 0 .5rem;
     padding: .25rem .5rem;
     background-color: #f3f3f3;
     span{
@@ -112,12 +111,18 @@ export const TradeDetailsInfo = styled.div`
             justify-self: end;
         }
     }
-`
+    `
 export const TradeDetailsContainer = styled.div`
     border: 1px solid lightgrey;  
     border-top: none;
     margin: 0 .5rem;
     background-color: #f3f3f3;
+    @media (max-width: 767px){
+        margin: 0;
+    }
+    @media (max-width: 767px){
+        text-align: center;
+    }
 `
 
 export const ButtonSmall = styled.button`

@@ -7,7 +7,7 @@ export const NewsArticle = styled.article`
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    margin: 0 .5rem;
     a {
         text-decoration: none;
         color: black;

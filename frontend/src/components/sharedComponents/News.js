@@ -1,5 +1,5 @@
 // Package imports
-import {useEffect, useState, useCallback} from 'react'
+import {useEffect, useState} from 'react'
 
 // Hooks
 import useInfiniteScroll from "../../hooks/useInfiniteScroll"
@@ -21,26 +21,24 @@ export default function News({ticker}) {
   const [isLoading, setIsLoading] = useState(true)
   const [getPage, setGetPage] = useInfiniteScroll();
   const [page, setPage] = useState(0)
-
-  const loadNewsContent = useCallback(
-    async (page, ticker) => {
-      setIsLoading(true)
-
-      fetchNewsContent(page, ticker)
-        .then((NewsContent) => {
-          setNewsData(prevState => {
-            return [...prevState, ...NewsContent]
-          })
-          setGetPage(false)
-          setIsLoading(false)
-      })
-    },
-    [setGetPage],
-  )
   
   useEffect(() => {
-      loadNewsContent(page, ticker)
-  }, [page, ticker, loadNewsContent]) 
+    let isMounted = true
+
+    setIsLoading(true)
+
+    fetchNewsContent(page, ticker)
+      .then((NewsContent) => {
+        if(!isMounted) return
+        setNewsData(prevState => {
+          return [...prevState, ...NewsContent]
+        })
+        setGetPage(false)
+        setIsLoading(false)
+    })
+
+    return () => isMounted = false
+  }, [page, ticker, setGetPage]) 
 
 
   useEffect(() => {

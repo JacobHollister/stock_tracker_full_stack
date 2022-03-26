@@ -83,6 +83,8 @@ export default function Portfolio() {
   })
 
   useEffect(() => {
+    let isMounted = true
+
     if (Object.keys(tradedCompanies).length === 0) return
 
     const companies = Object.keys(tradedCompanies)
@@ -93,7 +95,8 @@ export default function Portfolio() {
 
     Promise.all(companyFetchPromises)
       .then( lineDataResponses => {
-        
+        if(!isMounted) return 
+
         const fetchedCompanyLineData = {} 
 
         lineDataResponses.forEach((response, ind) => {
@@ -110,6 +113,8 @@ export default function Portfolio() {
         })
 
       })
+
+      return () => isMounted = false
   }, [tradedCompanies, chartResolution])
 
   const quoteChangeHandler = () => {

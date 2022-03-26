@@ -38,9 +38,11 @@ export const WatchlistCompanyCard = styled.div`
     
     @media (max-width: 992px) {
     }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
+        margin: .5rem 0;
     }
     @media (max-width: 576px) {
+        margin: .5rem 0;
         grid-template-columns: 6rem 1fr 10rem;
         margin: .5rem 0;
         h4{
@@ -52,4 +54,3 @@ export const WatchlistCompanyCard = styled.div`
         }
     }
 `
-// (<= 575px, 576px to 767px, 768px to 991px, > 992px )

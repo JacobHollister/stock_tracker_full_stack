@@ -41,6 +41,9 @@ export const Nav = styled.nav`
         }
     }
 
+    @media (max-width: 767px) {
+        display: none;
+    }
     @media (max-width: 576px) {
         display: none;
     }
@@ -59,9 +62,6 @@ export const NavButton = styled(NavLink)`
         border: none;
         background: none;
         position: relative;
-        @media (max-width: 768px) {
-            margin: 10px 2px 0 2px;
-        }
 
         &:after{
             content: '';
@@ -131,7 +131,7 @@ export const Backdrop = styled.div`
     bottom: 0;
     background-color: rgba(0, 0, 0, .7);
     z-index: 1000;
-    @media (min-width: 575px) {
+    @media (min-width: 768px) {
         display: none;
     }
 `
@@ -149,7 +149,7 @@ export const SideNav = styled.nav`
     box-sizing: border-box;
     transition: transform 0.3s ease-out;
     transform: ${props => (props.display === 'true')? 'translateX(0)' : 'translateX(-100%)'};
-    @media (min-width: 575px) {
+    @media (min-width: 768px) {
         display: none;
     }
 `
@@ -202,7 +202,7 @@ export const NavSmall = styled.nav`
         }
     }
 
-    @media (min-width: 575px) {
+    @media (min-width: 768px) {
         display: none;
     }
 `

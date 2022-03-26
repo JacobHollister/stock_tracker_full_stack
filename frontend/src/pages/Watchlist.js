@@ -10,6 +10,9 @@ import { getWatchList } from '../features/watchlist/watchlistSlice'
 import Loader from '../components/sharedComponents/Loader'
 import WatchlistCard from '../components/watchlistPage/WatchlistCard'
 
+// Styled Components
+import { StyledHeading } from '../components/styles/Heading.styled'
+
 
 export default function Watchlist() {
   const dispatch = useDispatch()
@@ -39,11 +42,14 @@ export default function Watchlist() {
     )
   })
 
-  if(isLoading) return <Loader />
-
   return (
-    <div>
-      {watchlistCompanys}
-    </div>
+    <>
+      <StyledHeading>
+        <h1>
+          WATCHLIST
+        </h1>
+      </StyledHeading>
+      {isLoading ? <Loader /> : watchlistCompanys}
+    </>
   )
 }

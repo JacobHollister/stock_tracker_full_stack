@@ -4,6 +4,12 @@ export const FormContainer = styled.div`
     width: 70%;
     padding: 0 10px;
     margin: 2rem auto;
+    @media (max-width: 767px) {
+        width: 85%;
+    }
+    @media (max-width: 576px) {
+        width: 100%;
+    }
 `
 
 export const FormHeading = styled.section`

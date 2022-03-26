@@ -13,6 +13,16 @@ export const ResolutionButtonContainer = styled.div`
             margin-left: 0;
         }
     }
+    @media (max-width: 992px) {
+    
+    }
+    @media (max-width: 768px) {
+
+    }
+    @media (max-width: 576px) {
+        margin-bottom: 1rem;
+        grid-template-columns: repeat(4, 1fr);
+    }
 `
 
 export const ResolutionButton = styled.button`

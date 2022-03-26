@@ -8,6 +8,7 @@ import { addToWatchList, removeFromWatchList } from '../features/watchlist/watch
 
 // Helper functions
 import { fetchCompanyInfo, fetchQuote } from '../utils/Api'
+import { graphColourHandler, quoteChangeHandler } from '../utils/graphFunctions'
 
 // Components
 import CompanyInfo from '../components/companyPage/CompanyInfo'
@@ -31,10 +32,9 @@ export default function Company() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
-    const {ticker} = useParams()
+    const { ticker } = useParams()
     const { user } = useSelector((state) => state.auth)
     const { watchlist } = useSelector((state) => state.watchlist)
-    //const { watchlist, isLoading, isError, isSuccess, message } = useSelector((state) => state.watchlist)
 
     const [ quote, setQuote] = useState(null)
     const [ companyInfo, setCompanyInfo] = useState(null)
@@ -48,44 +48,28 @@ export default function Company() {
     }, [user, navigate])
 
     useEffect(() => {
-        loadData()
-        //eslint-disable-next-line
-    }, [])
+        let isMounted = true
 
-    useEffect(() => {
-        const dangerFill = '#d9534f';
-        const successFill =  '#5cb85c'; 
-
-        if (quote && quote.dp < 0){
-            setChartColor(dangerFill)
-        } else if (quote && quote.dp > 0) {
-            setChartColor(successFill)
-        }
-    }, [quote])
-
-    const loadData = async () => {
         fetchQuote(ticker)
         .then(result => {
+            if(!isMounted) return
             setQuote(result)
+            setChartColor(graphColourHandler(result.dp))
         })
         .catch (
             err => console.error(err)
         )
         fetchCompanyInfo(ticker)
         .then(result => {
+            if(!isMounted) return
             setCompanyInfo(result)
         })
         .catch (
             err => console.error(err)
         )
-    }
 
-    function quoteChangeHandler() {
-        const changeDirection = ( quote.dp > 0 ) ? '+' : "-"
-        const changeAmount = Math.abs(quote.d.toFixed(2))
-        const changePercentage = Math.abs(quote.dp.toFixed(2))
-        return `${changeDirection}$${changeAmount} (${changeDirection}${changePercentage}%) Day` 
-    }
+        return () => isMounted = false
+    }, [ticker])
 
     const onAddToWatchlist = () => {
         dispatch(addToWatchList(ticker))
@@ -113,11 +97,10 @@ export default function Company() {
                     )}
                     <h2>
                         <span>${quote ? quote.c.toFixed(2) : '0.0'}</span>
-                        <span >{quote ? quoteChangeHandler() : '0.0'}</span>
+                        <span >{quote ? quoteChangeHandler(quote) : '0.0'}</span>
                     </h2>
                     <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + ticker)}>ADD</ButtonLarge>
                 </CompanyHeading>
-                <div></div>
             <CompanyGraph ticker={ticker} chartColor={chartColor}/>
             <CompanyInfo quote={quote} companyInfo={companyInfo}/>
         </CompanyContainer>

@@ -47,9 +47,21 @@ export default function CompanyGraph({ticker, chartColor}) {
     const [ chartResolution, setChartResolution ] = useState('week')
 
     useEffect(() => {
-        loadChartContent()
-        //eslint-disable-next-line
-    }, [chartResolution])
+        let isMounted = true
+
+        setIsChartLoading(true)
+        fetchLineData(ticker, chartResolution)
+        .then(result => {
+            if(!isMounted) return
+            setChartData(result.data)
+            setLabelData(result.labels)
+        })
+        .catch (
+            err => console.error(err)
+        )
+
+        return () => isMounted = false
+    }, [chartResolution, ticker])
 
     useEffect(() => {
         if(chartData && labelData){
@@ -57,18 +69,6 @@ export default function CompanyGraph({ticker, chartColor}) {
         }
     }, [chartData, labelData, ticker])
 
-
-    const loadChartContent = async () => {
-        setIsChartLoading(true)
-        fetchLineData(ticker, chartResolution)
-        .then(result => {
-            setChartData(result.data)
-            setLabelData(result.labels)
-        })
-        .catch (
-            err => console.error(err)
-        )
-    }
 
     const graphDataProps = {
             labels: labelData,

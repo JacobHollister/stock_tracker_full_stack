@@ -34,9 +34,11 @@ export const PorfolioCompanyCard = styled.div`
     @media (max-width: 992px) {
     
     }
-    @media (max-width: 768px) {
-        grid-template-columns: 8rem 1fr 1fr;
+    @media (max-width: 767px) {
+        margin: .5rem 0 0 0;
+        grid-template-columns: 7rem 1fr 1fr;
         h3 {
+            padding: .5rem 0;
             grid-template-columns: auto;
             grid-auto-flow: row;
             gap: 1rem;
@@ -67,6 +69,19 @@ export const PorfolioCompanyCardInfo = styled.div`
     span {
         &:nth-child(2) {
             color: ${props => props.color ? props.color : 'black'};
+            font-weight: bold;
+        }
+    }
+    @media (max-width: 767px) {
+        grid-template-rows: 1fr 1fr;
+        gap: .75rem;
+        span{
+            text-align: center;
+        }
+        div {
+            justify-content: center;
+            grid-auto-flow: row;
+            gap: .1rem;
         }
     }
 `

@@ -32,27 +32,29 @@ export default function Search() {
   }, [user, navigate])
 
   useEffect(() => {
+    let isMounted = true
+
     const delay = setTimeout(() => {
       if(searchQuery.length === 0) return
-      fetchSearchQuery(searchQuery)
-      // Send Axios request here
+      setIsLoading(true)
+
+      searchCompanies(searchQuery).then(
+        (result) => {
+          if(!isMounted) return
+          setSearchResults(result.data)
+          setIsLoading(false)
+        })
+
     }, 2000)
 
-    return () => clearTimeout(delay)
+    return () => {
+      clearTimeout(delay)
+      isMounted = false
+    }
   }, [searchQuery])
 
   function searchHandler(e) {
     setSearchQuery(e.target.value)
-  }
-
-  async function fetchSearchQuery(query) {
-  setIsLoading(true)
-
-  searchCompanies(query).then(
-    (result) => {
-      setSearchResults(result.data)
-      setIsLoading(false)
-    })
   }
 
   const results = searchResults.map((company, ind) => {
