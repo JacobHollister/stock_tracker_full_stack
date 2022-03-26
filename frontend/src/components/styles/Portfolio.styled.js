@@ -23,14 +23,12 @@ export const PortfolioHeader = styled.div`
 `
 export const PortfolioInfoContainer = styled.div`
     padding-top: .5rem;
-    width: 100%;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: .5rem;
     @media (max-width: 992px) {
-        grid-template-columns: 2fr 1fr;
-        grid-auto-flow: column;
+
     }
     @media (max-width: 767px) {
         grid-auto-flow: row;
@@ -44,7 +42,6 @@ export const PortfolioInfoContainer = styled.div`
 
 export const PortfolioGraphContainer = styled.div`
     height: 300px;
-    width: calc(100vw - 2rem);
     div { 
         padding: .5rem 0;
     }
@@ -54,10 +51,10 @@ export const PortfolioOverviewContainer = styled.div`
     grid-template-columns: repeat(3, auto);
     gap: 0rem 2rem;
     @media (max-width: 992px) {
+        grid-template-columns: repeat(2, auto);
     
     }
     @media (max-width: 768px) {
-        grid-template-columns: repeat(2, auto);
     }
     @media (max-width: 576px) {
         justify-content: center;
@@ -65,7 +62,7 @@ export const PortfolioOverviewContainer = styled.div`
     }
 `
 export const PortfolioWeightingsContainer = styled.div`
-    padding: 1rem;
+    margin: 2rem 1rem;
     margin-top: 1rem;
 `
 export const PortfolioInfoDetail = styled.div`
@@ -84,7 +81,6 @@ export const PortfolioInfoLabel = styled.div`
     font-weight: 600;
 `
 export const PortfolioHoldingsContainer = styled.div`
-    width: calc(100vw - 2rem);
     height: 30rem;
 `
 export const TradeDetailsHeader = styled.div`
