@@ -1,14 +1,25 @@
+// Package imports
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { confirm_update } from '../features/trades/tradesSlice'
-import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
-import { ButtonLarge } from '../components/styles/UI.styled'
-import { StyledHeading } from "../components/styles/Heading.styled"
-import { getPortfolio } from '../features/portfolio/portfolioSlice'
 import {format} from 'date-fns'
 
-const EditTrade = () => {
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
+import { confirm_update } from '../features/trades/tradesSlice'
+import { getPortfolio } from '../features/portfolio/portfolioSlice'
+
+// Styled Components
+import { ButtonLarge } from '../components/styles/UI.styled'
+import { StyledHeading } from "../components/styles/Heading.styled"
+import { 
+    Form, 
+    FormContainer, 
+    FormButtonContainer, 
+    QueryButton 
+} from '../components/styles/Form.styled'
+
+
+export default function EditTrade() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -123,5 +134,3 @@ const EditTrade = () => {
         </>
     )
 }
-
-export default EditTrade

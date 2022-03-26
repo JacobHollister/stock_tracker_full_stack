@@ -1,8 +1,14 @@
+// Package imports
 import { useEffect, useState } from 'react'
-import {PorfolioCompanyCard, PorfolioCompanyCardInfo} from './styles/PortfolioHolding.styled'
+
+// Components
 import TradeDetailsDropdown from './TradeDetailsDropdown'
 
-const PortfolioHolding = ({company, trades, companyData}) => {
+// Styled Components
+import {PorfolioCompanyCard, PorfolioCompanyCardInfo} from '../styles/PortfolioHolding.styled'
+
+
+export default function PortfolioHolding({company, trades, companyData}) {
 
     const [holdingData, setHoldingData ] = useState({
         gainAmount: 0,
@@ -113,5 +119,3 @@ const PortfolioHolding = ({company, trades, companyData}) => {
     )
 
 }
-
-export default PortfolioHolding

@@ -1,14 +1,21 @@
+// Package imports
 import {useEffect, useState, useCallback} from 'react'
-import { fetchNewsContent } from '../utils/Api'
-import useInfiniteScroll from "../hooks/useInfiniteScroll"
 
+// Hooks
+import useInfiniteScroll from "../../hooks/useInfiniteScroll"
+
+// Helper functions
+import { fetchNewsContent } from '../../utils/Api'
+
+// Components
 import Loader from "./Loader"
 import NewsSnippet from "./NewsSnippet"
 
-import { StyledHeading } from "./styles/Heading.styled"
+// Styled Components
+import { StyledHeading } from "../styles/Heading.styled"
 
 
-function News({ticker}) {
+export default function News({ticker}) {
 
   const [newsData, setNewsData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -68,5 +75,3 @@ function News({ticker}) {
       </>  
   )
 }
-
-export default News;

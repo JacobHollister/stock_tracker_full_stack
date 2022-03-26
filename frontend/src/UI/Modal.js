@@ -1,17 +1,29 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+// Package imports
 import ReactDom from 'react-dom'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
 
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
 import { getPortfolio } from '../features/portfolio/portfolioSlice'
-import { reset, cancel_confirm, deleteTrade, addTrade, updateTrade } from '../features/trades/tradesSlice'
+import { 
+    reset, 
+    cancel_confirm, 
+    deleteTrade, 
+    addTrade, 
+    updateTrade 
+} from '../features/trades/tradesSlice'
 
-import Loader from '../components/Loader'
+// Components
+import Loader from '../components/sharedComponents/Loader'
+
+// Styled Components
 import { ButtonLarge } from '../components/styles/UI.styled'
 import { Overlay, ModalContainer } from './Modal.styled'
 
-const Modal = () => {
+
+export default function Modal() {
     const navigate = useNavigate()
 
     function createWrapperAndAppendToBody(wrapperId) {
@@ -114,7 +126,3 @@ const Modal = () => {
     document.getElementById('modal')
     )
 }
-
-
-
-export default Modal

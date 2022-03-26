@@ -1,5 +1,17 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+// Package imports
+import {useEffect, useState} from 'react'
+
+// Components
+import Loader from '../sharedComponents/Loader'
+
+// Styled Components
+import {IndiceGraphContainer, IndiceGraphHeading} from '../styles/IndiceGraph.styled'
+
+// Helper functions
+import { fetchQuote, fetchLineData } from '../../utils/Api'
+import { graphColourHandler } from '../../utils/graphFunctions';
+
+// react-js chart imports
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -12,11 +24,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2'
 
-import { graphColourHandler } from '../utils/graphFunctions';
-
-import {IndiceGraphContainer, IndiceGraphHeading} from './styles/IndiceGraph.styled'
-import Loader from '../components/Loader'
-
+// ChartJs setup
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -27,7 +35,6 @@ ChartJS.register(
     Legend
 );
 
-
 export default function IndiceGraph({ticker, indice}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
@@ -37,22 +44,30 @@ export default function IndiceGraph({ticker, indice}) {
     const [ chartColor, setChartColor ] = useState(null)
 
     useEffect(() => {
+        let mounted = true
+
         setIsChartLoading(true)
-        axios.get(`http://localhost:5000/api/v1/stock/line?ticker=${ticker}&resolution=day`)
+        
+        fetchLineData(ticker, 'day')
         .then(result => {
-            setChartData(result.data.data)
-            setLabelData(result.data.labels)
+            if(!mounted) return
+            setChartData(result.data)
+            setLabelData(result.labels)
         })
         .catch (
             err => console.error(err)
         )
-        axios.get(`http://localhost:5000/api/v1/stock/quote/${ticker.toUpperCase()}`)
+        fetchQuote(ticker.toUpperCase())
         .then(result => {
-            setQuoteData(result.data)
+            if(!mounted) return
+            setQuoteData(result)
         })
         .catch (
             err => console.error(err)
         )
+
+        return () => mounted = false
+
     }, [ticker])
 
     useEffect(() => {

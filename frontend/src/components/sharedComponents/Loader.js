@@ -1,4 +1,5 @@
-import { LoaderBars, LoaderContainer} from './styles/Loader.styled'
+// Styled Components
+import { LoaderBars, LoaderContainer} from '../styles/Loader.styled'
 
 export default function Loader () {
     return(

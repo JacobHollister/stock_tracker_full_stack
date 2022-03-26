@@ -1,18 +1,33 @@
+// Package imports
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+
+// Redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { addToWatchList, removeFromWatchList } from '../features/watchlist/watchlistSlice'
+
+// Helper functions
 import { fetchCompanyInfo, fetchQuote } from '../utils/Api'
 
-import CompanyInfo from '../components/CompanyInfo'
-import CompanyGraph from '../components/CompanyGraph'
-import News from '../components/News'
+// Components
+import CompanyInfo from '../components/companyPage/CompanyInfo'
+import CompanyGraph from '../components/companyPage/CompanyGraph'
+import News from '../components/sharedComponents/News'
+
+// Assets / Icons
 import { CgAdd} from 'react-icons/cg'
 import { MdOutlineCancel } from 'react-icons/md'
-import { ButtonLarge } from '../components/styles/UI.styled'
-import { CompanyContainer, CompanyHeading, WatchlistButton} from '../components/styles/Company.styled'
 
-function Company() {
+// Styled Components
+import { ButtonLarge } from '../components/styles/UI.styled'
+import { 
+    CompanyContainer, 
+    CompanyHeading, 
+    WatchlistButton} 
+from '../components/styles/Company.styled'
+
+
+export default function Company() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
@@ -110,5 +125,3 @@ function Company() {
         </>
     )
 }
-
-export default Company

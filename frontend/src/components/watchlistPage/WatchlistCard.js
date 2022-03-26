@@ -1,11 +1,18 @@
+// Package imports
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { WatchlistCompanyCard } from './styles/Watchlist.styled'
-import { fetchQuote } from '../utils/Api'
+
+// Helper functions
+import { fetchQuote } from '../../utils/Api'
+
+// Components
 import WatchlistGraph from './WatchlistGraph'
 
+// Styled Components
+import { WatchlistCompanyCard } from '../styles/Watchlist.styled'
 
-function WatchlistCard({ticker}) {
+
+export default function WatchlistCard({ticker}) {
 
   const [ quote, setQuote] = useState(null)
   const [ Color, setColor ] = useState(null)
@@ -62,5 +69,3 @@ function WatchlistCard({ticker}) {
     </Link>
   )
 }
-
-export default WatchlistCard

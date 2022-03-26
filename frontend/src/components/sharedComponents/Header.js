@@ -1,4 +1,16 @@
+// Package imports
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../../features/auth/authSlice'
+import { reset as resetPortfolio } from '../../features/portfolio/portfolioSlice'
+
+// Components
+import MenuHamburger from './MenuHambuger'
+
+// Styled Components
 import { 
     Nav, 
     NavButton, 
@@ -12,18 +24,13 @@ import {
     SideNavButton,
     NavLogo,
     NavSmall
-} from './styles/Header.styled'
+} from '../styles/Header.styled'
+import { Container } from '../styles/Container.styled'
 
-import { Container } from './styles/Container.styled'
-import ProfileIcon from '../assets/icons/user.svg'
-import {Link} from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout, reset } from '../features/auth/authSlice'
-import { reset as resetPortfolio } from '../features/portfolio/portfolioSlice'
-import { useNavigate } from 'react-router-dom'
+// Assets / Icons
+import ProfileIcon from '../../assets/icons/user.svg'
 import { FaRegUser } from 'react-icons/fa'
 import { FiLogIn, FiLogOut } from 'react-icons/fi'
-import MenuHamburger from './MenuHambuger'
 
 
 export default function Header() {

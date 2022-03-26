@@ -1,10 +1,26 @@
+// Package imports
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+// Redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { getPortfolio } from '../features/portfolio/portfolioSlice'
-import { portfolioCloseHandler, portfolioOpenHandler, portfolioGraphDataHandler } from '../utils/PortfolioUtils'
+
+// Helper functions
+import { 
+  portfolioCloseHandler, 
+  portfolioOpenHandler, 
+  portfolioGraphDataHandler 
+} from '../utils/PortfolioUtils'
 import { fetchLineData } from '../utils/Api'
-import Loader from '../components/Loader'
+
+// Components
+import Loader from '../components/sharedComponents/Loader'
+import PortfolioGraph from '../components/portfolioPage/PortfolioGraph'
+import PortfolioDoughnutGraph from '../components/portfolioPage/PortfolioDoughnutGraph'
+import PortfolioHolding from '../components/portfolioPage/PortfolioHolding'
+
+// Styled Components
 import { StyledHeading } from '../components/styles/Heading.styled'
 import { 
   PortfolioContainer, 
@@ -17,18 +33,18 @@ import {
   PortfolioInfoLabel,
   PortfolioInfoDetail
 } from '../components/styles/Portfolio.styled'
-import PortfolioGraph from '../components/PortfolioGraph'
-import { ResolutionButtonContainer, ResolutionButton } from '../components/styles/CompanyGraph.styled'
-import PortfolioDoughnutGraph from '../components/PortfolioDoughnutGraph'
-import PortfolioHolding from '../components/PortfolioHolding'
+import { 
+  ResolutionButtonContainer, 
+  ResolutionButton 
+} from '../components/styles/CompanyGraph.styled'
 
 
-function Portfolio() {
+export default function Portfolio() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { trades, isLoading, isError, isSuccess, message  } = useSelector((state) => state.portfolio)
+  const { trades, isLoading, isSuccess } = useSelector((state) => state.portfolio)
 
   useEffect(() => {
     if(!user){
@@ -196,7 +212,6 @@ function Portfolio() {
             <PortfolioGraphContainer>
                 <PortfolioGraph 
                   data={tradedCompanyLineData} 
-                  resolution={chartResolution} 
                   chartColor={chartColor}
                   trades={trades}
                   setResolution={(resolution) => resolutionChangeHandler(resolution)}/>
@@ -250,5 +265,3 @@ function Portfolio() {
     </>
   )
 }
-
-export default Portfolio

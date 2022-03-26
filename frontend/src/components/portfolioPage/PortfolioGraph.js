@@ -1,5 +1,13 @@
+// Package imports
 import { useEffect, useState } from 'react';
+
+// Helper functions
 import compareAsc from 'date-fns/compareAsc';
+
+// Components
+import Loader from '../sharedComponents/Loader'
+
+// react-js chart imports
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,8 +19,8 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2'
-import Loader from './Loader'
 
+// ChartJs setup
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -23,18 +31,11 @@ ChartJS.register(
     Legend
 );
 
-function PortfolioGraph({data, trades, setResolution, chartColor}) {
-
+export default function PortfolioGraph({data, trades, chartColor}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
     const [ labelData, setLabelData ] = useState(null)
-    const [ chartResolution, setChartResolution ] = useState('week')
-
-    useEffect(() => {
-        
-        //eslint-disable-next-line
-    }, [chartResolution])
 
     useEffect(() => {
         if(Object.keys(data).length > 0 && trades.length > 0){
@@ -116,5 +117,3 @@ function PortfolioGraph({data, trades, setResolution, chartColor}) {
     </>
     )
 }
-
-export default PortfolioGraph;

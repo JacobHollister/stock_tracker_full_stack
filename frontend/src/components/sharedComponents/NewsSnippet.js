@@ -1,17 +1,21 @@
+// Package imports
+import { format, fromUnixTime } from 'date-fns'
+
+// Styled Components
 import { 
     NewsArticle, 
     NewsTitle, 
     NewsImage, 
     NewsSummary, 
     NewsSource
-} from './styles/NewsSnippet.styled';
+} from '../styles/NewsSnippet.styled';
 
-import defaultImage from '../assets/default.jpg'
+// Assets / Icons
+import defaultImage from '../../assets/default.jpg'
 
-const fns = require('date-fns')
 
 export default function NewsSnippet ({articleData})  {
-    const date = fns.format(fns.fromUnixTime(articleData.datetime), "eee do MMMM")
+    const date = format(fromUnixTime(articleData.datetime), "eee do MMMM")
 
     return (
         <NewsArticle>

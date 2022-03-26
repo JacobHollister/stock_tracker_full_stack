@@ -1,4 +1,20 @@
+// Package imports
 import { useEffect, useState } from 'react';
+
+// Helper functions
+import { fetchLineData } from '../../utils/Api'
+
+// Components
+import Loader from '../sharedComponents/Loader'
+
+// Styled Components
+import { 
+    CompanyGraphContainer, 
+    ResolutionButtonContainer, 
+    ResolutionButton 
+} from '../styles/CompanyGraph.styled'
+
+// react-js chart imports
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,12 +26,8 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2'
-import Loader from './Loader'
 
-import { fetchLineData } from '../utils/Api'
-
-import { CompanyGraphContainer, ResolutionButtonContainer, ResolutionButton } from './styles/CompanyGraph.styled'
-
+// ChartJs setup
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -26,8 +38,8 @@ ChartJS.register(
     Legend
 );
 
-function CompanyGraph({ticker, chartColor}) {
 
+export default function CompanyGraph({ticker, chartColor}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
@@ -110,5 +122,3 @@ function CompanyGraph({ticker, chartColor}) {
         </CompanyGraphContainer>
     )
 }
-
-export default CompanyGraph;

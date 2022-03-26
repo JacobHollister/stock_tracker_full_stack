@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyles from './components/styles/Global';
 import { Container } from './components/styles/Container.styled'
 
-import Header from "./components/Header";
+import Header from "./components/sharedComponents/Header";
 import Watchlist from './pages/Watchlist'
 import Markets from './pages/Markets'
 import Portfolio from './pages/Portfolio'

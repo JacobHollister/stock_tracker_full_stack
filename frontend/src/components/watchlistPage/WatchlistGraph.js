@@ -1,4 +1,14 @@
+// Package imports
 import {useEffect, useState } from 'react'
+
+// Helper functions
+import { fetchLineData } from '../../utils/Api'
+
+// Components
+import Loader from '../sharedComponents/Loader'
+
+// react-js chart imports
+import { Line } from 'react-chartjs-2'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -9,11 +19,8 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2'
-import { fetchLineData } from '../utils/Api'
 
-import Loader from '../components/Loader'
-
+// ChartJs setup
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -24,7 +31,7 @@ ChartJS.register(
     Legend
 );
 
-function WatchlistGraph({ticker, chartColor}) {
+export default function WatchlistGraph({ticker, chartColor}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
@@ -82,5 +89,3 @@ function WatchlistGraph({ticker, chartColor}) {
         <Line data={graphDataProps} options={graphOptionsProps} />
     )
 }
-
-export default WatchlistGraph

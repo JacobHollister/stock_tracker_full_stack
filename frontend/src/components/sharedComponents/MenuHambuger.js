@@ -1,6 +1,7 @@
-import { Hamburger, Line1, Line2, Line3 } from "./styles/MenuHamburger.styled"
+// Styled Components
+import { Hamburger, Line1, Line2, Line3 } from "../styles/MenuHamburger.styled"
 
-const MenuHamburger = ({isOpen, ToggleMenu}) => {
+export default function MenuHamburger({isOpen, ToggleMenu}) {
     
     return (
         <Hamburger onClick={ToggleMenu}>
@@ -10,5 +11,3 @@ const MenuHamburger = ({isOpen, ToggleMenu}) => {
         </Hamburger>
     )
 }
-
-export default MenuHamburger

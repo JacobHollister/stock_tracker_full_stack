@@ -1,14 +1,28 @@
+// Package imports
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
+// Redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { confirm_add } from '../features/trades/tradesSlice'
-import AsyncSelect from 'react-select/async'
+
+// Helper functions
 import { searchCompanies, fetchCompanyInfo } from '../utils/Api'
-import { Form, FormContainer, FormButtonContainer, QueryButton } from '../components/styles/Form.styled'
+
+// Components
+import AsyncSelect from 'react-select/async'
+
+// Styled Components
 import { ButtonLarge } from '../components/styles/UI.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
+import { 
+    Form, 
+    FormContainer, 
+    FormButtonContainer, 
+    QueryButton 
+} from '../components/styles/Form.styled'
 
-const AddTrade = () => {
+export default function AddTrade() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -199,5 +213,3 @@ const AddTrade = () => {
         </>
     )
 }
-
-export default AddTrade

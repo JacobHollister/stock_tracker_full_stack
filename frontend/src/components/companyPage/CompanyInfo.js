@@ -1,6 +1,12 @@
-import { InfoDetail, InfoLabel, CompanyInfoContainer } from './styles/Company.styled'
+// Styled Components
+import { 
+    InfoDetail, 
+    InfoLabel, 
+    CompanyInfoContainer 
+} from '../styles/Company.styled'
 
-function CompanyInfo({quote, companyInfo}) {
+
+export default function CompanyInfo({quote, companyInfo}) {
     return ( 
         <CompanyInfoContainer>
             <h1>Overview</h1>
@@ -37,5 +43,3 @@ function CompanyInfo({quote, companyInfo}) {
         </CompanyInfoContainer>
     );
 }
-
-export default CompanyInfo;

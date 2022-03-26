@@ -1,4 +1,10 @@
+// Package imports
 import { useEffect, useState } from 'react';
+
+// Components
+import Loader from '../sharedComponents/Loader'
+
+// react-js chart imports
 import {
     Chart as ChartJS,
     ArcElement,
@@ -10,8 +16,8 @@ import {
     Tooltip,
 } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2'
-import Loader from './Loader'
 
+// ChartJs setup
 ChartJS.register(
     ArcElement,
     DoughnutController,
@@ -22,7 +28,8 @@ ChartJS.register(
     Tooltip,
 ); 
 
-function PortfolioDoughnutGraph({data, tradedCompanies}) {
+
+export default function PortfolioDoughnutGraph({data, tradedCompanies}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
@@ -96,5 +103,3 @@ function PortfolioDoughnutGraph({data, tradedCompanies}) {
     </>
     )
 }
-
-export default PortfolioDoughnutGraph;

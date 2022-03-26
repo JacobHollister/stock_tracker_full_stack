@@ -1,13 +1,25 @@
+// Package imports
 import { useState } from 'react'
+
+// Redux imports
 import { useSelector } from 'react-redux'
-//import { useNavigate } from 'react-router-dom'
-import Loader from '../components/Loader'
-import { FormContainer, FormHeading, Form, FormButtonContainer } from '../components/styles/Form.styled'
+
+// Components
+import Loader from '../components/sharedComponents/Loader'
+
+// Styled Components
+import { 
+    FormContainer, 
+    FormHeading, 
+    Form, 
+    FormButtonContainer } from '../components/styles/Form.styled'
 import { ButtonLarge  } from '../components/styles/UI.styled'
+
+// Assets / Icons
 import { FiLogIn } from 'react-icons/fi'
 
 
-function ForgotPassword() {
+export default function ForgotPassword() {
     
     const [formData, setFormData] = useState({
         email: '',
@@ -69,5 +81,3 @@ function ForgotPassword() {
         </FormContainer>
     )
 }
-    
-export default ForgotPassword

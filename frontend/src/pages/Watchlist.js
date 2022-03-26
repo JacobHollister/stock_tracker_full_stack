@@ -1,12 +1,17 @@
+// Package imports
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+// Redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { getWatchList } from '../features/watchlist/watchlistSlice'
 
-import Loader from '../components/Loader'
-import WatchlistCard from '../components/WatchlistCard'
+// Components
+import Loader from '../components/sharedComponents/Loader'
+import WatchlistCard from '../components/watchlistPage/WatchlistCard'
 
-function Watchlist() {
+
+export default function Watchlist() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
@@ -42,5 +47,3 @@ function Watchlist() {
     </div>
   )
 }
-
-export default Watchlist

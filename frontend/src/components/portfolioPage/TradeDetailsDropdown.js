@@ -1,10 +1,21 @@
-import { TradeDetailsInfo , TradeDetailsHeader, TradeDetailsContainer, ButtonSmall } from './styles/Portfolio.styled'
-import {format} from 'date-fns'
-import { useDispatch } from 'react-redux'
-import { confirm_delete } from '../features/trades/tradesSlice'
+// Package imports
 import { useNavigate } from 'react-router-dom'
+import {format} from 'date-fns'
 
-const TradeDetailsDropdown = ({trades}) => {
+// Redux imports
+import { useDispatch } from 'react-redux'
+import { confirm_delete } from '../../features/trades/tradesSlice'
+
+// Styled Components
+import { 
+    TradeDetailsInfo, 
+    TradeDetailsHeader, 
+    TradeDetailsContainer, 
+    ButtonSmall
+} from '../styles/Portfolio.styled'
+
+
+export default function TradeDetailsDropdown({trades})  {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -43,6 +54,4 @@ const TradeDetailsDropdown = ({trades}) => {
         </TradeDetailsContainer>
     )
 }
-
-export default TradeDetailsDropdown
 

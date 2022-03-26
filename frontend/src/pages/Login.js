@@ -1,13 +1,27 @@
+// Package imports
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
 import { login, reset } from '../features/auth/authSlice'
-import Loader from '../components/Loader'
-import { FormContainer, FormHeading, Form, QueryButton, FormButtonContainer } from '../components/styles/Form.styled'
+
+// Components
+import Loader from '../components/sharedComponents/Loader'
+
+// Styled Components
+import { 
+  FormContainer, FormHeading, 
+  Form, 
+  QueryButton, 
+  FormButtonContainer 
+} from '../components/styles/Form.styled'
 import { ButtonLarge } from '../components/styles/UI.styled'
+
+// Assets / Icons
 import { FiLogIn } from 'react-icons/fi'
 
-function Login() {
+export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -101,5 +115,3 @@ function Login() {
     </FormContainer>
   )
 }
-
-export default Login

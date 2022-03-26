@@ -1,13 +1,22 @@
-import { Link } from 'react-router-dom'
+// Package imports
 import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+// Redux imports
+import { useSelector } from 'react-redux'
+
+// Helper functions
+import { searchCompanies } from '../utils/Api'
+
+// Components
+import Loader from '../components/sharedComponents/Loader'
+
+// Styled Components
 import { StyledHeading } from '../components/styles/Heading.styled'
 import { SearchInput, CompanyCard } from '../components/styles/Search.styled'
-import { searchCompanies } from '../utils/Api'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import Loader from '../components/Loader'
 
-function Search() {
+
+export default function Search() {
   const navigate = useNavigate()
 
   const [ searchQuery, setSearchQuery ] = useState('')
@@ -75,5 +84,3 @@ function Search() {
       </>
   )
 }
-
-export default Search

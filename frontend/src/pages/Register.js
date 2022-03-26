@@ -1,13 +1,29 @@
+// Package imports
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
 import { register, reset } from '../features/auth/authSlice'
-import { FaRegUser } from 'react-icons/fa'
-import Loader from '../components/Loader'
-import { FormContainer, FormHeading, Form, QueryButton, FormButtonContainer } from '../components/styles/Form.styled'
+
+// Components
+import Loader from '../components/sharedComponents/Loader'
+
+// Styled Components
+import { 
+  FormContainer, 
+  FormHeading, 
+  Form, 
+  QueryButton, 
+  FormButtonContainer 
+} from '../components/styles/Form.styled'
 import { ButtonLarge } from '../components/styles/UI.styled'
 
-function Register() {
+// Assets / Icons
+import { FaRegUser } from 'react-icons/fa'
+
+
+export default function Register() {
 
   const [formData, setFormData] = useState({
     name: '',
@@ -118,5 +134,3 @@ function Register() {
     </FormContainer>
   )
 }
-
-export default Register
