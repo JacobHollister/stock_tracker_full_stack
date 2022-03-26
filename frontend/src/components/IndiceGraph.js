@@ -12,6 +12,8 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2'
 
+import { graphColourHandler } from '../utils/graphFunctions';
+
 import {IndiceGraphContainer, IndiceGraphHeading} from './styles/IndiceGraph.styled'
 import Loader from '../components/Loader'
 
@@ -35,30 +37,6 @@ export default function IndiceGraph({ticker, indice}) {
     const [ chartColor, setChartColor ] = useState(null)
 
     useEffect(() => {
-        loadChartContent()
-        //eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        if(chartData && labelData && quoteData && chartColor){
-            setIsChartLoading(false)
-        }
-    }, [chartData, labelData, quoteData, chartColor, ticker])
-
-    useEffect(() => {
-        
-        const dangerFill = '#d9534f';
-        const successFill =  '#5cb85c'; 
-
-        if (quoteData && quoteData.dp < 0){
-            setChartColor(dangerFill)
-        } else if (quoteData && quoteData.dp > 0) {
-            setChartColor(successFill)
-        }
-    }, [quoteData])
-
-
-    const loadChartContent = async () => {
         setIsChartLoading(true)
         axios.get(`http://localhost:5000/api/v1/stock/line?ticker=${ticker}&resolution=day`)
         .then(result => {
@@ -75,7 +53,14 @@ export default function IndiceGraph({ticker, indice}) {
         .catch (
             err => console.error(err)
         )
-    }
+    }, [ticker])
+
+    useEffect(() => {
+        if(chartData && labelData && quoteData){
+            setChartColor(graphColourHandler(quoteData.dp))
+            setIsChartLoading(false)
+        }
+    }, [chartData, labelData, quoteData, ticker])
 
     const graphDataProps = {
             labels: labelData,

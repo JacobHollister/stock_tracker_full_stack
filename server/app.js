@@ -15,6 +15,8 @@ const auth = require('./routes/authRoutes')
 const connectDB = require('./db/connect')
 require('dotenv').config()
 
+const port = process.env.PORT || 5000;
+
 // middleware
 app.use(express.json())
 app.use(cors());
@@ -30,9 +32,14 @@ app.use('/api/v1/users', users)
 app.use('/api/v1/trades', trades)
 app.use('/api/v1/auth', auth)
 
-app.use(errorHandlerMiddleware);
-
-const port = process.env.PORT || 5000;
+// serve frontend
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
+  
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')))
+} else {
+  app.get('/', (req, res) => res.send('Server not set to production'))
+}
 
 const start = async () => {
   try {
@@ -43,13 +50,6 @@ const start = async () => {
   }
 }
 
-// serve frontend
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')))
-
-  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')))
-} else {
-  app.get('/', (req, res) => res.send('Server not set to production'))
-}
+app.use(errorHandlerMiddleware);
 
 start()
