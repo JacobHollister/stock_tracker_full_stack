@@ -2,7 +2,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Watchlist = require('../models/watchlist')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error');
 
