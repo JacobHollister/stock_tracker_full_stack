@@ -17,8 +17,10 @@ import ForgotPassword from './pages/ForgotPassword';
 
 import Modal from './UI/Modal'
 
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:5000';
+
+// testing in development
+// import axios from 'axios'
+// axios.defaults.baseURL = 'http://localhost:5000';
 
 const theme = {
   
