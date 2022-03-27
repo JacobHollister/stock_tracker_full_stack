@@ -20,7 +20,9 @@ import Modal from './UI/Modal'
 
 // testing in development
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:5000';
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    axios.defaults.baseURL = 'http://localhost:5000';
+}
 
 const theme = {
   
