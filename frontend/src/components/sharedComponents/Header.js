@@ -61,7 +61,7 @@ export default function Header() {
                     <NavButton to="/portfolio">PORTFOLIO</NavButton>
                     <NavButton to="/watchlist">WATCHLIST</NavButton>
                     <NavButton to="/search">SEARCH</NavButton>
-                    <Logo>STAKE</Logo>
+                    <Logo>STOCKS</Logo>
                     { user ? (
                         <>
                             <AuthButton alt="true" onClick={onLogout}>
@@ -84,11 +84,11 @@ export default function Header() {
                 </Nav>
                 <NavSmall>
                     <MenuHamburger ToggleMenu={ToggleMenu} isOpen={sideNavOpen}/>
-                    <Logo>STAKE</Logo>
+                    <Logo>STOCKS</Logo>
                 </NavSmall>
                 <SideNav display={sideNavOpen}>
                     <NavItems>
-                        <NavLogo>STAKE</NavLogo>
+                        <NavLogo>STOCKS</NavLogo>
                         <SideNavButton to="/" onClick={() => setSideNavOpen("false")}>MARKETS</SideNavButton>
                         <SideNavButton to="/portfolio" onClick={() => setSideNavOpen("false")}>PORTFOLIO</SideNavButton>
                         <SideNavButton to="/watchlist" onClick={() => setSideNavOpen("false")}>WATCHLIST</SideNavButton>

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Hamburger = styled.div`
-    width: 2rem;
-    height: 2rem;
-    padding: .25rem;
+    width: 3rem;
+    height: 3rem;
+    padding: .5rem;
     margin-left: .5rem;
     display: flex;
     justify-content: space-around;
@@ -11,12 +11,13 @@ export const Hamburger = styled.div`
     z-index: 10;
     & > div {
         width: 100%;
-        height: .25rem;
+        height: .35rem;
         border-radius: 10px;
-        background-color: black;
+        background-color: ${props => props.theme.primary};
         transform-origin: 1px;
         transition: all 0.3s linear;
     }
+
 `
 
 export const Line1 = styled.div`

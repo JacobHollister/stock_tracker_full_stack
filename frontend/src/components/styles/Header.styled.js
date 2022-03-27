@@ -124,7 +124,7 @@ export const NavIcon = styled.img`
 
 export const Backdrop = styled.div`
     position: fixed;
-    height: calc(100% - 2rem);
+    height: calc(100% - 3rem);
     left: 0;
     right: 0;
     bottom: 0;
@@ -139,7 +139,7 @@ export const SideNav = styled.nav`
     position: fixed;
     width: 280px;
     max-width: 70%;
-    height: calc(100% - 2rem);
+    height: calc(100% - 3rem);
     left: 0;
     bottom: 0;
     z-index: 1001;
@@ -188,7 +188,7 @@ export const NavSmall = styled.nav`
     left: 0;
     top: 0;
     width: 100vw;
-    height: 2rem;
+    height: 3rem;
     background-color: white;
     display: flex;
     align-items: center;

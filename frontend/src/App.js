@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyles from './components/styles/Global';
@@ -24,13 +25,28 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     axios.defaults.baseURL = 'http://localhost:5000';
 }
 
-const theme = {
-  
+const lightTheme = {
+  primary: 'black'
+}
+const darkTheme = {
+  primary: 'white'
 }
 
 function App() {
+
+  const [currentTheme, setCurrentTheme] = useState('light')
+
+  useEffect(() => {
+    const themeQuery = window.matchMedia('(prefers-color-scheme: light)')
+    console.log(themeQuery)
+    setCurrentTheme(themeQuery.matches ? 'light' : 'dark')
+    themeQuery.addEventListener('change', ({matches}) => {
+      setCurrentTheme(matches ? 'light' : 'dark')
+    })
+  }, [])
+
   return (
-    <ThemeProvider theme = { theme }>
+    <ThemeProvider theme = { currentTheme === 'light' ? lightTheme : darkTheme }>
       <>
         <Router>
           <GlobalStyles/>
