@@ -96,7 +96,7 @@ export default function Portfolio() {
     Promise.all(companyFetchPromises)
       .then( lineDataResponses => {
         if(!isMounted) return 
-
+        
         const fetchedCompanyLineData = {} 
 
         lineDataResponses.forEach((response, ind) => {

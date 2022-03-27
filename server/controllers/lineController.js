@@ -1,4 +1,3 @@
-const fns = require('date-fns')
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
 const {
@@ -15,31 +14,13 @@ const getLineData = asyncWrapper(async (req, res, next) => {
 
     if(candleData.s === "ok") {
         const lineData = candleData.c
-        const timeFormatString = formatTimeString(req.query.resolution)
-        
-        const labelData = candleData.t.map( (time) => {
-            return fns.format(fns.fromUnixTime(time), timeFormatString)
-        })
-
         const dateData = candleData.t
 
-        return res.status(200).json({data: lineData, labels: labelData, date: dateData})
+        return res.status(200).json({data: lineData, date: dateData})
     } else {
         return next(createCustomError(`External API error: ${candleData.s}`, 404))
     }
 
 })
-
-function formatTimeString(resolution) { 
-    switch (resolution) {
-        case "day":
-            return 'ccc p'
-        case 'week':
-            return 'ccc eo h aaaa'
-        // default: Month or Year
-        default:
-            return 'LLLL eo'
-    }
-}
 
 module.exports = getLineData

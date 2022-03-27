@@ -1,8 +1,9 @@
 // Package imports
 import { useEffect, useState } from 'react';
+import compareAsc from 'date-fns/compareAsc';
 
 // Helper functions
-import compareAsc from 'date-fns/compareAsc';
+import { graphLabelDataHandler } from '../../utils/graphFunctions';
 
 // Components
 import Loader from '../sharedComponents/Loader'
@@ -31,7 +32,7 @@ ChartJS.register(
     Legend
 );
 
-export default function PortfolioGraph({data, trades, chartColor}) {
+export default function PortfolioGraph({data, trades, chartColor, chartResolution}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
@@ -39,41 +40,36 @@ export default function PortfolioGraph({data, trades, chartColor}) {
 
     useEffect(() => {
         if(Object.keys(data).length > 0 && trades.length > 0){
-            portfolioGraphHandler(data, trades)
-            portfolioGraphLabelHandler(data)
-            setIsChartLoading(false)
-        }
-    }, [data, trades])
+            let portfolioData = []
 
-    function portfolioGraphHandler(data, trades){
-        let portfolioData = []
+            Object.keys(data).forEach((company) => {
 
-        Object.keys(data).forEach((company) => {
+                const companyTrades = trades.filter((trade) => {
+                    return trade.ticker === company
+                })
 
-            const companyTrades = trades.filter((trade) => {
-                return trade.ticker === company
-            })
-
-            data[company].date.forEach((date, ind) => {
-                companyTrades.forEach((trade) => {
-                    const tradeDate = date
-                    const labelDate = new Date(trade.purchase_date)
-                    if(compareAsc(tradeDate, labelDate)){
-                        if ( !portfolioData[ind] ) { portfolioData[ind] = 0 }
-                        const companyAmount = trade.quantity * data[company].data[ind]
-                        const totalAmount = parseFloat(portfolioData[ind] + companyAmount)
-                        portfolioData[ind] = totalAmount
-                    }
+                data[company].date.forEach((date, ind) => {
+                    companyTrades.forEach((trade) => {
+                        const tradeDate = date
+                        const labelDate = new Date(trade.purchase_date)
+                        if(compareAsc(tradeDate, labelDate)){
+                            if ( !portfolioData[ind] ) { portfolioData[ind] = 0 }
+                            const companyAmount = trade.quantity * data[company].data[ind]
+                            const totalAmount = parseFloat(portfolioData[ind] + companyAmount)
+                            portfolioData[ind] = totalAmount
+                        }
+                    })
                 })
             })
-        })
-        setChartData(portfolioData)
-    }
+            setChartData(portfolioData)
 
-    const portfolioGraphLabelHandler = (data) => {
-        const labels = data[Object.keys(data)[0]].labels
-        setLabelData(labels)
-    }
+            const dateData = data[Object.keys(data)[0]].date
+            const labels = graphLabelDataHandler(dateData, chartResolution)
+            setLabelData(labels)
+
+            setIsChartLoading(false)
+        }
+    }, [data, trades, chartResolution])
 
     const graphDataProps = {
             labels: labelData,

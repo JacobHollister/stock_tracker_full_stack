@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 // Helper functions
 import { fetchLineData } from '../../utils/Api'
+import { graphLabelDataHandler } from '../../utils/graphFunctions';
 
 // Components
 import Loader from '../sharedComponents/Loader'
@@ -54,7 +55,7 @@ export default function CompanyGraph({ticker, chartColor}) {
         .then(result => {
             if(!isMounted) return
             setChartData(result.data)
-            setLabelData(result.labels)
+            setLabelData(graphLabelDataHandler(result.date, chartResolution))
         })
         .catch (
             err => console.error(err)

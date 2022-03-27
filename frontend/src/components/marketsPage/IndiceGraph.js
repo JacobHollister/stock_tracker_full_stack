@@ -52,7 +52,7 @@ export default function IndiceGraph({ticker, indice}) {
         .then(result => {
             if(!mounted) return
             setChartData(result.data)
-            setLabelData(result.labels)
+            setLabelData(result.date)
         })
         .catch (
             err => console.error(err)
