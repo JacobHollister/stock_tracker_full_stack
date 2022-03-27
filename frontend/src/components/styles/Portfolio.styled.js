@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const PortfolioContainer = styled.div`
-    margin: 0 0;
+    margin: 0 0 5rem 0;
     padding: 0 .5rem 3rem .5rem;
     display: grid;
     gap: 1rem;

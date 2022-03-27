@@ -48,7 +48,6 @@ export const Nav = styled.nav`
         display: none;
     }
 `
-// (<= 575px, 576px to 767px, 768px to 991px, > 992px )
 
 export const NavButton = styled(NavLink)`
         cursor: pointer;
