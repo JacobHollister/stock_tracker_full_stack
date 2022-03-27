@@ -10,9 +10,9 @@ import Loader from '../sharedComponents/Loader'
 
 // Styled Components
 import { 
-    CompanyGraphContainer, 
     ResolutionButtonContainer, 
-    ResolutionButton 
+    ResolutionButton,
+    GraphContainer 
 } from '../styles/CompanyGraph.styled'
 
 // react-js chart imports
@@ -112,14 +112,16 @@ export default function CompanyGraph({ticker, chartColor}) {
     }
     
     return (
-        <CompanyGraphContainer>
+        <>
             <ResolutionButtonContainer>
                 <ResolutionButton active={chartResolution === 'day' ? true : false} value={'day'} onClick={buttonHandler}>DAY</ResolutionButton>
                 <ResolutionButton active={chartResolution === 'week' ? true : false} value={'week'} onClick={buttonHandler}>WEEK</ResolutionButton>
                 <ResolutionButton active={chartResolution === 'month' ? true : false} value={'month'} onClick={buttonHandler}>MONTH</ResolutionButton>
                 <ResolutionButton active={chartResolution === 'year' ? true : false} value={'year'} onClick={buttonHandler}>YEAR</ResolutionButton>
             </ResolutionButtonContainer>
-            {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps} />}
-        </CompanyGraphContainer>
+            <GraphContainer>
+                {isChartLoading ? <Loader/> :<Line data={graphDataProps} options={graphOptionsProps} />}
+            </GraphContainer>
+        </>
     )
 }

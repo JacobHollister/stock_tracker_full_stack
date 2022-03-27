@@ -88,7 +88,7 @@ export default function PortfolioGraph({data, trades, chartColor, chartResolutio
         maintainAspectRatio: false,
         plugins: {legend: {display: false}, tooltip: {enabled: false}}, 
         layout:{autoPadding: false, padding: {
-            left:0, right: 20}},
+            left:0, right: 5}},
         scales: { 
             xAxes: {display: true,
                     ticks: {autoSkip: true,

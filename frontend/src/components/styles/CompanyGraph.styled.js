@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const CompanyGraphContainer = styled.div`
+export const GraphContainer = styled.div`
     height: 300px;
+    margin-left: -30px;
 `
 export const ResolutionButtonContainer = styled.div`
     display: grid;

@@ -42,9 +42,7 @@ export const PortfolioInfoContainer = styled.div`
 
 export const PortfolioGraphContainer = styled.div`
     height: 300px;
-    div { 
-        padding: .5rem 0;
-    }
+    margin-left: -30px;
 `
 export const PortfolioOverviewContainer = styled.div`
     display: grid;
