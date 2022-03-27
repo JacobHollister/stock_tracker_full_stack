@@ -80,7 +80,7 @@ export default function EditTrade() {
         <FormContainer>
             <StyledHeading>
                 <h1>
-                    ADD A TRADE
+                    EDIT TRADE
                 </h1>
             </StyledHeading>
             <Form>
@@ -124,7 +124,7 @@ export default function EditTrade() {
                     <ButtonLarge color={'success'} type='submit'>
                     Edit Trade
                     </ButtonLarge>
-                    <QueryButton onClick={() => navigate('/')}>
+                    <QueryButton onClick={() => navigate('/portfolio')}>
                         Back to portfolio
                     </QueryButton>
                 </FormButtonContainer>

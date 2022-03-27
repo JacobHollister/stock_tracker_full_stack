@@ -18,7 +18,11 @@ export const ModalContainer = styled.div`
     background-color: #FFF;
     padding: 1rem 2rem;
     z-index: 1000;
+    max-width: 95%;
     min-width: 30rem;
+    @media (max-width: 576px) {
+        min-width: 95%;
+    }
     h2, p{
         text-align: center;
     }
@@ -28,5 +32,11 @@ export const ModalContainer = styled.div`
     }
     button {
         justify-self: center;
+    }
+    div {
+        @media (max-width: 576px){
+            display: grid;
+            grid-auto-flow: row;
+        }
     }
 `
