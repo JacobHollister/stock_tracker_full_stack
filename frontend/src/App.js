@@ -15,6 +15,7 @@ import Register from './pages/Register'
 import Search from './pages/Search'
 import Login from './pages/Login'
 import Company from './pages/Company';
+import CryptoCurrency from './pages/CryptoCurrency';
 import ForgotPassword from './pages/ForgotPassword';
 
 import Modal from './UI/Modal'
@@ -60,6 +61,7 @@ function App() {
               <Route path='/' element={ <Markets/> }/>
               <Route path='/watchlist' element={ <Watchlist/> }/>
               <Route path='/crypto' element={ <Crypto/> }/>
+              <Route path='/crypto/:symbol' element={ <CryptoCurrency/> }/>
               <Route path='/portfolio' element={ <Portfolio/> }/>
               <Route path='/addtrade' element={ <AddTrade/> }/>
               <Route path='/addtrade/:ticker' element={ <AddTrade/> }/>
@@ -69,6 +71,7 @@ function App() {
               <Route path='/forgotpassword' element={ <ForgotPassword/> }/>
               <Route path='/register' element={ <Register/> }/>
               <Route path='/company/:ticker' element={ <Company/> }/>
+              <Route path='/CryptoCurrency/:symbol' element={ <CryptoCurrency/> }/>
             </Routes>
           </Container>
         </Router>

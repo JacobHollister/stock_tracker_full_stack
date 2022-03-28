@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+// Get user from local storage
+// const userToken = JSON.parse(localStorage.getItem('user')).token
+
 export const fetchNewsContent = async (page, ticker) => {
     const tickerUrl = ticker ? '/' + ticker : "" 
 
@@ -17,6 +20,20 @@ export const fetchNewsContent = async (page, ticker) => {
 export const fetchCompanyInfo = async (ticker) => {
     return await new Promise((resolve, reject)=>{
         axios.get(`/api/v1/companys/${ticker}`)
+        .then(result => {
+            resolve(result.data) 
+        })
+        .catch (
+            err => reject(err)
+        )
+    })
+}
+
+export const fetchCryptoInfo = async (symbol, token) => {
+    const config = {headers: {'Authorization': `Bearer ${token}`}}
+
+    return await new Promise((resolve, reject)=>{
+        axios.get(`/api/v1/crypto/${symbol}`, config)
         .then(result => {
             resolve(result.data) 
         })

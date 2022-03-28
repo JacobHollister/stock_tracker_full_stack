@@ -13,14 +13,13 @@ import { StyledHeading } from '../components/styles/Heading.styled'
 
 // Supported CyrptoCurrencies
 const supportedCurrencies  = {
-    'BTC': "BITCOIN",
-    'ETH': "ETHEREUM",
-    'ADA': "CARDANO", 
-    'SOL': "SOLANA", 
-    'LUNA': "TERA", 
-    'DOT': "POLKADOT", 
-    'DOGE': "DOGECOIN", 
-    'SHIB': "SHIBA INU"}
+    'BTC': "bitcoin",
+    'ETH': "ethereum",
+    'ADA': "cardano", 
+    'SOL': "solana", 
+    'LUNA': "terra-luna", 
+    'DOT': "poldadot", 
+    'DOGE': "dogecoin"}
 
 export default function Watchlist() {
 

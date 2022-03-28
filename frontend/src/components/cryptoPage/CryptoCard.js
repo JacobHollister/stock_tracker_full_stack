@@ -1,5 +1,6 @@
 // Package imports
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 // Helper functions
 import { fetchCryptoLineData } from '../../utils/Api'
@@ -15,6 +16,7 @@ import { ButtonLarge } from '../styles/UI.styled';
 
 
 export default function CryptoCard({symbol, name}) {
+    const navigate = useNavigate()
 
     const  [ displayOverlay, setDisplayOverlay ] = useState(false)
 
@@ -45,15 +47,17 @@ export default function CryptoCard({symbol, name}) {
 
     }, [symbol])
 
+    const navigateURL = `/crypto/${name}`
+
     return (
         <div style={{position: 'relative'}}>
             { displayOverlay ? (
                 <CardOverlay display={displayOverlay} onClick={() => setDisplayOverlay(false)}>
-                    <ButtonLarge color={'success'}>
+                    <ButtonLarge color={'success'} onClick={() => navigate(navigateURL)}>
                         ADD
                     </ButtonLarge>
-                    <ButtonLarge onClick={() => setDisplayOverlay(false)}>
-                        CANCEL
+                    <ButtonLarge onClick={() => navigate(`/crypto/${name}`)}>
+                        INFO
                     </ButtonLarge>
                 </CardOverlay>
             ) : (
@@ -61,7 +65,7 @@ export default function CryptoCard({symbol, name}) {
             )}
             <SlimCard color={chartColor} onClick={() => setDisplayOverlay(true)}>
                 <h3>
-                    <span>{name}</span>
+                    <span>{name.toUpperCase()}</span>
                     <span> - </span>
                     <span>{symbol}</span>
                 </h3>

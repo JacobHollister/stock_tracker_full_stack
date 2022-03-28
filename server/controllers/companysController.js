@@ -10,8 +10,7 @@ const getCompanys = asyncWrapper(async (req, res) => {
     res.status(200).json(companys)
 })
 
-// @desc  Returns Company info from MONGO DB, if no company info is found on MONGO DB
-//        fetches info from finhub and stores in MONGO DB then returns info
+// @desc fetches info from finhub then returns info
 // @route   GET /api/v1/companys/:ticker
 // @access  Private
 const getCompanyInfo = asyncWrapper(async (req, res, next) => {
