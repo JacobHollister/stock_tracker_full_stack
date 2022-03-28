@@ -71,6 +71,11 @@ export default function Search() {
 
   return (
       <>
+        <StyledHeading>
+          <h1>
+            SEARCH
+          </h1>
+        </StyledHeading>
         <SearchInput>
           <input placeholder={'Search'} value={searchQuery} onChange={(e) => searchHandler(e)}></input>
           <span></span>
@@ -78,7 +83,7 @@ export default function Search() {
         {(searchResults.length > 0) ? 
         <StyledHeading>
           <h1>
-            SEARCH RESULTS
+            RESULTS
           </h1>
         </StyledHeading>
         : null}

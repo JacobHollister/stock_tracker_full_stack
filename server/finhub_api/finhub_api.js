@@ -47,8 +47,6 @@ const getFinhubCandles = async (companyTicker, resolution) => {
 
 const getCryptoLineData = async (cryptoSymbol, resolution) => {
     const [currentDay, startDate, finhubResolution] = resolutionHandler(resolution)
-    
-    console.log([currentDay, startDate, finhubResolution], cryptoSymbol)
 
     const queryUrl = `https://finnhub.io/api/v1/crypto/candle?symbol=BINANCE:${cryptoSymbol}USDT&resolution=${finhubResolution}&from=${startDate}&to=${currentDay}`
     const Candles = await queryFinhub(queryUrl)

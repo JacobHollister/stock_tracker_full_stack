@@ -75,7 +75,6 @@ export default function CryptoGraph({symbol, name}) {
             labels: labelData,
             datasets: [
                 {
-                    //borderColor: chartColor,
                     borderColor: '#0492C2',
                     data: chartData, 
                     fill: true,

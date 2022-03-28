@@ -9,7 +9,7 @@ import { fetchQuote } from '../../utils/Api'
 import WatchlistGraph from './WatchlistGraph'
 
 // Styled Components
-import { WatchlistCompanyCard } from '../styles/Watchlist.styled'
+import { SlimCard } from '../styles/Watchlist.styled'
 
 
 export default function WatchlistCard({ticker}) {
@@ -56,7 +56,7 @@ export default function WatchlistCard({ticker}) {
 
   return (
     <Link to={linkTo} style={{ textDecoration: 'none' }}>
-      <WatchlistCompanyCard color={Color}>
+      <SlimCard color={Color}>
         <h3>{ticker}</h3>
         <div>
           <WatchlistGraph ticker={ticker} chartColor={Color}/>
@@ -65,7 +65,7 @@ export default function WatchlistCard({ticker}) {
           <span>${quote ? quote.c.toFixed(2) : '0.0'} </span>
           <span >{quote ? quoteChangeHandler() : '0.0'}</span>
         </h4>
-      </WatchlistCompanyCard>
+      </SlimCard>
     </Link>
   )
 }

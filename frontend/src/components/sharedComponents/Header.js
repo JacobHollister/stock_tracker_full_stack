@@ -84,6 +84,7 @@ export default function Header() {
                     <NavButton to="/">MARKETS</NavButton>
                     <NavButton to="/portfolio">PORTFOLIO</NavButton>
                     <NavButton to="/watchlist">WATCHLIST</NavButton>
+                    <NavButton to="/crypto">CRYPTO</NavButton>
                     <NavButton to="/search">SEARCH</NavButton>
                 </Nav>
                 <NavSmall>
@@ -96,6 +97,7 @@ export default function Header() {
                         <SideNavButton to="/" onClick={() => setSideNavOpen("false")}>MARKETS</SideNavButton>
                         <SideNavButton to="/portfolio" onClick={() => setSideNavOpen("false")}>PORTFOLIO</SideNavButton>
                         <SideNavButton to="/watchlist" onClick={() => setSideNavOpen("false")}>WATCHLIST</SideNavButton>
+                        <SideNavButton to="/crypto" onClick={() => setSideNavOpen("false")}>CRYPTO</SideNavButton>
                         <SideNavButton end to="/search" onClick={() => setSideNavOpen("false")}>SEARCH</SideNavButton>
                         { user ? (
                             <SideNavButton to='/' onClick={() => onLogout()}>LOGOUT</SideNavButton>

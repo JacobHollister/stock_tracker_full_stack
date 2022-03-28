@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const WatchlistCompanyCard = styled.div`
+export const SlimCard = styled.div`
     cursor: pointer;
     margin-bottom: .5rem;
     margin: .5rem;
@@ -8,7 +8,7 @@ export const WatchlistCompanyCard = styled.div`
     border-bottom: 1px solid grey;
     display: grid;
     gap: 1rem;
-    grid-template-columns: 6rem 1fr 15rem;
+    grid-template-columns: 15rem 1fr 15rem;
     justify-content: space-between; 
     align-items: center;
     color: black;
@@ -27,7 +27,7 @@ export const WatchlistCompanyCard = styled.div`
         display: grid;
         grid-auto-flow: column;
         justify-content: end;
-        gap: 1rem;
+        gap: .5rem;
         padding: .5rem;
     }
     div {
@@ -40,17 +40,40 @@ export const WatchlistCompanyCard = styled.div`
     }
     @media (max-width: 767px) {
         margin: .5rem 0;
+        grid-template-columns: .75fr .5fr 1fr;
+        h3{
+            span {
+                &:nth-child(2){
+                    display: none;
+                }
+                &:nth-child(3){
+                    display: none;
+                }
+            }
+        }
     }
     @media (max-width: 576px) {
         margin: .5rem 0;
-        grid-template-columns: 6rem 1fr 10rem;
+        grid-template-columns: .5fr 1fr 1fr;
         margin: .5rem 0;
         h4{
+            text-align: end;
             grid-auto-flow: row;
-            justify-content: center;
+            justify-content: end;
         }
         div {
             width: 100px;
         }
+        h3{
+            span {
+                &:nth-child(1){
+                    display: none;
+                }
+                &:nth-child(3){
+                    display: contents;
+                }
+            }
+        }
     }
+    
 `

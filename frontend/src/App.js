@@ -6,6 +6,7 @@ import { Container } from './components/styles/Container.styled'
 
 import Header from "./components/sharedComponents/Header";
 import Watchlist from './pages/Watchlist'
+import Crypto from './pages/Crypto'
 import Markets from './pages/Markets'
 import Portfolio from './pages/Portfolio'
 import AddTrade from './pages/AddTrade'
@@ -58,6 +59,7 @@ function App() {
             <Routes>
               <Route path='/' element={ <Markets/> }/>
               <Route path='/watchlist' element={ <Watchlist/> }/>
+              <Route path='/crypto' element={ <Crypto/> }/>
               <Route path='/portfolio' element={ <Portfolio/> }/>
               <Route path='/addtrade' element={ <AddTrade/> }/>
               <Route path='/addtrade/:ticker' element={ <AddTrade/> }/>
