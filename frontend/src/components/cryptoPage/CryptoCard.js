@@ -1,6 +1,5 @@
 // Package imports
 import { useState, useEffect } from 'react'
-//import { Link } from 'react-router-dom'
 
 // Helper functions
 import { fetchCryptoLineData } from '../../utils/Api'
@@ -11,10 +10,13 @@ import CryptoGraphSmall from './CryptoGraphSmall'
 
 // Styled Components
 import { SlimCard } from '../styles/Watchlist.styled'
+import { CardOverlay } from '../styles/Crypto.styled'
+import { ButtonLarge } from '../styles/UI.styled';
 
 
 export default function CryptoCard({symbol, name}) {
 
+    const  [ displayOverlay, setDisplayOverlay ] = useState(false)
 
     const [ chartData, setChartData ] = useState(null)
     const [ labelData, setLabelData ] = useState(null)
@@ -43,24 +45,34 @@ export default function CryptoCard({symbol, name}) {
 
     }, [symbol])
 
-    // const linkTo = `/company/${ticker}`
-
     return (
-        // <Link to={linkTo} style={{ textDecoration: 'none' }}>
-        <SlimCard color={chartColor}>
-            <h3>
-                <span>{name}</span>
-                <span> - </span>
-                <span>{symbol}</span>
-            </h3>
-            <div>
-            <CryptoGraphSmall chartColor={chartColor} data={chartData} labels={labelData}/>
-            </div>
-            <h4>
-            <span>${price ? price : '0.0'} </span>
-            <span >({changePercentage ? changePercentage : '0.0'})%</span>
-            </h4>
-        </SlimCard>
-        // </Link>
+        <div style={{position: 'relative'}}>
+            { displayOverlay ? (
+                <CardOverlay display={displayOverlay} onClick={() => setDisplayOverlay(false)}>
+                    <ButtonLarge color={'success'}>
+                        ADD
+                    </ButtonLarge>
+                    <ButtonLarge onClick={() => setDisplayOverlay(false)}>
+                        CANCEL
+                    </ButtonLarge>
+                </CardOverlay>
+            ) : (
+                null
+            )}
+            <SlimCard color={chartColor} onClick={() => setDisplayOverlay(true)}>
+                <h3>
+                    <span>{name}</span>
+                    <span> - </span>
+                    <span>{symbol}</span>
+                </h3>
+                <div>
+                <CryptoGraphSmall chartColor={chartColor} data={chartData} labels={labelData}/>
+                </div>
+                <h4>
+                <span>${price ? price : '0.0'} </span>
+                <span >({changePercentage ? changePercentage : '0.0'})%</span>
+                </h4>
+            </SlimCard>
+        </div>
     )
 }

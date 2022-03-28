@@ -226,7 +226,7 @@ export default function Portfolio() {
         </PortfolioInfoContainer>
         <StyledHeading>
           <h1>
-            Overview
+            OVERVIEW
           </h1>
         </StyledHeading>
             <PortfolioOverviewContainer>
@@ -258,7 +258,7 @@ export default function Portfolio() {
             </PortfolioOverviewContainer>
         <StyledHeading>
         <h1>
-          Holdings
+          HOLDINGS
         </h1>
       </StyledHeading>
         <PortfolioHoldingsContainer>
