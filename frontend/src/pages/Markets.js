@@ -3,8 +3,9 @@ import IndiceGraph from '../components/marketsPage/IndiceGraph'
 import News from "../components/sharedComponents/News"
 
 // Styled Components
+import { Container } from '../components/styles/Container.styled'
 import { StyledHeading } from "../components/styles/Heading.styled"
-import { MarketGraphContainer } from "../components/styles/MarketGraphContainer.styled"
+import { MarketGraphContainer } from "../components/styles/Markets.styled"
 
 
 export default function Markets() {

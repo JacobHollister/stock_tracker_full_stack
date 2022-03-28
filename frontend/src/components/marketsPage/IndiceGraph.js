@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react'
 import Loader from '../sharedComponents/Loader'
 
 // Styled Components
-import {IndiceGraphContainer, IndiceGraphHeading} from '../styles/IndiceGraph.styled'
+import {IndiceGraphContainer, IndiceGraphHeading} from '../styles/Markets.styled'
 
 // Helper functions
 import { fetchQuote, fetchLineData } from '../../utils/Api'

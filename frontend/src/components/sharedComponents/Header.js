@@ -12,6 +12,7 @@ import MenuHamburger from './MenuHambuger'
 
 // Styled Components
 import { 
+    NavHeader,
     Nav, 
     NavButton, 
     StyledHeader, 
@@ -56,12 +57,9 @@ export default function Header() {
     return(
         <StyledHeader>
             <Container>
-                <Nav>
-                    <NavButton to="/">MARKETS</NavButton>
-                    <NavButton to="/portfolio">PORTFOLIO</NavButton>
-                    <NavButton to="/watchlist">WATCHLIST</NavButton>
-                    <NavButton to="/search">SEARCH</NavButton>
-                    <Logo>STOCKS</Logo>
+                <NavHeader>
+                    <span style={{ alignSelf: 'center'}}>(logo)</span>
+                    <h2>STOCKS</h2> 
                     { user ? (
                         <>
                             <AuthButton alt="true" onClick={onLogout}>
@@ -81,6 +79,12 @@ export default function Header() {
                                 </AuthButton>
                         </>
                     )}
+                </NavHeader>
+                <Nav>
+                    <NavButton to="/">MARKETS</NavButton>
+                    <NavButton to="/portfolio">PORTFOLIO</NavButton>
+                    <NavButton to="/watchlist">WATCHLIST</NavButton>
+                    <NavButton to="/search">SEARCH</NavButton>
                 </Nav>
                 <NavSmall>
                     <MenuHamburger ToggleMenu={ToggleMenu} isOpen={sideNavOpen}/>

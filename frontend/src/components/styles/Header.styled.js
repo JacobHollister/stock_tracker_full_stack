@@ -44,9 +44,6 @@ export const Nav = styled.nav`
     @media (max-width: 767px) {
         display: none;
     }
-    @media (max-width: 576px) {
-        display: none;
-    }
 `
 
 export const NavButton = styled(NavLink)`
@@ -93,10 +90,21 @@ export const NavButton = styled(NavLink)`
             cursor: default;
         }
     `
+export const NavHeader = styled.div`
+    margin-bottom: .25rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: flex-start;
+    h2 {
+        margin: 0 0 0 .5rem;
+    }
+    @media (max-width: 767px) {
+        display: none;
+    }
+`
 
-//Change to image when created
 export const Logo = styled.div`
-    // Temporary style
     font-size: 1rem;
     font-weight: bold;
     letter-spacing: .1rem;
@@ -174,13 +182,11 @@ export const SideNavButton = styled(NavLink)`
     }
 `
 
-export const NavLogo = styled.div`
+export const NavLogo = styled.h2`
     font-weight: bold;
-    // Temporary style
-    font-size: 2rem;
     letter-spacing: .1rem;
     text-transform: bold;
-    padding: 1rem;
+    padding: 0 1rem;
 `
 
 export const NavSmall = styled.nav`

@@ -28,6 +28,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 const lightTheme = {
   primary: 'black'
 }
+
 const darkTheme = {
   primary: 'white'
 }
@@ -38,11 +39,12 @@ function App() {
 
   useEffect(() => {
     const themeQuery = window.matchMedia('(prefers-color-scheme: light)')
-    console.log(themeQuery)
+    themeQuery.onchange = () => console.log('changed')
     setCurrentTheme(themeQuery.matches ? 'light' : 'dark')
     themeQuery.addEventListener('change', ({matches}) => {
       setCurrentTheme(matches ? 'light' : 'dark')
     })
+
   }, [])
 
   return (

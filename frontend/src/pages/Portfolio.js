@@ -23,7 +23,6 @@ import PortfolioHolding from '../components/portfolioPage/PortfolioHolding'
 // Styled Components
 import { StyledHeading } from '../components/styles/Heading.styled'
 import { 
-  PortfolioContainer, 
   PortfolioHeader, 
   PortfolioGraphContainer, 
   PortfolioWeightingsContainer,
@@ -37,6 +36,7 @@ import {
   ResolutionButtonContainer, 
   ResolutionButton 
 } from '../components/styles/CompanyGraph.styled'
+import { Container } from '../components/styles/Container.styled'
 
 
 export default function Portfolio() {
@@ -192,10 +192,9 @@ export default function Portfolio() {
   
   return (
     <>
-      <PortfolioContainer>
         <StyledHeading>
           <h1>
-            Portfolio
+            PORTFOLIO
           </h1>
         </StyledHeading>
         <PortfolioHeader color={chartColor}>
@@ -266,7 +265,6 @@ export default function Portfolio() {
         <PortfolioHoldingsContainer>
           {holdings}
         </PortfolioHoldingsContainer>
-      </PortfolioContainer>
     </>
   )
 }

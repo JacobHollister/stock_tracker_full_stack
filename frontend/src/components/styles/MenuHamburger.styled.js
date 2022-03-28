@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Hamburger = styled.div`
+    position: absolute;
     width: 3rem;
     height: 3rem;
     padding: .5rem;
