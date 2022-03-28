@@ -37,6 +37,40 @@ const getFinhubCompanyNews = async (companyTicker) => {
 }
 
 const getFinhubCandles = async (companyTicker, resolution) => {
+    const [currentDay, startDate, finhubResolution] = resolutionHandler(resolution) 
+
+    const queryUrl = `https://finnhub.io/api/v1/stock/candle?symbol=${companyTicker}&resolution=${finhubResolution}&from=${startDate}&to=${currentDay}`
+    const Candles = await queryFinhub(queryUrl)
+
+    return Candles.length === 0 ? null : Candles
+}
+
+const getCryptoLineData = async (cryptoSymbol, resolution) => {
+    const [currentDay, startDate, finhubResolution] = resolutionHandler(resolution)
+    
+    console.log([currentDay, startDate, finhubResolution], cryptoSymbol)
+
+    const queryUrl = `https://finnhub.io/api/v1/crypto/candle?symbol=BINANCE:${cryptoSymbol}USDT&resolution=${finhubResolution}&from=${startDate}&to=${currentDay}`
+    const Candles = await queryFinhub(queryUrl)
+
+    return Candles.length === 0 ? null : Candles
+}
+
+const getFinhubQuote = async (ticker) => {
+    const queryUrl = `https://finnhub.io/api/v1/quote?symbol=${ticker}`
+    const Quote = await queryFinhub(queryUrl)
+
+    return Object.keys(Quote).length === 0 ? null : Quote;
+}
+
+const getFinhubFinancials = async (ticker) => {
+    const queryUrl = `https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all`
+    const financials = await queryFinhub(queryUrl)
+
+    return Object.keys(financials).length === 0 ? null : financials;
+}
+
+function resolutionHandler(resolution) {
     const currentDay = fns.getUnixTime(Date.now())
     let finhubResolution
     let startDate
@@ -62,25 +96,9 @@ const getFinhubCandles = async (companyTicker, resolution) => {
             break;
     }
 
-    const queryUrl = `https://finnhub.io/api/v1/stock/candle?symbol=${companyTicker}&resolution=${finhubResolution}&from=${startDate}&to=${currentDay}`
-    const Candles = await queryFinhub(queryUrl)
-
-    return Candles.length === 0 ? null : Candles
+    return [currentDay, startDate, finhubResolution]
 }
 
-const getFinhubQuote = async (ticker) => {
-    const queryUrl = `https://finnhub.io/api/v1/quote?symbol=${ticker}`
-    const Quote = await queryFinhub(queryUrl)
-
-    return Object.keys(Quote).length === 0 ? null : Quote;
-}
-
-const getFinhubFinancials = async (ticker) => {
-    const queryUrl = `https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all`
-    const financials = await queryFinhub(queryUrl)
-
-    return Object.keys(financials).length === 0 ? null : financials;
-}
 
 module.exports = {
     getFinhubCompanyInfo,
@@ -89,5 +107,6 @@ module.exports = {
     getFinhubCandles,
     getFinhubQuote,
     getFinhubFinancials,
-    searchCompany
+    searchCompany,
+    getCryptoLineData
 }

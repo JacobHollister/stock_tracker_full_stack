@@ -15,13 +15,13 @@ export const MarketGraphContainer = styled.div`
     }
 `;
 
-export const IndiceGraphContainer = styled.div`
+export const SmallGraphContainer = styled.div`
     flex-grow: 1;
     display: grid;
     grid-template-rows: auto 1fr;
 `
 
-export const IndiceGraphHeading = styled.div`
+export const SmallGraphHeading = styled.div`
     display: flex;
     justify-content: space-between;
 

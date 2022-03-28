@@ -51,6 +51,18 @@ export const fetchLineData = async (ticker, resolution) => {
     })
 }
 
+export const fetchCryptoLineData = async (symbol, resolution) => {
+    return await new Promise((resolve, reject)=>{
+        axios.get(`/api/v1/crypto/line?cryptoSymbol=${symbol}&resolution=${resolution}`)
+        .then(result => {
+            resolve(result.data) 
+        })
+        .catch (
+            err => reject(err)
+        )
+    })
+}
+
 export const searchCompanies = async (query) => {
     if (query === "") return
     return await new Promise((resolve, reject)=>{

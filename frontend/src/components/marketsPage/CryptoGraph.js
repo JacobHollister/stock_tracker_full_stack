@@ -8,8 +8,8 @@ import Loader from '../sharedComponents/Loader'
 import {SmallGraphContainer, SmallGraphHeading} from '../styles/Markets.styled'
 
 // Helper functions
-import { fetchLineData } from '../../utils/Api'
-import { graphColourHandler, GraphChangeHandler } from '../../utils/graphFunctions';
+import { fetchCryptoLineData } from '../../utils/Api'
+import { GraphChangeHandler, graphColourHandler } from '../../utils/graphFunctions';
 
 // react-js chart imports
 import {
@@ -35,7 +35,7 @@ ChartJS.register(
     Legend
 );
 
-export default function IndiceGraph({ticker, indice}) {
+export default function CryptoGraph({symbol, name}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
@@ -48,7 +48,7 @@ export default function IndiceGraph({ticker, indice}) {
 
         setIsChartLoading(true)
         
-        fetchLineData(ticker, 'day')
+        fetchCryptoLineData(symbol, 'day')
         .then(result => {
             if(!mounted) return
             const [changeAmount, changePercentageString] = GraphChangeHandler(result.data)
@@ -63,19 +63,20 @@ export default function IndiceGraph({ticker, indice}) {
 
         return () => mounted = false
 
-    }, [ticker])
+    }, [symbol])
 
     useEffect(() => {
         if(chartData && labelData){
             setIsChartLoading(false)
         }
-    }, [chartData, labelData, ticker])
+    }, [chartData, labelData, symbol])
 
     const graphDataProps = {
             labels: labelData,
             datasets: [
                 {
-                    borderColor: chartColor,
+                    //borderColor: chartColor,
+                    borderColor: '#0492C2',
                     data: chartData, 
                     fill: true,
                     borderWidth: '2',
@@ -98,8 +99,8 @@ export default function IndiceGraph({ticker, indice}) {
     return (
         <SmallGraphContainer>
             <SmallGraphHeading>
-                <span>{indice}</span>
-                <span>{ticker} </span>
+                <span>{name}</span>
+                <span>{symbol} </span>
                 <span style={{color: chartColor, fontWeight: 700}}> {changePercentage ? changePercentage : '0.0'}%</span>
             </SmallGraphHeading>
             <div>

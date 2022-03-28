@@ -19,6 +19,15 @@ export const quoteChangeHandler = (quote) => {
     return `${changeDirection}$${changeAmount} (${changeDirection}${changePercentage}%) Day` 
 }
 
+export const GraphChangeHandler = ( graphData ) => {
+    const firstClose = graphData[0]
+    const lastClose = graphData[graphData.length -1]
+    const changeAmount = lastClose - firstClose
+    const changeDirection = ( changeAmount > 0) ? '+' : '-'
+    const changePercentage = ( (changeAmount / firstClose) * 100).toFixed(2)
+    return [changeAmount, `${changeDirection}${Math.abs(changePercentage)}`]
+}
+
 export const graphLabelDataHandler = (dateData, resolution) => {
     const timeFormatString = formatTimeString(resolution)
 

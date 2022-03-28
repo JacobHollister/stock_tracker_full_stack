@@ -36,7 +36,6 @@ import {
   ResolutionButtonContainer, 
   ResolutionButton 
 } from '../components/styles/CompanyGraph.styled'
-import { Container } from '../components/styles/Container.styled'
 
 
 export default function Portfolio() {
