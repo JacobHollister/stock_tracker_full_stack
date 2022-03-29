@@ -18,7 +18,7 @@ const supportedCurrencies  = {
     'ADA': "cardano", 
     'SOL': "solana", 
     'LUNA': "terra-luna", 
-    'DOT': "poldadot", 
+    'DOT': "polkadot", 
     'DOGE': "dogecoin"}
 
 export default function Watchlist() {

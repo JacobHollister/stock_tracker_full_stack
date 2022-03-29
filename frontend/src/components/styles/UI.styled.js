@@ -28,3 +28,21 @@ export const ButtonLarge = styled.button`
         filter: brightness(90%);
     }
 `
+
+export const BackButton = styled.button`
+    position: absolute;
+    top: -.5rem;
+    left: -.5rem;
+    padding: 0 0;
+    border: none;
+    border-bottom: 1px solid black;
+    background: none;
+    cursor: pointer;
+    @media (max-width: 767px) {
+        top: 0;
+        left: 0;
+    }
+    &:hover {
+        transform: scale(1.02);
+    }
+`

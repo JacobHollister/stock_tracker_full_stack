@@ -1,6 +1,6 @@
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
-const {getFinhubCompanyInfo, getFinhubFinancials, searchCompany} = require('../finhub_api/finhub_api')
+const {getFinhubCompanyInfo, getFinhubFinancials, searchCompany} = require('../external_APIs/finhub_api')
 
 // @desc    Returns list of all companies stored on MONGO DB
 // @route   GET /api/v1/companys

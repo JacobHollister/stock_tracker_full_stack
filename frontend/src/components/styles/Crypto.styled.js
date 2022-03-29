@@ -18,6 +18,7 @@ export const CardOverlay = styled.div`
 `
 
 export const CryptoContainer = styled.div`
+    position: relative;
     display: grid;
     margin: 0 .5rem 3rem .5rem;
     h1 {
@@ -26,6 +27,8 @@ export const CryptoContainer = styled.div`
     }
     @media (max-width: 767px) {
         gap: .5rem;
+        margin: 0 0 3rem 0;
+        padding: 0 .25rem;
     }
 `
 
@@ -33,15 +36,12 @@ export const CryptoHeading = styled.div`
     width: 100%;
     margin-bottom: 1.5rem;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto;
     justify-content:space-between;
-    div {
-        flex: auto;
-        display: flex;
-        justify-content: end;
-        padding-right: 1rem;
+    h1 {
+        grid-column-start: 1;
+        grid-column-end: 3;
     }
-
     h2 {
         font-size: 1.3rem;
         font-weight: 300;
@@ -54,6 +54,18 @@ export const CryptoHeading = styled.div`
                 font-weight: 600;
                 color: ${props => props.color}
             }
+        }
+    }
+    @media (max-width: 767px){
+        grid-template-columns: 1fr;
+        margin-left:.5rem;
+        h1 {
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
+        button {
+            justify-self: start;
+            margin-left: 0;
         }
     }
 

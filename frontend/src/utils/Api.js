@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-// Get user from local storage
-// const userToken = JSON.parse(localStorage.getItem('user')).token
-
 export const fetchNewsContent = async (page, ticker) => {
     const tickerUrl = ticker ? '/' + ticker : "" 
 
@@ -68,9 +65,11 @@ export const fetchLineData = async (ticker, resolution) => {
     })
 }
 
-export const fetchCryptoLineData = async (symbol, resolution) => {
+export const fetchCryptoLineData = async (symbol, resolution, token) => {
+    const config = {headers: {'Authorization': `Bearer ${token}`}}
+
     return await new Promise((resolve, reject)=>{
-        axios.get(`/api/v1/crypto/line?cryptoSymbol=${symbol}&resolution=${resolution}`)
+        axios.get(`/api/v1/crypto/line?cryptoSymbol=${symbol}&resolution=${resolution}`, config)
         .then(result => {
             resolve(result.data) 
         })

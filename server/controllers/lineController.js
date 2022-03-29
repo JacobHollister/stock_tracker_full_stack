@@ -2,7 +2,7 @@ const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
 const {
     getFinhubCandles
-    } = require('../finhub_api/finhub_api')
+    } = require('../external_APIs/finhub_api')
 
 // @desc    Get candle {close and time} information for specfic ticker (used for line graphs)
 // @route   GET /api/v1/stock/line

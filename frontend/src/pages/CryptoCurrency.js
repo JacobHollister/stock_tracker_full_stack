@@ -7,18 +7,17 @@ import { useSelector, useDispatch } from 'react-redux'
 
 // Helper functions
 import { fetchCryptoInfo } from '../utils/Api'
-import { quoteChangeHandler, graphColourHandler } from '../utils/graphFunctions'
+import { graphColourHandler, cryptoChangeHandler } from '../utils/graphFunctions'
 
 // Components
-import CompanyInfo from '../components/companyPage/CompanyInfo'
-import CompanyGraph from '../components/companyPage/CompanyGraph'
-import News from '../components/sharedComponents/News'
+import CryptoGraphLarge from '../components/cryptoCurrencyPage/CryptoGraphLarge'
+import CryptoInfo from '../components/cryptoCurrencyPage/CryptoInfo'
 
 // Assets / Icons
 
 
 // Styled Components
-import { ButtonLarge } from '../components/styles/UI.styled'
+import { ButtonLarge, BackButton } from '../components/styles/UI.styled'
 import { 
     CryptoContainer, 
     CryptoHeading} 
@@ -29,10 +28,10 @@ export default function CryptoCurrency() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
-    const { symbol } = useParams()
+    const { name } = useParams()
     const { user } = useSelector((state) => state.auth)
 
-    const [ CryptoInfo, setCryptoInfo] = useState(null)
+    const [ cryptoInfo, setCryptoInfo] = useState(null)
     const [ chartColour, setChartColour ] = useState(null)
 
     useEffect(() => {
@@ -45,36 +44,36 @@ export default function CryptoCurrency() {
     useEffect(() => {
         let isMounted = true
 
-        fetchCryptoInfo(symbol, user.token)
+        fetchCryptoInfo(name, user.token)
         .then(result => {
             if(!isMounted) return
             setCryptoInfo(result)
             setChartColour(graphColourHandler(result.change))
-            console.log(result)
         })
         .catch (
             err => console.error(err)
         )
 
         return () => isMounted = false
-    }, [symbol, user])
+    }, [name, user])
 
 
     return (
         <>
         <CryptoContainer>
+            <BackButton onClick={() => navigate(-1)}> BACK</BackButton>
                 <CryptoHeading color={chartColour}>
                     <h1>
-                        <span>{CryptoInfo ? CryptoInfo.shortName.toUpperCase() : null} | {CryptoInfo ? CryptoInfo.name : ""}</span>
+                        <span>{cryptoInfo ? cryptoInfo.shortName.toUpperCase() : null} | {cryptoInfo ? cryptoInfo.name : ""}</span>
                     </h1>
-                    <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + symbol)}>ADD</ButtonLarge>
                     <h2>
-                        <span>${CryptoInfo ? CryptoInfo.currentPrice : '0.0'}</span>
-                        <span >{CryptoInfo ? CryptoInfo.changePercentage.toFixed(2) : '0.0'}</span>
+                        <span>${cryptoInfo ? cryptoInfo.currentPrice : '0.0'}</span>
+                        <span >{cryptoInfo ? cryptoChangeHandler(cryptoInfo.changePercentage) : '0.0'}</span>
                     </h2>
+                    <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + name)}>ADD</ButtonLarge>
                 </CryptoHeading>
-            {/* <CompanyGraph ticker={symbol} chartColor={chartColor}/>
-            <CompanyInfo quote={quote} companyInfo={companyInfo}/> */}
+            <CryptoGraphLarge symbol={cryptoInfo ? cryptoInfo.shortName : null} token={user.token}/>
+            <CryptoInfo info={cryptoInfo}/>
         </CryptoContainer>
         </>
     )

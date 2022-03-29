@@ -2,7 +2,7 @@ const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
 const {
     getFinhubQuote
-    } = require('../finhub_api/finhub_api')
+    } = require('../external_APIs/finhub_api')
 
 // @desc    Get price quote for company ticker
 // @route   GET /api/v1/stock/quote/:ticker

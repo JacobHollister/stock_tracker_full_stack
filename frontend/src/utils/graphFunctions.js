@@ -19,6 +19,12 @@ export const quoteChangeHandler = (quote) => {
     return `${changeDirection}$${changeAmount} (${changeDirection}${changePercentage}%) Day` 
 }
 
+export const cryptoChangeHandler = (change) => {
+    const changeDirection = ( change > 0 ) ? '+' : "-"
+    const changeAmount = Math.abs(change.toFixed(2))
+    return `(${changeDirection}${changeAmount}%) Day`
+}
+
 export const GraphChangeHandler = ( graphData ) => {
     const firstClose = graphData[0]
     const lastClose = graphData[graphData.length -1]

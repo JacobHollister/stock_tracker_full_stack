@@ -3,7 +3,7 @@ const { createCustomError } = require('../errors/custom-error')
 const {
     getFinhubMarketNews,
     getFinhubCompanyNews
-    } = require('../finhub_api/finhub_api')
+    } = require('../external_APIs/finhub_api')
 
 // @desc    Get news
 // @route   GET /api/v1/news

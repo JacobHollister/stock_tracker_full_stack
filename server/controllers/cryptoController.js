@@ -1,11 +1,10 @@
-const { fetchCryptoInfo } = require('../coinGeckoApi/coinGeckoApi')
+const { fetchCryptoInfo } = require('../external_APIs/coin_gecko_api')
 const asyncWrapper = require('../middleware/async')
 
 // @desc    Fetching crypto currency information and returns it  
 // @route   GET /api/v1/crypto/:symbol
 // @access  Private
 const getCryptoInfo = asyncWrapper(async (req, res, next) => {
-    console.log('here')
     const { symbol } = req.params
     
     const cryptoInfo = await fetchCryptoInfo(symbol)

@@ -47,13 +47,11 @@ export default function CryptoCard({symbol, name}) {
 
     }, [symbol])
 
-    const navigateURL = `/crypto/${name}`
-
     return (
         <div style={{position: 'relative'}}>
             { displayOverlay ? (
                 <CardOverlay display={displayOverlay} onClick={() => setDisplayOverlay(false)}>
-                    <ButtonLarge color={'success'} onClick={() => navigate(navigateURL)}>
+                    <ButtonLarge color={'success'} onClick={() => navigate('/')}>
                         ADD
                     </ButtonLarge>
                     <ButtonLarge onClick={() => navigate(`/crypto/${name}`)}>

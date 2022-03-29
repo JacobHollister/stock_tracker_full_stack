@@ -61,7 +61,7 @@ function App() {
               <Route path='/' element={ <Markets/> }/>
               <Route path='/watchlist' element={ <Watchlist/> }/>
               <Route path='/crypto' element={ <Crypto/> }/>
-              <Route path='/crypto/:symbol' element={ <CryptoCurrency/> }/>
+              <Route path='/crypto/:name' element={ <CryptoCurrency/> }/>
               <Route path='/portfolio' element={ <Portfolio/> }/>
               <Route path='/addtrade' element={ <AddTrade/> }/>
               <Route path='/addtrade/:ticker' element={ <AddTrade/> }/>

@@ -2,7 +2,8 @@
 import { 
     InfoDetail, 
     InfoLabel, 
-    CompanyInfoContainer 
+    CompanyInfoContainer,
+    LabelContainer 
 } from '../styles/Company.styled'
 
 
@@ -10,7 +11,7 @@ export default function CompanyInfo({quote, companyInfo}) {
     return ( 
         <CompanyInfoContainer>
             <h1>Overview</h1>
-            <div>
+            <LabelContainer>
                 <InfoDetail>
                     <InfoLabel>Open :</InfoLabel>
                     <span>${quote ? quote.o.toFixed(2) : '0.0'}</span>
@@ -39,7 +40,7 @@ export default function CompanyInfo({quote, companyInfo}) {
                     <InfoLabel>P/E Ratio :</InfoLabel>
                     <span>{companyInfo && companyInfo.peRatio ? companyInfo.peRatio.toFixed(2) : '0.0'}</span>
                 </InfoDetail>
-            </div>
+            </LabelContainer>
         </CompanyInfoContainer>
     );
 }

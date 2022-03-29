@@ -20,7 +20,7 @@ import { CgAdd} from 'react-icons/cg'
 import { MdOutlineCancel } from 'react-icons/md'
 
 // Styled Components
-import { ButtonLarge } from '../components/styles/UI.styled'
+import { ButtonLarge, BackButton } from '../components/styles/UI.styled'
 import { 
     CompanyContainer, 
     CompanyHeading, 
@@ -82,25 +82,26 @@ export default function Company() {
     return (
         <>
         <CompanyContainer>
-                <CompanyHeading color={chartColor}>
-                    <h1>
-                        <span>{ticker.toUpperCase()} | {companyInfo ? companyInfo.name : ""}</span>
-                    </h1>
-                    { watchlist.includes(ticker) ? (
-                        <WatchlistButton onClick={removeFromWatchlist}>
-                            <MdOutlineCancel/> Remove from watchlist
-                        </WatchlistButton>
-                    ) : (
-                        <WatchlistButton onClick={onAddToWatchlist}>
-                            <CgAdd/>Add to watchlist
-                        </WatchlistButton>
-                    )}
-                    <h2>
-                        <span>${quote ? quote.c.toFixed(2) : '0.0'}</span>
-                        <span >{quote ? quoteChangeHandler(quote) : '0.0'}</span>
-                    </h2>
-                    <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + ticker)}>ADD</ButtonLarge>
-                </CompanyHeading>
+            <BackButton onClick={() => navigate(-1)}> BACK</BackButton>
+            <CompanyHeading color={chartColor}>
+                <h1>
+                    <span>{ticker.toUpperCase()} | {companyInfo ? companyInfo.name : ""}</span>
+                </h1>
+                { watchlist.includes(ticker) ? (
+                    <WatchlistButton onClick={removeFromWatchlist}>
+                        <MdOutlineCancel/> Remove from watchlist
+                    </WatchlistButton>
+                ) : (
+                    <WatchlistButton onClick={onAddToWatchlist}>
+                        <CgAdd/>Add to watchlist
+                    </WatchlistButton>
+                )}
+                <h2>
+                    <span>${quote ? quote.c.toFixed(2) : '0.0'}</span>
+                    <span >{quote ? quoteChangeHandler(quote) : '0.0'}</span>
+                </h2>
+                <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + ticker)}>ADD</ButtonLarge>
+            </CompanyHeading>
             <CompanyGraph ticker={ticker} chartColor={chartColor}/>
             <CompanyInfo quote={quote} companyInfo={companyInfo}/>
         </CompanyContainer>

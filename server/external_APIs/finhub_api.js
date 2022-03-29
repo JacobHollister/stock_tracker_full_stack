@@ -46,7 +46,7 @@ const getFinhubCandles = async (companyTicker, resolution) => {
 }
 
 const getCryptoLineData = async (cryptoSymbol, resolution) => {
-    const [currentDay, startDate, finhubResolution] = resolutionHandler(resolution)
+    const [currentDay, startDate, finhubResolution] = resolutionHandler(resolution, true)
 
     const queryUrl = `https://finnhub.io/api/v1/crypto/candle?symbol=BINANCE:${cryptoSymbol}USDT&resolution=${finhubResolution}&from=${startDate}&to=${currentDay}`
     const Candles = await queryFinhub(queryUrl)
@@ -68,7 +68,7 @@ const getFinhubFinancials = async (ticker) => {
     return Object.keys(financials).length === 0 ? null : financials;
 }
 
-function resolutionHandler(resolution) {
+function resolutionHandler(resolution, crypto = false) {
     const currentDay = fns.getUnixTime(Date.now())
     let finhubResolution
     let startDate
@@ -76,6 +76,10 @@ function resolutionHandler(resolution) {
     switch (resolution) {
         case 'day':
             startDate = fns.getUnixTime(fns.subBusinessDays(Date.now(), 1))
+            // Allowing for weekend break in stock market
+            if(fns.isWeekend(fns.subDays(startDate, 2)) && !crypto){
+                startDate = fns.getUnixTime(fns.subBusinessDays(Date.now(), 2))
+            }
             finhubResolution = '15'
             break;
         case 'week':

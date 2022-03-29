@@ -8,6 +8,6 @@ const {
     getCryptoInfo,
 } = require('../controllers/cryptoController')
 
-router.route('/:symbol').get(authenticationMiddleware, getCryptoInfo)
+router.route('/:symbol').get(getCryptoInfo)
 
 module.exports = router

@@ -4,6 +4,6 @@ const cache = require('apicache').middleware
 
 const getLineData = require('../controllers/lineController')
 
-router.route('/').get(cache('2 minutes'), getLineData)
+router.route('/').get(getLineData)
 
 module.exports = router
