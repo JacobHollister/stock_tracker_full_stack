@@ -8,7 +8,7 @@ const {
     addTrade,
     updateTrade,
     removeTrade
-} = require('../controllers/tradesController')
+} = require('../controllers/stockTradesController')
 
 router.route('/').get(authenticationMiddleware ,gettrades)
                 .post(authenticationMiddleware ,addTrade)

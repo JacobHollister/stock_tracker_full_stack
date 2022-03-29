@@ -8,6 +8,7 @@ const {
 // @route   GET /api/v1/stock/line
 // @access  Private
 const getCryptoLine = asyncWrapper(async (req, res, next) => {
+    console.log('im trying')
     const {cryptoSymbol, resolution} = req.query
 
     const candleData = await getCryptoLineData(cryptoSymbol.toUpperCase(), resolution)

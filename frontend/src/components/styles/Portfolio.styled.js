@@ -69,7 +69,6 @@ export const PortfolioInfoLabel = styled.div`
     font-weight: 600;
 `
 export const PortfolioHoldingsContainer = styled.div`
-    height: 30rem;
 `
 export const TradeDetailsHeader = styled.div`
     display: grid;

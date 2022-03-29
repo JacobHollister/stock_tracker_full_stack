@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TradeSchema = new mongoose.Schema({
+const StockTradeSchema = new mongoose.Schema({
 
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -25,4 +25,4 @@ const TradeSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Trade', TradeSchema);
+module.exports = mongoose.model('StockTrade', StockTradeSchema);

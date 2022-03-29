@@ -29,7 +29,7 @@ ChartJS.register(
 ); 
 
 
-export default function PortfolioDoughnutGraph({data, tradedCompanies}) {
+export default function PortfolioDoughnutGraph({data, tradedHoldings}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
     const [ chartData, setChartData ] = useState(null)
@@ -37,40 +37,42 @@ export default function PortfolioDoughnutGraph({data, tradedCompanies}) {
 
     useEffect(() => {
         setIsChartLoading(true)
-        if(Object.keys(data).length > 0 && Object.keys(tradedCompanies).length > 0){
-            doughnutGraphHandler(data, tradedCompanies)
+        if(Object.keys(data).length > 0 && Object.keys(tradedHoldings).length > 0){
+            doughnutGraphHandler(data, tradedHoldings)
             setIsChartLoading(false)
         }
-    },[data, tradedCompanies])
+    },[data, tradedHoldings])
 
-    const doughnutGraphHandler = (data, tradedCompanies) => {
+    const doughnutGraphHandler = (data, tradedHoldings) => {
         let labels = []
         let graphData = []
-        Object.keys(data).forEach((company) => {
-            labels.push(company)
-            const graphDataAmount = (tradedCompanies[company] * data[company].data[data[company].data.length -1]).toFixed(2)
+        Object.keys(data).forEach((holding) => {
+            labels.push(holding)
+            const graphDataAmount = (tradedHoldings[holding] * data[holding].data[data[holding].data.length -1]).toFixed(2)
             graphData.push(parseFloat(graphDataAmount))
         })
 
-        if(graphData.length > 4){
-            const sortedGraphData = [...graphData].sort().reverse().slice(0,3)
-            const updatedGraphData = [0]
-            const updatedLabelData = ['Other']
-            labels.forEach((company, ind) => {
-                if(sortedGraphData.includes(graphData[ind]))
-                {
-                    updatedGraphData.push(parseFloat(graphData[ind]))
-                    updatedLabelData.push(company)
-                } else {
-                    updatedGraphData[0] = graphData[ind] + parseFloat(updatedGraphData[0])
-                }
-            })
-            updatedGraphData.reverse()
-            updatedLabelData.reverse()
-            setChartData(updatedGraphData)
-            setLabelData(updatedLabelData)
-            return
-        }
+        // old Code not sure if we reuse
+
+        // if(graphData.length > 4){
+        //     const sortedGraphData = [...graphData].sort().reverse().slice(0,3)
+        //     const updatedGraphData = [0]
+        //     const updatedLabelData = ['Other']
+        //     labels.forEach((company, ind) => {
+        //         if(sortedGraphData.includes(graphData[ind]))
+        //         {
+        //             updatedGraphData.push(parseFloat(graphData[ind]))
+        //             updatedLabelData.push(company)
+        //         } else {
+        //             updatedGraphData[0] = graphData[ind] + parseFloat(updatedGraphData[0])
+        //         }
+        //     })
+        //     updatedGraphData.reverse()
+        //     updatedLabelData.reverse()
+        //     setChartData(updatedGraphData)
+        //     setLabelData(updatedLabelData)
+        //     return
+        // }
         setChartData(graphData)
         setLabelData(labels)
     }

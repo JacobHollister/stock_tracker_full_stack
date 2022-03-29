@@ -1,9 +1,9 @@
 const asyncWrapper = require('../middleware/async')
 const { createCustomError } = require('../errors/custom-error')
-const Trade = require('../models/trade')
+const Trade = require('../models/stockTrade')
 
-// @desc    Get users trades
-// @route   GET /api/v1/trades
+// @desc    Get users stock trades
+// @route   GET /api/v1/trades/stock
 // @access  Private
 const gettrades = asyncWrapper(async (req, res, next) => {
     const userTrades = await Trade.find({user: req.user._id})
@@ -11,8 +11,8 @@ const gettrades = asyncWrapper(async (req, res, next) => {
     res.status(200).json(userTrades)
 })
 
-// @desc    Add user trade
-// @route   POST /api/v1/trades
+// @desc    Add user stock trade
+// @route   POST /api/v1/trades/stock
 // @access  Private
 const addTrade = asyncWrapper(async (req, res) => {
     const {ticker, quantity, purchase_date, purchase_price} = req.body
@@ -22,8 +22,8 @@ const addTrade = asyncWrapper(async (req, res) => {
     res.status(201).json(newTrade)
 })
 
-// @desc    Delete trade
-// @route   Delete /api/v1/trades
+// @desc    Delete stock trade
+// @route   Delete /api/v1/trades/stock
 // @access  Private
 const removeTrade = asyncWrapper( async (req, res, next) => {
     const trade = await Trade.findOne({user: req.user._id, _id: req.body.trade_id})
@@ -36,8 +36,8 @@ const removeTrade = asyncWrapper( async (req, res, next) => {
     }
 })
 
-// @desc    Update user trade
-// @route   Patch /api/v1/trades
+// @desc    Update user stock trade
+// @route   Patch /api/v1/trades/stock
 // @access  Private
 const updateTrade = asyncWrapper( async(req, res, next) => {
 

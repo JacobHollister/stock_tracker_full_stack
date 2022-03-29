@@ -41,21 +41,19 @@ export default function PortfolioGraph({data, trades, chartColor, chartResolutio
     useEffect(() => {
         if(Object.keys(data).length > 0 && trades.length > 0){
             let portfolioData = []
+            Object.keys(data).forEach((holding) => {
 
-            Object.keys(data).forEach((company) => {
-
-                const companyTrades = trades.filter((trade) => {
-                    return trade.ticker === company
+                const holdingTrades = trades.filter((trade) => {
+                    return trade.ticker === holding || trade.symbol === holding
                 })
-
-                data[company].date.forEach((date, ind) => {
-                    companyTrades.forEach((trade) => {
+                data[holding].date.forEach((date, ind) => {
+                    holdingTrades.forEach((trade) => {
                         const tradeDate = date
                         const labelDate = new Date(trade.purchase_date)
                         if(compareAsc(tradeDate, labelDate)){
                             if ( !portfolioData[ind] ) { portfolioData[ind] = 0 }
-                            const companyAmount = trade.quantity * data[company].data[ind]
-                            const totalAmount = parseFloat(portfolioData[ind] + companyAmount)
+                            const companyAmount = trade.quantity * data[holding].data[ind]
+                            const totalAmount = parseFloat(portfolioData[ind]) + companyAmount
                             portfolioData[ind] = totalAmount
                         }
                     })

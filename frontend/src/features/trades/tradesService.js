@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL= '/api/v1/trades/'
+const API_URL= '/api/v1/trades/stock'
 
 const addTrade = async(tradeDetails, token) => {
     const config = {headers: {'Authorization': `Bearer ${token}`}}

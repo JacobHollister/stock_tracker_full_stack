@@ -12,7 +12,7 @@ import {
   portfolioOpenHandler, 
   portfolioGraphDataHandler 
 } from '../utils/PortfolioUtils'
-import { fetchLineData } from '../utils/Api'
+import { fetchLineData, fetchCryptoLineData } from '../utils/Api'
 
 // Components
 import Loader from '../components/sharedComponents/Loader'
@@ -54,9 +54,10 @@ export default function Portfolio() {
   }, [user, navigate, dispatch])
 
   useEffect(() => {
+    if(Object.keys(trades).length === 0) return 
     let totalInvestment = 0
     const tradedCompanies = {}
-    trades.forEach(trade => {
+    trades.stocks.forEach(trade => {
       if(!tradedCompanies[trade.ticker]) {
         tradedCompanies[trade.ticker] = trade.quantity
       } else {
@@ -65,6 +66,17 @@ export default function Portfolio() {
       totalInvestment += trade.quantity * trade.purchase_price
     });
     setTradedCompanies(tradedCompanies)
+    
+    const tradedCrypto = {}
+    trades.crypto.forEach(trade => {
+      if(!tradedCrypto[trade.symbol]) {
+        tradedCrypto[trade.symbol] = trade.quantity
+      } else {
+        tradedCrypto[trade.symbol] += trade.quantity
+      }
+      totalInvestment += trade.quantity * trade.purchase_price
+    });
+    setTradedCrypto(tradedCrypto)
 
     setPortfolioData( prev => {
       return { ...prev, investmentCost: totalInvestment}
@@ -73,54 +85,98 @@ export default function Portfolio() {
 
   const [ chartColor, setChartColor ] = useState(null)
   const [ tradedCompanies, setTradedCompanies ] = useState({})
+  const [ tradedCrypto, setTradedCrypto ] = useState({})
   const [ tradedCompanyLineData, setTradedCompanyLineData] = useState({})
+  const [ tradedCryptoLineData, setTradedCryptoLineData] = useState({})
   const [ chartResolution, setChartResolution ] = useState('week')
   const [ portfolioData, setPortfolioData] = useState({
-    open: 0, 
-    close: 0,
+    openStock: 0, 
+    closeStock: 0,
+    openCrypto: 0, 
+    closeCrypto: 0,
     investmentCost: 0
   })
 
   useEffect(() => {
     let isMounted = true
 
-    if (Object.keys(tradedCompanies).length === 0) return
+    if (Object.keys(tradedCompanies).length === 0 && Object.keys(tradedCrypto).length === 0) return
 
     const companies = Object.keys(tradedCompanies)
-
-    let companyFetchPromises = companies.map((company) => {
+    
+    const companyFetchPromises = companies.map((company) => {
       return fetchLineData(company, chartResolution)
     })
-
-    Promise.all(companyFetchPromises)
+    
+    const fetchedCompanyLineData = {} 
+    Promise.all([...companyFetchPromises])
       .then( lineDataResponses => {
         if(!isMounted) return 
         
-        const fetchedCompanyLineData = {} 
 
         lineDataResponses.forEach((response, ind) => {
           fetchedCompanyLineData[companies[ind]] = response
         })
 
-        setTradedCompanyLineData(portfolioGraphDataHandler(fetchedCompanyLineData))
+        //console.log(fetchedCompanyLineData)
 
-        const open = portfolioOpenHandler(fetchedCompanyLineData, tradedCompanies)
-        const close = portfolioCloseHandler(fetchedCompanyLineData, tradedCompanies)
+        //setTradedCompanyLineData(fetchedCompanyLineData)
+        setTradedCompanyLineData(portfolioGraphDataHandler(fetchedCompanyLineData))
+        
+        const openStock = portfolioOpenHandler(fetchedCompanyLineData, tradedCompanies)
+        const closeStock  = portfolioCloseHandler(fetchedCompanyLineData, tradedCompanies)
 
         setPortfolioData(prev => {
-          return {...prev, open, close}
+          return {...prev, openStock, closeStock}
         })
 
       })
+      
+      const cryptos = Object.keys(tradedCrypto)
+  
+      const cryptoFetchPromises = cryptos.map((crypto) => {
+        return fetchCryptoLineData(crypto, chartResolution, user.token)
+      })
 
+    const fetchedCryptoLineData = {} 
+    Promise.all([...cryptoFetchPromises])
+      .then( lineDataResponses => {
+        if(!isMounted) return 
+        
+
+        lineDataResponses.forEach((response, ind) => {
+          fetchedCryptoLineData[cryptos[ind]] = response
+        })
+
+        //console.log(fetchedCryptoLineData)
+        setTradedCryptoLineData(fetchedCryptoLineData)
+        //setTradedCryptoLineData(portfolioGraphDataHandler(fetchedCompanyLineData))
+        
+        const openCrypto = portfolioOpenHandler(fetchedCryptoLineData, tradedCrypto)
+        const closeCrypto = portfolioCloseHandler(fetchedCryptoLineData, tradedCrypto)
+        
+        setPortfolioData(prev => {
+          return {...prev, openCrypto, closeCrypto}
+        })
+
+      })
+      
       return () => isMounted = false
-  }, [tradedCompanies, chartResolution])
+    }, [tradedCompanies, tradedCrypto, chartResolution, user])
+    
+  // useEffect(() => {
+  //   ///console.log(portfolioGraphDataHandler({... tradedCryptoLineData, ...tradedCompanyLineData}))
+  //   const combinedGraphData = portfolioGraphDataHandler({...tradedCryptoLineData, ...tradedCompanyLineData})
+  //   //console.log(combinedGraphData)
+  // }, [tradedCryptoLineData, tradedCompanyLineData])
 
   const quoteChangeHandler = () => {
-    const changeDirection = ( portfolioData.close > portfolioData.open ) ? '+' : "-"
-    const change = portfolioData.close - portfolioData.open
+    const open = (parseFloat(portfolioData.openCrypto) + parseFloat(portfolioData.openCrypto)).toFixed(2)
+    const close = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeCrypto)).toFixed(2)
+    const changeDirection = ( close > open ) ? '+' : "-"
+    const change = close - open
     const changeAmount = Math.abs(change.toFixed(2))
-    const changePercentage = Math.abs(((change / portfolioData.open) * 100).toFixed(2))
+    const changePercentage = Math.abs(((change / open) * 100).toFixed(2))
     return `${changeDirection}$${changeAmount} (${changeDirection}${changePercentage}%) ${chartResolution}` 
   }
 
@@ -128,9 +184,12 @@ export default function Portfolio() {
     const dangerFill = '#d9534f';
     const successFill =  '#5cb85c'; 
 
-    if (portfolioData.close < portfolioData.open){
+    const open = (parseFloat(portfolioData.openCrypto) + parseFloat(portfolioData.openCrypto)).toFixed(2)
+    const close = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeCrypto)).toFixed(2)
+
+    if (close < open){
         setChartColor(dangerFill)
-    } else if (portfolioData.close > portfolioData.open) {
+    } else {
         setChartColor(successFill)
     }
   }, [portfolioData])
@@ -159,16 +218,23 @@ export default function Portfolio() {
   }
 
   const companyHoldingTradeHandler = (company) => {
-    const companyTrades = trades.filter((trade) => {
+    const companyTrades = trades.stocks.filter((trade) => {
       return trade.ticker === company 
     })
     return companyTrades
   }
+
+  const cryptoHoldingTradeHandler = (symbol) => {
+    const cryptoTrades = trades.crypto.filter((trade) => {
+      return trade.symbol === symbol 
+    })
+    return cryptoTrades
+  }
   
   if(isLoading || !isSuccess) return <Loader/>
-  if(!isLoading && Object.keys(tradedCompanies).length === 0) return <p>Please add trades to view portfolio</p>
+  if(!isLoading && Object.keys(tradedCompanies).length === 0 && Object.keys(tradedCrypto).length === 0) return <p>Please add trades to view portfolio</p>
 
-  let holdings = Object.keys(tradedCompanies).map((company, ind) => {
+  let stockHoldings = Object.keys(tradedCompanies).map((company, ind) => {
     return (
       <PortfolioHolding 
         key={ind} 
@@ -188,6 +254,28 @@ export default function Portfolio() {
     })
     return CompanyInvestment > nextCompanyInvestment ? -1 : 1
   })
+
+  let cryptoHoldings = Object.keys(tradedCrypto).map((symbol, ind) => {
+    return (
+      <PortfolioHolding 
+        key={ind} 
+        company={symbol} 
+        trades={cryptoHoldingTradeHandler(symbol)}
+        companyData={tradedCryptoLineData[symbol]}
+        crypto
+      />
+    )
+  }).sort((symbol, nextSymbol) => {
+    let CompanyInvestment = 0
+    let nextCompanyInvestment = 0
+    symbol.props.trades.forEach((trade) => {
+      CompanyInvestment += trade.quantity * trade.purchase_price
+    })
+    nextSymbol.props.trades.forEach((trade) => {
+      nextCompanyInvestment += trade.quantity * trade.purchase_price
+    })
+    return CompanyInvestment > nextCompanyInvestment ? -1 : 1
+  })
   
   return (
     <>
@@ -198,10 +286,10 @@ export default function Portfolio() {
         </StyledHeading>
         <PortfolioHeader color={chartColor}>
           <h1>
-            ${portfolioData.close !== 0 ? portfolioData.close : '0.0'}
+            ${((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2): '0.0'}
           </h1>
           <h3>
-            {portfolioData.close !== 0 ? quoteChangeHandler() : '0.0'}
+            {((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? quoteChangeHandler() : '0.0'}
           </h3>
         </PortfolioHeader>
         <PortfolioInfoContainer>
@@ -214,14 +302,14 @@ export default function Portfolio() {
             </ResolutionButtonContainer>
             <PortfolioGraphContainer>
                 <PortfolioGraph 
-                  data={tradedCompanyLineData} 
+                  data={portfolioGraphDataHandler({...tradedCryptoLineData, ...tradedCompanyLineData})} 
                   chartColor={chartColor}
-                  trades={trades}
-                  setResolution={(resolution) => resolutionChangeHandler(resolution)}/>
+                  trades={[...trades.stocks, ...trades.crypto]}
+                  chartResolution={chartResolution}/>
               </PortfolioGraphContainer>
           </div>
           <PortfolioWeightingsContainer>
-            <PortfolioDoughnutGraph data={tradedCompanyLineData} tradedCompanies={tradedCompanies}/>
+            <PortfolioDoughnutGraph data={{...tradedCompanyLineData, ...tradedCryptoLineData}} tradedHoldings={{...tradedCompanies, ...tradedCrypto}}/>
           </PortfolioWeightingsContainer>
         </PortfolioInfoContainer>
         <StyledHeading>
@@ -256,14 +344,22 @@ export default function Portfolio() {
                     <span>${portfolioData.investmentCost ? portfolioData.investmentCost : '0.0'}</span>
                 </PortfolioInfoDetail>
             </PortfolioOverviewContainer>
-        <StyledHeading>
+      <StyledHeading>
         <h1>
-          HOLDINGS
+          STOCK HOLDINGS
         </h1>
       </StyledHeading>
         <PortfolioHoldingsContainer>
-          {holdings}
+          {stockHoldings}
         </PortfolioHoldingsContainer>
+      <StyledHeading>
+        <h1>
+          CRYPTO HOLDINGS
+        </h1>
+      </StyledHeading>
+      <PortfolioHoldingsContainer>
+        {cryptoHoldings}
+      </PortfolioHoldingsContainer>
     </>
   )
 }

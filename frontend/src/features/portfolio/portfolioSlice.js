@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import portfolioService from './portfolioService'
 
 const initialState = {
-    trades: [],
+    trades: {},
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -43,7 +43,7 @@ export const portfolioSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
-                state.trades = []
+                state.stockTrades = []
             })
     }
 })
