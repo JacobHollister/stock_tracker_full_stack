@@ -52,27 +52,6 @@ export default function PortfolioDoughnutGraph({data, tradedHoldings}) {
             graphData.push(parseFloat(graphDataAmount))
         })
 
-        // old Code not sure if we reuse
-
-        // if(graphData.length > 4){
-        //     const sortedGraphData = [...graphData].sort().reverse().slice(0,3)
-        //     const updatedGraphData = [0]
-        //     const updatedLabelData = ['Other']
-        //     labels.forEach((company, ind) => {
-        //         if(sortedGraphData.includes(graphData[ind]))
-        //         {
-        //             updatedGraphData.push(parseFloat(graphData[ind]))
-        //             updatedLabelData.push(company)
-        //         } else {
-        //             updatedGraphData[0] = graphData[ind] + parseFloat(updatedGraphData[0])
-        //         }
-        //     })
-        //     updatedGraphData.reverse()
-        //     updatedLabelData.reverse()
-        //     setChartData(updatedGraphData)
-        //     setLabelData(updatedLabelData)
-        //     return
-        // }
         setChartData(graphData)
         setLabelData(labels)
     }
@@ -88,7 +67,6 @@ export default function PortfolioDoughnutGraph({data, tradedHoldings}) {
             ],
         }],
 
-        // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: labelData
     }
     

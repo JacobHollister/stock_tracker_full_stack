@@ -11,6 +11,8 @@ import Markets from './pages/Markets'
 import Portfolio from './pages/Portfolio'
 import AddTrade from './pages/AddTrade'
 import EditTrade from './pages/EditTrade'
+import AddCryptoTrade from './pages/AddCryptoTrade'
+import EditCryptoTrade from './pages/EditCryptoTrade'
 import Register from './pages/Register'
 import Search from './pages/Search'
 import Login from './pages/Login'
@@ -66,6 +68,8 @@ function App() {
               <Route path='/addtrade' element={ <AddTrade/> }/>
               <Route path='/addtrade/:ticker' element={ <AddTrade/> }/>
               <Route path='/edittrade/:trade_id' element={ <EditTrade/> }/>
+              <Route path='/addcryptotrade/:symbol' element={ <AddCryptoTrade/> }/>
+              <Route path='/editcryptotrade/:trade_id' element={ <EditCryptoTrade/> }/>
               <Route path='/search' element={ <Search/> }/>
               <Route path='/login' element={ <Login/> }/>
               <Route path='/forgotpassword' element={ <ForgotPassword/> }/>

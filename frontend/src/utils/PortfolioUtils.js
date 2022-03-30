@@ -80,3 +80,35 @@ export const portfolioOpenHandler = (fetchedCompanyLineData, tradedCompanies) =>
     }
     return total.toFixed(2)
 }
+
+export const portfolioChangeHandler = (portfolioData, chartResolution) => {
+    const open = (parseFloat(portfolioData.openCrypto) + parseFloat(portfolioData.openStock)).toFixed(2)
+    const close = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2)
+    const changeDirection = ( close > open ) ? '+' : "-"
+    const change = close - open
+    const changeAmount = Math.abs(change.toFixed(2))
+    const changePercentage = Math.abs(((change / open) * 100).toFixed(2))
+    return `${changeDirection}$${changeAmount} (${changeDirection}${changePercentage}%) ${chartResolution}` 
+}
+
+export const portfolionIvestmentGainHandler = (portfolioData) => {
+    const close = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2)
+    const changeDirection = ( close > portfolioData.investmentCost ) ? '+' : "-"
+    return `${changeDirection}$${(close - portfolioData.investmentCost).toFixed(2)}`
+}
+
+export const portfolfioInvestmentPercentHandler = (portfolioData) => {
+    const close = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2)
+    const changeDirection = ( close > portfolioData.investmentCost ) ? '+' : "-"
+    const change = close - portfolioData.investmentCost
+    const changeAmount = Math.abs(change.toFixed(2))
+    const changePercentage = Math.abs(((changeAmount / portfolioData.investmentCost) * 100).toFixed(2))
+    return `${changeDirection}${changePercentage}%`
+}
+
+export   const portfolfioInvestmentColorHandler = (portfolioData) => {
+    const dangerFill = '#d9534f';
+    const successFill =  '#5cb85c'; 
+    const close = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2)
+    return (close > portfolioData.investmentCost ) ? successFill : dangerFill
+}
