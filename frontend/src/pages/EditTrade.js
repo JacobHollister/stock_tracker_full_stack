@@ -41,9 +41,11 @@ export default function EditTrade() {
         purchase_price: '',
         purchase_date: '',
         quantity: '',
+        symbol: '',
+        pairingSymbol: ''
     })
 
-    const {purchase_price, purchase_date, quantity, ticker } = formData
+    const {purchase_price, symbol, pairingSymbol, purchase_date, quantity, ticker } = formData
 
     useEffect(() => {
         if(Object.keys(trades).length > 0){
@@ -67,9 +69,27 @@ export default function EditTrade() {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        // check values
-        if(formData.ticker && formData.purchase_price && formData.quantity && formData.purchase_date) {
-            dispatch(confirm_update(formData))
+        if((formData.ticker || (formData.symbol && formData.pairingSymbol)) && purchase_price && quantity && purchase_date) {
+            if(symbol){
+                const cryptoFormData = {
+                    trade_id,
+                    symbol: formData.symbol,
+                    pairingSymbol: formData.pairingSymbol,
+                    purchase_price,
+                    purchase_date,
+                    quantity
+                }
+                dispatch(confirm_update(cryptoFormData))
+            } else if(formData.ticker) {
+                const stockFormData = {
+                    trade_id,
+                    ticker: formData.ticker,
+                    purchase_price,
+                    purchase_date,
+                    quantity
+                }
+                dispatch(confirm_update(stockFormData))
+            }
         } else {
             console.log('not all fields filled out')
         }
@@ -86,14 +106,42 @@ export default function EditTrade() {
             </StyledHeading>
             <Form>
                 <form onSubmit={onSubmit}>
-                    <label >Company</label>
-                    <input
-                        type='text'
-                        id='ticker'
-                        name='ticker'
-                        value={ticker}
-                        disabled
-                />
+                    { ticker ? (
+                        <>
+                            <label >Company</label>
+                            <input
+                                type='text'
+                                id='ticker'
+                                name='ticker'
+                                placeholder={ticker}
+                                disabled
+                            />
+                        </>
+                        ) : (
+                        null
+                        )}
+                        { symbol ? (
+                            <>
+                                <label >Currency</label>
+                                <input
+                                type='text'
+                                id='symbol'
+                                name='symbol'
+                                placeholder={symbol}
+                                disabled
+                                />
+                                <label >Currency Pairing</label>
+                                <input
+                                type='text'
+                                id='pairingSymbol'
+                                name='pairingSymbol'
+                                placeholder={pairingSymbol}
+                                disabled
+                                />
+                            </>
+                        ) : (
+                            null
+                        )}
                     <label htmlFor='purchase_price'>Purchase price</label>
                     <input
                         type='number'
@@ -103,15 +151,31 @@ export default function EditTrade() {
                         placeholder='Enter purchase price'
                         onChange={onChange}
                     />
-                    <label htmlFor='quantity'>Amount of shares</label>
-                    <input
-                        type='number'
-                        id='quantity'
-                        name='quantity'
-                        value={quantity}
-                        placeholder='Enter amount of shares'
-                        onChange={onChange}
-                    />
+                    {symbol ? (
+                        <>
+                            <label htmlFor='quantity'>Amount of Currency</label>
+                            <input
+                                type='number'
+                                id='quantity'
+                                name='quantity'
+                                value={quantity}
+                                placeholder='Amount of Currency'
+                                onChange={onChange}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <label htmlFor='quantity'>Amount of shares</label>
+                            <input
+                                type='number'
+                                id='quantity'
+                                name='quantity'
+                                value={quantity}
+                                placeholder='Enter amount of shares'
+                                onChange={onChange}
+                            />
+                        </>
+                    )}
                     <label htmlFor='purchase_date'>Purchased date</label>
                     <input
                         type='date'

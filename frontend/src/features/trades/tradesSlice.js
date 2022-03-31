@@ -28,7 +28,8 @@ export const addTrade = createAsyncThunk('trades/add', async (tradeDetails, thun
 export const deleteTrade = createAsyncThunk('trades/delete', async (trade_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await tradesService.deleteTrade(trade_id, token)
+        const trades = thunkAPI.getState().portfolio.trades
+        return await tradesService.deleteTrade(trade_id, trades, token)
     } catch (error) {
         const message = (error.response && 
                 error.response.data && 
