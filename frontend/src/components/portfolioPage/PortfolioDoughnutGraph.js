@@ -47,7 +47,7 @@ export default function PortfolioDoughnutGraph({data, tradedHoldings}) {
         let labels = []
         let graphData = []
         Object.keys(data).forEach((holding) => {
-            labels.push(holding)
+            labels.push(holding.toUpperCase())
             const graphDataAmount = (tradedHoldings[holding] * data[holding].data[data[holding].data.length -1]).toFixed(2)
             graphData.push(parseFloat(graphDataAmount))
         })

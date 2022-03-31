@@ -15,7 +15,7 @@ import {
 } from '../styles/Portfolio.styled'
 
 
-export default function TradeDetailsDropdown({trades})  {
+export default function TradeDetailsDropdown({trades, crypto})  {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -45,7 +45,7 @@ export default function TradeDetailsDropdown({trades})  {
     return (
         <TradeDetailsContainer>
             <TradeDetailsHeader>
-            <span>Total Shares</span>    
+            {crypto ? (<span>Total Shares</span>) :( <span>Currency Amount</span>)}
             <span>Purchase Price</span>    
             <span>Purchase Date</span>    
             <span></span>    

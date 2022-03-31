@@ -114,7 +114,7 @@ export default function Modal() {
                 <p><strong>Ticker : </strong>{trade.ticker}</p>
             ) : (
                 <>
-                    <p><strong>Currency : </strong>{trade.symbol}</p> 
+                    <p><strong>Currency : </strong>{trade.symbol.toUpperCase()}</p> 
                     <p><strong>Pairing Currency : </strong>{trade.pairingSymbol}</p> 
                 </>
             )}
