@@ -46,13 +46,14 @@ export default function EditTrade() {
     const {purchase_price, purchase_date, quantity, ticker } = formData
 
     useEffect(() => {
-        if(trades.length > 0){
-            const editingTrade = trades.filter((trade) => {
+        if(Object.keys(trades).length > 0){
+            const combinedTrades = [...trades.stocks, ...trades.crypto]
+            const editingTrade = combinedTrades.filter((trade) => {
                 return trade._id === trade_id
             })[0]
-            const { ticker, purchase_price, quantity } = editingTrade
+            const { ticker, symbol, pairingSymbol, purchase_price, quantity } = editingTrade
             const purchase_date = format(new Date(editingTrade.purchase_date), 'yyyy-MM-dd')
-            setFormData({ ticker, purchase_price, purchase_date, quantity, trade_id })
+            setFormData({ ticker, symbol, pairingSymbol, purchase_price, purchase_date, quantity, trade_id })
         }
     }, [trades, trade_id])
 

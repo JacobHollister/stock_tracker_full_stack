@@ -1,13 +1,13 @@
 // Package imports
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // Redux imports
 import { useSelector, useDispatch } from 'react-redux'
 import { confirm_add } from '../features/trades/tradesSlice'
 
 // Helper functions
-import { searchCompanies, fetchCompanyInfo } from '../utils/Api'
+import { searchCompanies, fetchCompanyInfo, fetchCryptoInfo } from '../utils/Api'
 
 // Components
 import AsyncSelect from 'react-select/async'
@@ -25,7 +25,9 @@ import {
 export default function AddTrade() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [searchParams] = useSearchParams();
 
+    // Check user is logged in
     const { user } = useSelector((state) => state.auth)
 
     useEffect(() => {
@@ -34,19 +36,27 @@ export default function AddTrade() {
         }
     }, [user, navigate, dispatch])
 
-    const {ticker} = useParams()
-
+    const [ticker, setTicker] = useState(null)
+    const [symbol, setSymbol] = useState(null)
     const [tickerInfo, setTickerInfo] = useState(null)
+    const [symbolInfo, setSymbolInfo] = useState(null)
     const [inputValue, setValue] = useState('');
     const [debounce, setDebounce] = useState({});
     const [formData, setFormData] = useState({
         ticker: '',
+        symbol: '',
+        pairingSymbol: 'USDT',
         purchase_price: '',
         purchase_date: '',
         quantity: '',
     })
-
-    const {purchase_price, purchase_date, quantity }= formData
+    const {purchase_price, purchase_date, quantity } = formData
+    
+    useEffect(() => {
+        const queryParams = Object.fromEntries([...searchParams])
+        if(queryParams.ticker) setTicker(queryParams.ticker)
+        if(queryParams.symbol) setSymbol(queryParams.symbol)
+    }, [searchParams])
 
     useEffect(() => {
         if(ticker){
@@ -59,6 +69,19 @@ export default function AddTrade() {
         }))
         }
     }, [ticker])
+
+    useEffect(() => {
+        if(symbol){
+            fetchCryptoInfo(symbol, user.token)
+            .then(result => {
+                setSymbolInfo(`${result.shortName.toUpperCase()} - ${result.name}`)
+                setFormData((prevState) => ({
+                    ...prevState,
+                    symbol: result.shortName,
+                }))
+            })
+        }
+    }, [symbol, user])
 
     useEffect(() => {
         const { cb, delay } = debounce;
@@ -109,8 +132,25 @@ export default function AddTrade() {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if(formData.ticker && formData.purchase_price && formData.quantity && formData.purchase_date) {
-            dispatch(confirm_add(formData))
+        if((formData.ticker || (formData.symbol && formData.pairingSymbol)) && purchase_price && quantity && purchase_date) {
+            if(symbol){
+                const cryptoFormData = {
+                    symbol: formData.symbol,
+                    pairingSymbol: formData.pairingSymbol,
+                    purchase_price,
+                    purchase_date,
+                    quantity
+                }
+                dispatch(confirm_add(cryptoFormData))
+            } else if(formData.ticker) {
+                const stockFormData = {
+                    ticker: formData.ticker,
+                    purchase_price,
+                    purchase_date,
+                    quantity
+                }
+                dispatch(confirm_add(stockFormData))
+            }
         } else {
             console.log('not all fields filled out')
         }
@@ -141,33 +181,59 @@ export default function AddTrade() {
             </StyledHeading>
             <Form>
                 <form onSubmit={onSubmit}>
-                    <label >Company</label>
                     { ticker ? (
-                        <input
-                            type='text'
-                            id='ticker'
-                            name='ticker'
-                            placeholder={tickerInfo ? tickerInfo : ticker}
-                            disabled
-                        />
+                        <>
+                            <label >Company</label>
+                            <input
+                                type='text'
+                                id='ticker'
+                                name='ticker'
+                                placeholder={tickerInfo ? tickerInfo : ticker}
+                                disabled
+                            />
+                        </>
                         ) : (
-                        <div>
-                            <AsyncSelect
-                            cacheOptions
-                            placeholder={'Please select company'}
-                            inputValue={inputValue}
-                            getOptionLabel={e => e.symbol + " : " + e.description}
-                            getOptionValue={e => e.symbol}
-                            loadOptions={loadOptions}
-                            onInputChange={handleInputChange}
-                            onChange={handleChange}
-                            noOptionsMessage={() => "No results"}
-                            styles={selectOptions.customStyles}
-                            theme={selectOptions.customTheme}
-                        />
-                    </div>
-                    )}
-                        
+                        null
+                        )}
+                        { symbol ? (
+                            <>
+                                <label >Currency</label>
+                                <input
+                                type='text'
+                                id='symbol'
+                                name='symbol'
+                                placeholder={symbolInfo ? symbolInfo : symbol}
+                                disabled
+                                />
+                                <label >Currency Pairing</label>
+                                <input
+                                type='text'
+                                id='pairingSymbol'
+                                name='pairingSymbol'
+                                placeholder={formData.pairingSymbol}
+                                disabled
+                                />
+                            </>
+                        ) : (
+                            null
+                        )}
+                        { (!symbol && !ticker) ? (
+                            <div>
+                                <AsyncSelect
+                                cacheOptions
+                                placeholder={'Please select company'}
+                                inputValue={inputValue}
+                                getOptionLabel={e => e.symbol + " : " + e.description}
+                                getOptionValue={e => e.symbol}
+                                loadOptions={loadOptions}
+                                onInputChange={handleInputChange}
+                                onChange={handleChange}
+                                noOptionsMessage={() => "No results"}
+                                styles={selectOptions.customStyles}
+                                theme={selectOptions.customTheme}
+                            />
+                        </div>
+                        ) : null}
                     <label htmlFor='purchase_price'>Purchase price</label>
                     <input
                         type='number'
@@ -177,15 +243,31 @@ export default function AddTrade() {
                         placeholder='Enter purchase price'
                         onChange={onChange}
                     />
-                    <label htmlFor='quantity'>Amount of shares</label>
-                    <input
-                        type='number'
-                        id='quantity'
-                        name='quantity'
-                        value={quantity}
-                        placeholder='Enter amount of shares'
-                        onChange={onChange}
-                    />
+                    {symbol ? (
+                        <>
+                            <label htmlFor='quantity'>Amount of Currency</label>
+                            <input
+                                type='number'
+                                id='quantity'
+                                name='quantity'
+                                value={quantity}
+                                placeholder='Amount of Currency'
+                                onChange={onChange}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <label htmlFor='quantity'>Amount of shares</label>
+                            <input
+                                type='number'
+                                id='quantity'
+                                name='quantity'
+                                value={quantity}
+                                placeholder='Enter amount of shares'
+                                onChange={onChange}
+                            />
+                        </>
+                    )}
                     <label htmlFor='purchase_date'>Purchased date</label>
                     <input
                         type='date'

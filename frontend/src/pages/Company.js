@@ -100,7 +100,7 @@ export default function Company() {
                     <span>${quote ? quote.c.toFixed(2) : '0.0'}</span>
                     <span >{quote ? quoteChangeHandler(quote) : '0.0'}</span>
                 </h2>
-                <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + ticker)}>ADD</ButtonLarge>
+                <ButtonLarge color={'success'} onClick={() => navigate({pathname: `/addtrade`, search: `?ticker=${ticker}`})}>ADD</ButtonLarge>
             </CompanyHeading>
             <CompanyGraph ticker={ticker} chartColor={chartColor}/>
             <CompanyInfo quote={quote} companyInfo={companyInfo}/>

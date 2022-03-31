@@ -110,7 +110,14 @@ export default function Modal() {
         ) : (
             <>
             <h2>{ModalHeadingHandler()}</h2>
-            <p><strong>Ticker : </strong>{trade.ticker}</p>
+            { trade.ticker ? (
+                <p><strong>Ticker : </strong>{trade.ticker}</p>
+            ) : (
+                <>
+                    <p><strong>Currency : </strong>{trade.symbol}</p> 
+                    <p><strong>Pairing Currency : </strong>{trade.pairingSymbol}</p> 
+                </>
+            )}
             <p><strong>Quantity : </strong>{trade.quantity}</p>
             <p><strong>Purhcase price : </strong>{trade.purchase_price}</p>
             <p><strong>Purchase date : </strong>{format(new Date(trade.purchase_date), 'do LLLL yyyy')}</p>

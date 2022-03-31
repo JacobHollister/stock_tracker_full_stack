@@ -70,7 +70,7 @@ export default function CryptoCurrency() {
                         <span>${cryptoInfo ? cryptoInfo.currentPrice : '0.0'}</span>
                         <span >{cryptoInfo ? cryptoChangeHandler(cryptoInfo.changePercentage) : '0.0'}</span>
                     </h2>
-                    <ButtonLarge color={'success'} onClick={() => navigate('/addtrade/' + name)}>ADD</ButtonLarge>
+                    <ButtonLarge color={'success'} onClick={() => navigate({pathname: '/addtrade', search: `?symbol=${name}`})}>ADD</ButtonLarge>
                 </CryptoHeading>
             <CryptoGraphLarge symbol={cryptoInfo ? cryptoInfo.shortName : null} token={user.token}/>
             <CryptoInfo info={cryptoInfo}/>

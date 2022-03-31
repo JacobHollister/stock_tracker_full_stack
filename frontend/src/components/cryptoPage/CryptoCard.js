@@ -51,7 +51,7 @@ export default function CryptoCard({symbol, name}) {
         <div style={{position: 'relative'}}>
             { displayOverlay ? (
                 <CardOverlay display={displayOverlay} onClick={() => setDisplayOverlay(false)}>
-                    <ButtonLarge color={'success'} onClick={() => navigate('/')}>
+                    <ButtonLarge color={'success'} onClick={() => navigate({pathname: '/addtrade', search: `?symbol=${name}`})}>
                         ADD
                     </ButtonLarge>
                     <ButtonLarge onClick={() => navigate(`/crypto/${name}`)}>

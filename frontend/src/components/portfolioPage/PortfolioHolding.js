@@ -89,7 +89,7 @@ export default function PortfolioHolding({company, trades, companyData}) {
         <>
             <PorfolioCompanyCard onClick={() => setTradesOpen((prev) => !prev)}>
                 <h3>
-                    <span>{company}</span>
+                    <span>{company.toUpperCase()}</span>
                     <span> - </span>
                     <span>${holdingData.investmentTotal}</span>
                 </h3>
