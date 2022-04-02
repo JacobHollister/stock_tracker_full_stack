@@ -57,7 +57,7 @@ export default function PortfolioHolding({company, trades, companyData}) {
         const currentPrice = companyData.data[companyData.data.length -1] 
         const currentInvestment = currentPrice * shareAmount
         const changeDirection = ( currentInvestment > totalCost ) ? '+' : "-"
-        const changePercentage = Math.abs(((gainAmount / currentInvestment) * 100).toFixed(2))
+        const changePercentage = Math.abs(((gainAmount / totalCost) * 100).toFixed(2))
         return `${changeDirection} ${changePercentage}%`
     }
     
