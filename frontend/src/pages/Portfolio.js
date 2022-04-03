@@ -12,9 +12,6 @@ import {
   portfolioOpenHandler, 
   portfolioGraphDataHandler, 
   portfolioChangeHandler,
-  portfolionIvestmentGainHandler,
-  portfolfioInvestmentPercentHandler,
-  portfolfioInvestmentColorHandler
 } from '../utils/PortfolioUtils'
 import { fetchLineData, fetchCryptoLineData } from '../utils/Api'
 
@@ -23,6 +20,8 @@ import Loader from '../components/sharedComponents/Loader'
 import PortfolioGraph from '../components/portfolioPage/PortfolioGraph'
 import PortfolioDoughnutGraph from '../components/portfolioPage/PortfolioDoughnutGraph'
 import PortfolioHolding from '../components/portfolioPage/PortfolioHolding'
+import PortfolioOverview from '../components/portfolioPage/PortfolioOverview'
+import PortfolioCurrencyConversion from '../components/portfolioPage/PortfolioCurrencyConversion'
 
 // Styled Components
 import { StyledHeading } from '../components/styles/Heading.styled'
@@ -32,9 +31,6 @@ import {
   PortfolioWeightingsContainer,
   PortfolioHoldingsContainer,
   PortfolioInfoContainer,
-  PortfolioOverviewContainer,
-  PortfolioInfoLabel,
-  PortfolioInfoDetail
 } from '../components/styles/Portfolio.styled'
 import { 
   ResolutionButtonContainer, 
@@ -259,71 +255,43 @@ export default function Portfolio() {
   
   return (
     <>
-        <StyledHeading>
-          <h1>
-            PORTFOLIO
-          </h1>
-        </StyledHeading>
-        <PortfolioHeader color={chartColor}>
-          <h1>
-            ${((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2): '0.0'}
-          </h1>
-          <h3>
-            {((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? portfolioChangeHandler(portfolioData, chartResolution) : '0.0'}
-          </h3>
-        </PortfolioHeader>
-        <PortfolioInfoContainer>
-          <div>
-            <ResolutionButtonContainer>
-                <ResolutionButton active={chartResolution === 'day' ? true : false} value={'day'} onClick={resolutionChangeHandler}>DAY</ResolutionButton>
-                <ResolutionButton active={chartResolution === 'week' ? true : false} value={'week'} onClick={resolutionChangeHandler}>WEEK</ResolutionButton>
-                <ResolutionButton active={chartResolution === 'month' ? true : false} value={'month'} onClick={resolutionChangeHandler}>MONTH</ResolutionButton>
-                <ResolutionButton active={chartResolution === 'year' ? true : false} value={'year'} onClick={resolutionChangeHandler}>YEAR</ResolutionButton>
-            </ResolutionButtonContainer>
-            <PortfolioGraphContainer>
-                <PortfolioGraph 
-                  data={portfolioGraphDataHandler({...tradedCryptoLineData, ...tradedCompanyLineData})} 
-                  chartColor={chartColor}
-                  trades={[...trades.stocks, ...trades.crypto]}
-                  chartResolution={chartResolution}/>
-              </PortfolioGraphContainer>
-          </div>
-          <PortfolioWeightingsContainer>
-            <PortfolioDoughnutGraph data={{...tradedCompanyLineData, ...tradedCryptoLineData}} tradedHoldings={{...tradedCompanies, ...tradedCrypto}}/>
-          </PortfolioWeightingsContainer>
-        </PortfolioInfoContainer>
-        <StyledHeading>
-          <h1>
-            OVERVIEW
-          </h1>
-        </StyledHeading>
-            <PortfolioOverviewContainer>
-                <PortfolioInfoDetail>
-                    <PortfolioInfoLabel>Open</PortfolioInfoLabel>
-                    <span> : </span>
-                    <span>${(portfolioData.closeStock || portfolioData.closeCrypto) ? (parseFloat(portfolioData.openCrypto) + parseFloat(portfolioData.openStock)).toFixed(2) : '0.0'}</span>
-                </PortfolioInfoDetail>
-                <PortfolioInfoDetail>
-                    <PortfolioInfoLabel>Close</PortfolioInfoLabel>
-                    <span> : </span>
-                    <span>${(portfolioData.closeStock || portfolioData.closeCrypto) ? (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2) : '0.0'}</span>
-                </PortfolioInfoDetail>
-                <PortfolioInfoDetail>
-                    <PortfolioInfoLabel>Total Gain / Loss</PortfolioInfoLabel>
-                    <span> : </span>
-                    <span style={{color: portfolfioInvestmentColorHandler(portfolioData)}}>{(portfolioData.investmentCost && (portfolioData.closeStock || portfolioData.closeCrypto)) ? portfolionIvestmentGainHandler(portfolioData) : '0.0'}</span>
-                </PortfolioInfoDetail>
-                <PortfolioInfoDetail >
-                    <PortfolioInfoLabel>Total Gain / Loss %</PortfolioInfoLabel>
-                    <span> : </span>
-                    <span style={{color: portfolfioInvestmentColorHandler(portfolioData)}}>{(portfolioData.investmentCost && (portfolioData.closeStock || portfolioData.closeCrypto)) ? portfolfioInvestmentPercentHandler(portfolioData) : '0.0'}</span>
-                </PortfolioInfoDetail>
-                <PortfolioInfoDetail>
-                    <PortfolioInfoLabel>Investment Cost</PortfolioInfoLabel>
-                    <span> : </span>
-                    <span>${portfolioData.investmentCost ? portfolioData.investmentCost : '0.0'}</span>
-                </PortfolioInfoDetail>
-            </PortfolioOverviewContainer>
+      <StyledHeading>
+        <h1>
+          PORTFOLIO
+        </h1>
+      </StyledHeading>
+      <PortfolioHeader color={chartColor}>
+        <h1>
+          ${((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2): '0.0'}
+        </h1>
+        <h3>
+          {((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? portfolioChangeHandler(portfolioData, chartResolution) : '0.0'}
+        </h3>
+      </PortfolioHeader>
+      <PortfolioInfoContainer>
+        <div>
+          <ResolutionButtonContainer>
+              <ResolutionButton active={chartResolution === 'day' ? true : false} value={'day'} onClick={resolutionChangeHandler}>DAY</ResolutionButton>
+              <ResolutionButton active={chartResolution === 'week' ? true : false} value={'week'} onClick={resolutionChangeHandler}>WEEK</ResolutionButton>
+              <ResolutionButton active={chartResolution === 'month' ? true : false} value={'month'} onClick={resolutionChangeHandler}>MONTH</ResolutionButton>
+              <ResolutionButton active={chartResolution === 'year' ? true : false} value={'year'} onClick={resolutionChangeHandler}>YEAR</ResolutionButton>
+          </ResolutionButtonContainer>
+          <PortfolioGraphContainer>
+              <PortfolioGraph 
+                data={portfolioGraphDataHandler({...tradedCryptoLineData, ...tradedCompanyLineData})} 
+                chartColor={chartColor}
+                trades={[...trades.stocks, ...trades.crypto]}
+                chartResolution={chartResolution}/>
+            </PortfolioGraphContainer>
+        </div>
+        <PortfolioWeightingsContainer>
+          <PortfolioDoughnutGraph data={{...tradedCompanyLineData, ...tradedCryptoLineData}} tradedHoldings={{...tradedCompanies, ...tradedCrypto}}/>
+        </PortfolioWeightingsContainer>
+      </PortfolioInfoContainer>
+
+      <PortfolioOverview portfolioData={portfolioData} />
+
+      <PortfolioCurrencyConversion user={user} />
       <StyledHeading>
         <h1>
           STOCK HOLDINGS
