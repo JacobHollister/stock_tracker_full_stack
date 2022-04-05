@@ -291,7 +291,9 @@ export default function Portfolio() {
 
       <PortfolioOverview portfolioData={portfolioData} />
 
-      <PortfolioCurrencyConversion user={user} />
+      <PortfolioCurrencyConversion 
+        user={user}
+        portfolioAmount={((portfolioData.closeStock !== 0) || (portfolioData.closeCrypto !== 0)) ? (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2): '0.0'}  />
       <StyledHeading>
         <h1>
           STOCK HOLDINGS

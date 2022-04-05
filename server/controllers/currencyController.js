@@ -8,7 +8,7 @@ const { getCurrencies, getConversionPrice } = require('../external_APIs/currency
 const getCurrenciesList = asyncWrapper(async (req, res, next) => {
     const currencies = await getCurrencies()
     if (!currencies) return next(createCustomError(`No currencies could be found`, 404))
-    return res.status(200).json(currencies)
+    return res.status(200).json(currencies['symbols'])
 })
 
 const currencyConversionPrice = asyncWrapper( async (req, res, next) => {
@@ -16,9 +16,9 @@ const currencyConversionPrice = asyncWrapper( async (req, res, next) => {
 
     const conversionRate = await getConversionPrice(currency)
     
-    if(!conversionRate) return  next(createCustomError(`No currency conversion could be found`, 404))
+    if(!conversionRate.success) return  next(createCustomError(`No currency conversion could be found`, 404))
 
-    return res.status(200).json(conversionRate)
+    return res.status(200).json(conversionRate.result)
 })
 
 module.exports = {
