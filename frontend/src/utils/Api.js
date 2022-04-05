@@ -53,6 +53,33 @@ export const fetchQuote = async (ticker) => {
     })
 }
 
+export const fetchCurrencyQuote = async (currency, token) => {
+    const config = {headers: {'Authorization': `Bearer ${token}`}}
+    
+    return await new Promise((resolve, reject)=>{
+        axios.get(`/api/v1/currency/${currency}`, config)
+        .then(result => {
+            resolve(result.data) 
+        })
+        .catch (
+            err => reject(err)
+        )
+    })
+}
+export const fetchCurrencies = async (token) => {
+    const config = {headers: {'Authorization': `Bearer ${token}`}}
+
+    return await new Promise((resolve, reject)=>{
+        axios.get(`/api/v1/currency`, config)
+        .then(result => {
+            resolve(result.data) 
+        })
+        .catch (
+            err => reject(err)
+        )
+    })
+}
+
 export const fetchLineData = async (ticker, resolution) => {
     return await new Promise((resolve, reject)=>{
         axios.get(`/api/v1/stock/line?ticker=${ticker}&resolution=${resolution}`)

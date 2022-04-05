@@ -103,7 +103,6 @@ export const portfolfioInvestmentPercentHandler = (portfolioData) => {
     const change = close - portfolioData.investmentCost
     const changeAmount = Math.abs(change.toFixed(2))
     const changePercentage = Math.abs(((changeAmount / portfolioData.investmentCost) * 100).toFixed(2))
-    console.log(portfolioData.investmentCost)
     return `${changeDirection}${changePercentage}%`
 }
 
