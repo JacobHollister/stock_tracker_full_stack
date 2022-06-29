@@ -178,8 +178,9 @@ export default function Portfolio() {
     const dangerFill = '#d9534f';
     const successFill =  '#5cb85c'; 
 
-    const portfolioOpen = (parseFloat(portfolioData.openCrypto) + parseFloat(portfolioData.openCrypto)).toFixed(2)
-    const portfolioClose = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeCrypto)).toFixed(2)
+    const portfolioOpen = (parseFloat(portfolioData.openCrypto) + parseFloat(portfolioData.openStock)).toFixed(2)
+    const portfolioClose = (parseFloat(portfolioData.closeCrypto) + parseFloat(portfolioData.closeStock)).toFixed(2)
+
 
     if (portfolioClose < portfolioOpen){
         setChartColor(dangerFill)

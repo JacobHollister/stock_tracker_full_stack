@@ -28,7 +28,7 @@ const registerUser = asyncWrapper( async (req, res, next) => {
     const watchlist = await Watchlist.create({user: user.id, watchlist: [] })
     const token = generateToken(user.id);
 
-    return res.status(200).json({token, expiresIn: process.env.TOKEN_EXP,})
+    return res.status(200).json({token, expiresIn: process.env.TOKEN_EXP, name})
 })
 
 // @desc    Login user

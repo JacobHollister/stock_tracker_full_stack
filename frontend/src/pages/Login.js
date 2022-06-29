@@ -100,6 +100,9 @@ export default function Login() {
             onChange={onChange}
           />
           <FormButtonContainer>
+            <ButtonLarge color={'warning'} type='submit' onClick={() => {setFormData({email: 'sample@google.com', password: 'testing'})}}>
+              Test User
+            </ButtonLarge>
             <ButtonLarge color={'success'} type='submit'>
               Login
             </ButtonLarge>
@@ -109,9 +112,6 @@ export default function Login() {
           </FormButtonContainer>
         </form>
       </Form>
-      <button onClick={() => {setFormData({email: 'testing@admin.com', password: 'admin1234'})}}>
-        developer test credentials
-      </button>
     </FormContainer>
   )
 }

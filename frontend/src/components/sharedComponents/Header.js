@@ -1,6 +1,6 @@
 // Package imports
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // Redux imports
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,8 +16,7 @@ import {
     Nav, 
     NavButton, 
     StyledHeader, 
-    Logo, 
-    NavIcon, 
+    Logo,  
     AuthButton,
     SideNav,
     NavItems,
@@ -29,7 +28,6 @@ import {
 import { Container } from '../styles/Container.styled'
 
 // Assets / Icons
-import ProfileIcon from '../../assets/icons/user.svg'
 import { FaRegUser } from 'react-icons/fa'
 import { FiLogIn, FiLogOut } from 'react-icons/fi'
 
@@ -53,8 +51,6 @@ export default function Header() {
     const ToggleMenu = () => {
         setSideNavOpen(prev => prev === "true" ? 'false' : "true")
     }
-
-    console.log(user)
 
     return(
         <StyledHeader>
