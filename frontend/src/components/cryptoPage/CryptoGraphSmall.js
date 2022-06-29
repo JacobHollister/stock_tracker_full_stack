@@ -28,7 +28,7 @@ ChartJS.register(
     Legend
 );
 
-export default function CryptoGraphSmall({data, labels, chartColor}) {
+export default function CryptoGraphSmall({data, labels}) {
 
     const [ isChartLoading, setIsChartLoading] = useState(true)
 
@@ -62,7 +62,7 @@ export default function CryptoGraphSmall({data, labels, chartColor}) {
         },
     }
 
-    if (isChartLoading) return  <Loader/>
+    if (isChartLoading) return <></>
     return (
         <Line data={graphDataProps} options={graphOptionsProps} />
     )

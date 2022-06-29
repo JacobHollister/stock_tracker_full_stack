@@ -54,31 +54,13 @@ export default function Header() {
         setSideNavOpen(prev => prev === "true" ? 'false' : "true")
     }
 
+    console.log(user)
+
     return(
         <StyledHeader>
             <Container>
                 <NavHeader>
-                    <span style={{ alignSelf: 'center'}}>(logo)</span>
-                    <h2>STOCKS</h2> 
-                    { user ? (
-                        <>
-                            <AuthButton alt="true" onClick={onLogout}>
-                                <FiLogOut/> Logout
-                            </AuthButton>
-                            <Link to='/'>
-                                <NavIcon src = {ProfileIcon}></NavIcon>
-                            </Link>
-                        </>
-                    ):(
-                        <>
-                                <AuthButton onClick={() => navigate('/login')}>
-                                    <FiLogIn/> Sign in
-                                </AuthButton>
-                                <AuthButton alt="true" onClick={() =>navigate('/register')}>
-                                    <FaRegUser/> Register
-                                </AuthButton>
-                        </>
-                    )}
+                    <h2>STOCK TRACKER</h2> 
                 </NavHeader>
                 <Nav>
                     <NavButton to="/">MARKETS</NavButton>
@@ -86,10 +68,27 @@ export default function Header() {
                     <NavButton to="/watchlist">WATCHLIST</NavButton>
                     <NavButton to="/crypto">CRYPTO</NavButton>
                     <NavButton to="/search">SEARCH</NavButton>
+                    { user ? (
+                        <div>
+                            <span><strong>{user.name}</strong></span>
+                            <AuthButton alt="true" onClick={onLogout}>
+                                <FiLogOut/> Logout
+                            </AuthButton>
+                        </div>
+                    ):(
+                        <div>
+                                <AuthButton onClick={() => navigate('/login')}>
+                                    <FiLogIn/> Sign in
+                                </AuthButton>
+                                <AuthButton alt="true" onClick={() =>navigate('/register')}>
+                                    <FaRegUser/> Register
+                                </AuthButton>
+                        </div>
+                    )}
                 </Nav>
                 <NavSmall>
                     <MenuHamburger ToggleMenu={ToggleMenu} isOpen={sideNavOpen}/>
-                    <Logo>STOCKS</Logo>
+                    <Logo>STOCK TRACKER</Logo>
                 </NavSmall>
                 <SideNav display={sideNavOpen}>
                     <NavItems>

@@ -8,7 +8,7 @@ import TradeDetailsDropdown from './TradeDetailsDropdown'
 import {PorfolioCompanyCard, PorfolioCompanyCardInfo} from '../styles/PortfolioHolding.styled'
 
 
-export default function PortfolioHolding({company, trades, companyData}) {
+export default function PortfolioHolding({company, trades, companyData, crypto}) {
 
     const [holdingData, setHoldingData ] = useState({
         gainAmount: 0,
@@ -114,7 +114,7 @@ export default function PortfolioHolding({company, trades, companyData}) {
                     </div>
                 </PorfolioCompanyCardInfo>
             </PorfolioCompanyCard>
-            {tradesOpen ? <TradeDetailsDropdown trades={trades}/> : null}
+            {tradesOpen && <TradeDetailsDropdown trades={trades} crypto/> }
         </>
     )
 

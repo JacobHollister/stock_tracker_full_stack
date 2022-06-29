@@ -46,7 +46,7 @@ const loginUser = asyncWrapper(async (req, res) => {
     if(await bcrypt.compare(password, user.password)){
         const token = await generateToken(user.id);
 
-        return res.status(200).json({ msg: 'Successfully logged in!', token, expiresIn: process.env.TOKEN_EXP});
+        return res.status(200).json({ msg: 'Successfully logged in!', token, expiresIn: process.env.TOKEN_EXP, name: user.name});
     } else {
         return new createCustomError('Invalid Username / Password', 401);
     }

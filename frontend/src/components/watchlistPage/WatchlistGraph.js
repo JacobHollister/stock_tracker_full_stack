@@ -85,7 +85,7 @@ export default function WatchlistGraph({ticker, chartColor}) {
         },
     }
 
-    if (isChartLoading) return  <Loader/>
+    if (isChartLoading) return <></>
     return (
         <Line data={graphDataProps} options={graphOptionsProps} />
     )

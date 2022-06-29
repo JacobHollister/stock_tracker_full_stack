@@ -17,7 +17,7 @@ export const AuthButton = styled.button`
     background: none;
     background-color: ${props => props.alt ? 'grey' : 'none'};
     color: ${props => props.alt ? 'white' : 'black'};
-    border: 1.5px solid black;
+    border: 1.5px solid ${props => props.alt ? 'lightgrey' : 'black'};
     border-radius: .25rem;
 
     &:last-child{
@@ -27,6 +27,7 @@ export const AuthButton = styled.button`
     &:hover {
         background-color: lightgrey;
         color: ${props => !props.alt ? 'white' : 'black'};
+        border: 1.5px solid black;
     }
 `
 
@@ -41,6 +42,17 @@ export const Nav = styled.nav`
         }
     }
 
+    div {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        justify-items: center;
+    }
+    span {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
     @media (max-width: 767px) {
         display: none;
     }
@@ -94,10 +106,10 @@ export const NavHeader = styled.div`
     margin-bottom: .25rem;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: 1fr auto auto;
     align-items: flex-start;
     h2 {
-        margin: 0 0 0 .5rem;
+        margin: 0;
     }
     @media (max-width: 767px) {
         display: none;

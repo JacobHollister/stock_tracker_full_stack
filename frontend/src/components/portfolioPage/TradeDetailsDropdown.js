@@ -45,7 +45,7 @@ export default function TradeDetailsDropdown({trades, crypto})  {
     return (
         <TradeDetailsContainer>
             <TradeDetailsHeader>
-            {crypto ? (<span>Total Shares</span>) :( <span>Currency Amount</span>)}
+            {crypto ? ( <span>Currency Amount</span>) : (<span>Total Shares</span>)}
             <span>Purchase Price</span>    
             <span>Purchase Date</span>    
             <span></span>    

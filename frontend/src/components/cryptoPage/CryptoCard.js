@@ -49,7 +49,7 @@ export default function CryptoCard({symbol, name}) {
 
     return (
         <div style={{position: 'relative'}}>
-            { displayOverlay ? (
+            { displayOverlay && (
                 <CardOverlay display={displayOverlay} onClick={() => setDisplayOverlay(false)}>
                     <ButtonLarge color={'success'} onClick={() => navigate({pathname: '/addtrade', search: `?symbol=${name}`})}>
                         ADD
@@ -58,8 +58,6 @@ export default function CryptoCard({symbol, name}) {
                         INFO
                     </ButtonLarge>
                 </CardOverlay>
-            ) : (
-                null
             )}
             <SlimCard color={chartColor} onClick={() => setDisplayOverlay(true)}>
                 <h3>
